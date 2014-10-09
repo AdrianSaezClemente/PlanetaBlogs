@@ -1,0 +1,35 @@
+   
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Paginación</title>
+	</head>
+
+	<body>
+		<ul class="pagination">
+			{% if pages.has_previous %}
+				<li><a href="?page={{ pages.previous_page_number }}">previo</a></li>
+			{% else %}
+				<li class="disabled"><a href="#">&laquo;</a></li>
+			{% endif %}
+
+			{% for page in pages.pages_to_show %}
+				{% if page == -1 %}
+					<li class="disabled"><a href="#">&hellip;</a></li>
+				{% elif page == pages.number %}
+					<li class="active"><a href="#">{{ page_num }}</a></li>
+				{% else %}
+					<li><a href="?page={{ page_num }}">{{page_num}}</a>
+				{% endif %}
+			{% endfor %}
+
+			{% if pages.has_next %}
+				<li><a href="?page={{ pages.next_page_number }}">next</a></li>
+			{% else %}
+				<li class="disabled"><a href="#">&raquo;</a></li>
+			{% endif %}
+		</ul>
+
+	</body>
+</html>

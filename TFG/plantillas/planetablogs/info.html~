@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}info.css" title="style" />
+		<title>TFG</title>
+	</head>
+	
+	<body>
+		<div id="cabecera"><p>Información de registro</p></div>
+		<div id="informacion">
+			<div id="exito">Registro realizado con éxito</div>
+			{% block contenido %}
+				<div id="info">
+					<p>Tu información:</p>
+					<p>Nick: {{ form.nick }}</p>
+					<p>Nombre y apellidos: {{ form.nombre_apellidos }}</p>
+					<p>Rss: {{ form.rss }}</p>
+					<p>Contraseña: {{ form.password }}</p>
+				</div>
+				<a href="/planetablogs/"><button id="boton" onclick="">Continuar</button></a>
+			{% endblock contenido %}
+		</div>
+	</body>
+</html>

@@ -1,0 +1,105 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Plantilla básica de Bootstrap</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="css/blog1.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<!-- CABECERA -->
+		<div class="blog-masthead">
+			<div class="container">
+				<nav class="blog-nav">
+					<a class="blog-nav-item active" href="#">Home</a>
+					<a class="blog-nav-item" href="#">New features</a>
+					<a class="blog-nav-item" href="#">Press</a>
+					<a class="blog-nav-item" href="#">New hires</a>
+					<a class="blog-nav-item" href="#">About</a>
+				</nav>
+			</div>
+		</div>
+		<!-- FIN CABECERA -->
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<div class="blog-header">
+				<h1 class="blog-title">Educational Planet</h1>
+				<p class="lead blog-description">El blog educativo del futuro</p>
+			</div>
+			<div class="row">
+				<div id="todasentradas" class="col-xs-12 col-sm-8 blog-main">
+					{% if lista_usuarios %}
+							<div id="entradas">
+							{% for entrada in entradas %}
+								<div class="blog-post">
+									<h2 class="blog-post-title">Sample blog post</h2>
+									<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+									<div id="entrada">
+										<h2><a target="_blank" href={{ entrada.usuario.url_blog }}>{{ entrada }}</a></br><span>{{ entrada.fecha }}</span></h2>
+										<h3><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
+										<p>{{ entrada.descripcion }}</p>
+									</div>
+								</div>
+							{% endfor %}
+							</div>
+					{% else %}
+						<p>No hay entradas en Educational Planet</p>
+					{% endif %}
+				</div>
+				<div class="clearfix visible-xs"></div>
+				<div id="suscriptores" class="col-xs-12 col-sm-4 blog-main">
+					<span id="titulo_columna">Suscriptores</span></br></br></br>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+							<th>#</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Username</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							<td>1</td>
+							<td>Mark</td>
+							<td>Otto</td>
+							<td>@mdo</td>
+							</tr>
+							<tr>
+							<td>2</td>
+							<td>Jacob</td>
+							<td>Thornton</td>
+							<td>@fat</td>
+							</tr>
+							<tr>
+							<td>3</td>
+							<td>Larry</td>
+							<td>the Bird</td>
+							<td>@twitter</td>
+							</tr>
+						</tbody>
+					</table>
+					<table>
+						<tbody>
+						{% for usuario in lista_usuarios %}
+						<tr>
+							<td><a style="display:list-item;font-size:0.7em" target="_blank" href="{{ usuario.url_blog }}">{{ usuario }}</a><a style="font-size:0.7em" target="_blank" href="{{ usuario.rss }}">  (feed)</a></td>
+						</tr>
+						{% empty %}
+						<tr><td colspan="4">No hay personas suscritas</td></tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- FIN CONTENEDOR -->
+	</body>
+</html>
+

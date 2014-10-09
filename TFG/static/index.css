@@ -1,0 +1,460 @@
+/*
+ * Globals
+ */
+body {
+    /*margin:2em;*/
+    background-color: 	#ADD8E6;
+    margin:0 auto;
+    width:auto;
+    text-align: left;
+    float:center;
+    z-index:0;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    color: #555;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+    margin-top: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    color: #333;
+}
+
+/**************************MI CSS**********************************/
+
+#todasentradas {
+	height:70px;
+	margin-bottom:1.2em;
+	background-color: #B9C5CD;
+	box-shadow:0.1em 0.1em 0.2em black;
+	height:auto;
+	overflow:hidden;
+	font-size:0.7em;
+	padding:3em;
+}
+
+#suscriptores {
+	padding-top:2em;
+	margin:0 auto;
+	height:auto;
+}
+
+#titulo_columna {
+	margin-left:35px;
+	text-align:center;
+	font-weight:bold;
+}
+
+#tablasuscriptores {
+	background-color: #B9C5CD;
+	margin-left:30px;
+	box-shadow: 0 0 30px black;
+}
+
+#entrada {
+	height:70px;
+	/*border:0.15em solid black;*/
+	margin-bottom:1.2em;
+	background-color: #DCDCDC;
+	box-shadow:0.1em 0.1em 0.2em black;
+	height:auto;
+	overflow:hidden;
+}
+
+#entrada h2 {
+	background: #3399FF;
+	margin-top: 0;
+	padding:0.4em;
+	font-style: oblique;
+	font-size:30px;
+	color: black;
+}
+
+#entrada h3 {
+	margin-left:1.5em;
+	margin-right:1.5em;
+	background: #3399FF;
+	position: center;
+	margin-top: 0;
+	padding: 0.3em;
+	font-size:15px;
+	text-align:center;
+}
+
+#entrada h2 span {
+	float:right;
+	color: black;
+	font-size:11px;
+	padding-right: 0.5em;
+	padding-top: 0.3em;
+}
+
+#entrada h3 a {
+	color: black;
+}
+
+#entrada h2 a {
+	color: black;
+	font-size:1em;
+}
+
+#entrada p {
+	padding:20px;
+	font-size:11px;
+	margin-left:1.5em;
+	margin-right:1.5em;
+}
+
+.pagination {
+	margin-left:14em;
+}
+
+.pagination a,.current {
+	font-size:13px;
+	padding:3px;
+}
+
+.pag {
+	box-shadow:0.2em 0.2em 0.2em black;
+	border:2px solid black;
+	border-radius: 5px;
+}
+
+/********************FIN DE MI CSS**********************************/
+/*
+ * Override Bootstrap's default container.
+ */
+
+.container {
+	max-width: none !important;
+    width: 970px;
+}
+
+
+/*
+ * Masthead for nav
+ */
+
+.blog-masthead {
+  background-color: #428bca;
+  -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+          box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+}
+
+/* Nav links */
+.blog-nav-item {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  font-weight: 500;
+  color: #cdddeb;
+}
+.blog-nav-item:hover,
+.blog-nav-item:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Active state gets a caret at the bottom */
+.blog-nav .active {
+  color: #fff;
+}
+.blog-nav .active:after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid;
+  border-left: 5px solid transparent;
+}
+
+
+/*
+ * Blog name and description
+ */
+
+.blog-header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.blog-title {
+  margin-top: 30px;
+  margin-bottom: 0;
+  font-size: 60px;
+  font-weight: normal;
+}
+.blog-description {
+  font-size: 20px;
+  color: #999;
+}
+
+
+/*
+ * Main column and sidebar layout
+ */
+
+.blog-main {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* Sidebar modules for boxing content */
+.sidebar-module {
+  padding: 15px;
+  margin: 0 -15px 15px;
+}
+.sidebar-module-inset {
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+.sidebar-module-inset p:last-child,
+.sidebar-module-inset ul:last-child,
+.sidebar-module-inset ol:last-child {
+  margin-bottom: 0;
+}
+
+
+
+/* Pagination */
+.pager {
+  margin-bottom: 60px;
+  text-align: left;
+}
+.pager > li > a {
+  width: 140px;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 30px;
+}
+
+
+/*
+ * Blog posts
+ */
+
+.blog-post {
+  margin-bottom: 60px;
+}
+.blog-post-title {
+  
+  font-size: 40px;
+}
+.blog-post-meta {
+  margin-bottom: 20px;
+  color: #999;
+}
+
+
+/*
+ * Footer
+ */
+
+.blog-footer {
+  padding: 40px 0;
+  color: #999;
+  text-align: center;
+  background-color: #0066CC;
+  border-top: 1px solid #e5e5e5;
+}
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
+
+
+
+/*********************************INDEX****************************************/
+
+
+body {
+	background-color: 	#ADD8E6;
+	margin:0 auto;
+    
+    text-align: left;
+    float:center;
+    z-index:0;
+}
+
+
+#header {
+	width:100%;
+	position:fixed;
+}
+
+#cabecera {
+  	height: 55px;
+  	margin: 0;
+  	padding: 0;
+	float: top;
+	box-shadow: 0 0 30px black;
+	background-color:#101010;
+}
+
+#cabecera p {
+	font-size: 1.6em;
+	text-align: center;
+	font-weight: bold;
+	margin: 0 auto;
+	padding-top:0.6em; /*Mirar*/
+}
+
+#intercabecera *{
+	margin-right:3px;
+	margin-top:1px;
+	float:right;
+}
+
+#subcabecera {
+	height:40px;
+	background:-moz-linear-gradient(top,#202020 10%,#101010 40%);
+	/*background:-moz-linear-gradient(bottom,#0c0c0c 80%,#008B8B 100%);*/
+	box-shadow: 0 0 30px black;
+}
+
+#logo {
+	float:left;
+	padding:20px;
+	color:white;
+}
+
+#busca {
+	float:left;
+	margin-left:300px;
+	padding:20px;
+}
+
+#buscar {
+	width:250px;
+	height:20px;
+}
+
+#login {
+	/*display:inline-block;position:relative;text-align:center;text-decoration:none;background--image:-moz-linear-gradient(top,rgba(255,255,255,.1)0,rgba(0,0,0,.1)100%);background-repeat:repeat-x;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05);padding:0 15px;line-height:30px;border:1px solid #8B8B8B;border-radius:3px;font-size:14px;vertical-align:middle;cursor:pointer;-moz-user-select:none;*/
+	float:right;
+	padding:20px;
+}
+
+#registro {
+	font-size:0.8em;
+	padding-left:10px;
+	border-left:1px solid white;
+}
+
+#iden {
+	font-size:0.8em;
+	margin-right:10px;
+}
+
+#iden a,#registro a {
+	color:white;
+}
+
+#intro_nick{
+	margin-right:10px;
+	height:20px;
+}
+
+#intro_pass {
+	margin-right:10px;
+	height:20px;
+}
+
+#contenedor {
+	height:auto;
+	overflow:auto;
+	margin: 0 auto;
+	padding:1em;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	margin-left:4em;
+	margin-right:4em;
+	margin-top:5em;
+	/*border:0.5em solid black;*/
+	margin-bottom: 0.4em;
+}
+
+#contenido {
+	margin: 0 auto;
+	padding-top:4em;
+	width:850px;
+	/*border:0.3em solid blue;*/
+	float:left;
+}
+
+#columna {
+	margin: 0 auto;
+	padding-top:4em;
+	height:auto;
+	overflow:hidden;
+	width:300px;
+	float:right;
+	text-align:center;
+}
+
+#interior {
+	margin-right:0.8em;
+	margin-bottom:0.8em;
+	margin-left:2em;
+	background-color:#DCDCDC;
+	box-shadow:0em 0em 0.5em black;
+	border-radius: 10px;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+
+table {
+	/*text-decoration:underline;*/
+	margin-left:50px;
+}
+
+
+
+
+#boton {
+	background-color: #778899;
+	margin: 0.3em;
+	color: black;
+	width: 9em;
+	border: 0.2em solid #778899;
+	border-radius: 10px;
+	float:right;
+}
+
+a {
+	text-decoration:none
+}
+
+#subpie {
+	height:20px;
+	background:#008080;
+}
+
+#pie {
+	height:40px;
+	float:bottom;
+  	bottom: 0px;
+  	background: #008B8B;
+  	margin: 0;
+  	padding: 0;
+}
+
+#pie p {
+	font-size: 0.7em;
+	text-align: center;
+	font-weight: bold;
+	margin: 0 auto;
+	padding-top:1.2em; /*Mirar*/
+}

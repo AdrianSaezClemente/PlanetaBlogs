@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>TFG</title>
+		<style type="text/css">
+#cabecera {
+  	height: 100px;
+  	background: #008B8B;
+  	margin: 0;
+  	padding: 0;
+	float: top;
+	margin-bottom: 0.8em;
+	border-bottom: 0.5em solid #778899;
+	border-radius: 10px;
+	box-shadow: 0 0 15em #008B8B;
+}
+
+#cabecera p {
+	font-size: 1.6em;
+	text-align: center;
+	font-weight: bold;
+	margin: 0 auto;
+	padding-top:1.2em; /*Mirar*/
+}
+
+#id_descripcion_entrada {
+	margin-left:15em;
+	width: 700px;
+	height: 200px;
+}
+
+.nombre {
+
+}
+
+.urlblog {
+
+}
+
+.descripcion {
+
+}
+
+.fecha {
+
+}
+		</style>
+	</head>
+	
+	<body>
+		<p>Nick y/o contraseña no coinciden</p>
+		<div id="cabecera"><p>Ingresar usuario</p></div>
+
+		<div id="formulario">	
+		{% block contenido %}
+		<form method="POST">{% csrf_token %}
+		{{ formulario.as_p }}
+		<input type="submit" value="Enviar" />
+		</form>
+		{% endblock contenido %}
+		</div>
+	</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		{% block head %}
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}index.css" title="style" />
+	   	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}index.js"></script>
+		<script>
+	   	var tmp = '{{ json_usuarios|escapejs }}';
+	   	var usuario = JSON.parse(tmp);
+	   	</script>
+		<title>TFG</title>
+		{% endblock head %}
+	</head>
+	<body>
+		
+		
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<!-- CABECERA -->
+			<div class="row">
+				<div class="col-xs-12 blog-masthead">
+					<nav class="blog-nav">
+						<a class="blog-nav-item active" href="#">Home</a>
+						<a class="blog-nav-item" href="#">Identifícate</a>
+						<a class="blog-nav-item" href="/planetablogs/nuevousuario/">Regístrate</a>
+					</nav>
+				</div>
+			</div>
+		<!-- FIN CABECERA -->
+			<div class="blog-header">
+				<h1 class="blog-title">Educational Planet</h1>
+				<p class="lead blog-description">El blog educativo del futuro</p>
+			</div>
+			<div class="row">
+				<div id="todasentradas" class="col-xs-12 col-sm-8 blog-main">
+					{% if lista_usuarios %}
+							<div id="entradas">
+							{% for entrada in entradas %}
+								<div class="blog-post">
+									<div id="entrada">
+										<h2 class="blog-post-title"><a target="_blank" href={{ entrada.usuario.url_blog }}>{{ entrada }}</a><span class="blog-post-meta">{{ entrada.fecha }} por <a href={{ entrada.usuario.url_blog }}>{{ entrada.usuario.nick }}</a></span></h2>
+										<h3><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
+										<p>{{ entrada.descripcion }}</p>
+									</div>
+								</div>
+							{% endfor %}
+							</div>
+					{% else %}
+						<p>No hay entradas en Educational Planet</p>
+					{% endif %}
+					
+					<div class="paginador">
+						<ul class="pagination">
+							<li>
+								{% if entradas.has_previous %}
+									{% if entradas.previous_page_number == 1 %}
+										<span class="pag"><a href="/planetablogs/">&larr; Anterior</a></span>
+									{% else %}
+										<span class="pag"><a href="?page={{ entradas.previous_page_number }}">&larr; Anterior</a></span>
+									{% endif %}
+								{% endif %}
+							</li>
+							<li>
+								<span class="current">
+									Página {{ entradas.number }} de {{ entradas.paginator.num_pages }}
+								</span>
+							</li>
+							<li>
+								{% if entradas.has_next %}
+									<span class="pag"><a href="?page={{ entradas.next_page_number }}">Siguiente &rarr;</a></span>
+								{% endif %}
+							</li>
+						</ul>
+					</div> 
+				</div>
+				<div class="clearfix visible-xs"></div>
+				<div id="suscriptores" class="col-xs-12 col-sm-4 blog-main">
+					<div id="titulo_columna">Suscriptores</div></br>
+					<table id="tablasuscriptores" class="table table-hover">
+						<thead>
+							<tr>
+							<th>Usuario</th>
+							<th>Blog</th>
+							<th>Puntos</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for usuario in lista_usuarios %}
+							<tr>
+								<td>{{ usuario.nick }}</td>
+								<td><a style="font-size:0.7em" target="_blank" href="{{ usuario.url_blog }}">{{ usuario }}</a><a style="font-size:0.7em" target="_blank" href="{{ usuario.rss }}"> (feed)</a></td>
+								<td>0</td>
+							</tr>
+							{% empty %}
+							<tr><td colspan="4">No hay personas suscritas</td></tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- FIN CONTENEDOR -->
+		<!-- Pie de página -->
+		<div class="row">
+			<div class="col-xs-12 blog-footer">
+				<p>Soy el pie de página</p>
+			</div>
+		</div>
+	</body>
+</html>
+
+
+<!--
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+  </table>
+ -->

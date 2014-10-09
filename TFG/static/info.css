@@ -1,0 +1,42 @@
+#cabecera {
+  	height: 100px;
+  	background: #008B8B;
+  	margin: 0;
+  	padding: 0;
+	float: top;
+	margin-bottom: 0.8em;
+	border-bottom: 0.5em solid #778899;
+	border-radius: 10px;
+	box-shadow: 0 0 15em #008B8B;
+}
+
+#cabecera p {
+	font-size: 1.6em;
+	text-align: center;
+	font-weight: bold;
+	margin: 0 auto;
+	padding-top:1.2em; /*Mirar*/
+}
+
+#informacion {
+	padding:30px;
+	margin-left:25%;
+	width:600px;
+	height:auto;
+	overflow:hidden;
+	box-shadow:0 0 0.4em black;
+	border-radius:10px;
+}
+
+#boton {
+	float:right;
+}
+
+#exito {
+	font-weight:bold;
+	text-align:center;
+}
+
+#info {
+	margin-left:10%;
+}

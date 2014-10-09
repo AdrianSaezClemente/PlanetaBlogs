@@ -1,0 +1,24 @@
+{% extends "tabla.html" %}
+
+{% block titulo %} Blogs subscribers {% endblock titulo %}
+
+
+{% block contenido %}
+<table>
+<thead>
+<tr>
+<th>Nombre</th>
+</tr>
+</thead>
+<tbody>
+{% for persona in personas %}
+<tr>
+<td><a target="_blank" href="{{ persona.url_blog }}">{{ persona.nombre_apellidos }}</a></td>
+</tr>
+{% empty %}
+<tr><td colspan="4">No hay personas suscritas</td></tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock contenido %}

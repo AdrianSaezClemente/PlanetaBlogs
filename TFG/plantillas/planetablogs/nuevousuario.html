@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	   	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}nuevousuario.css" title="style" />
+	   	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	   	<script src="{{ STATIC_URL }}nuevousuario.js"></script>
+	   	<script>
+	   	var tmp = '{{ lista_usuarios|escapejs }}';
+	   	var usuario = JSON.parse(tmp);
+	   	</script>
+		<title>TFG</title>
+	</head>
+
+	<body>
+		<div id="cabecera"><p>Registrar nuevo usuario</p></div>
+		<div id="formulario">	
+			{% block contenido %}
+			<form method="POST">{% csrf_token %}
+				<div id="cnick">
+					<label>Nick</label>
+					<input id="nick" type="text" style="font-style:oblique;font-size:0.7em;" placeholder="  Pon tu nick" autocomplete="off" name="nick"><div id="anima"></div><div id="salida" style="font-size:0.8em"></div>
+				</div></br></br>
+				<label>Nombre y apellidos</label>
+				<input id="nombre" type="text" style="font-style:oblique;font-size:0.7em;" name="nombre_apellidos" placeholder="  Nombre y apellidos completos" autocomplete="off"><div id="salida"></div></br>
+				<label>Rss</label>
+				<input id="rss" type="text" name="rss" style="font-style:oblique;font-size:0.7em;" placeholder="  Rss válido" autocomplete="off"><div id="salida"></div></br>
+				<div id="ccontraseña">
+					<label>Contraseña</label>
+					<input type="text" id="contraseña" style="font-style:oblique;font-size:0.7em;" name="password" placeholder="  Introduce al menos 6 caracteres" autocomplete="off"/><div id="contraseñaSalida"></div></br>
+				</div></br></br></br>
+				<div id="boton"><input id="guardar" type="submit" value="Guardar" /><span id="result">{{ info }}</span>
+					<span id="img"><img id="imagen" src="{{ STATIC_URL }}imagenes/info.png" height="12" width="12"/><span style="font-size:0.5em">Información</span></span>
+					<a href="planetablogs/"><input id="volver" type="submit" value="Volver" /></a>
+				</div></br>
+			</form>
+			<div style="font-size:0.8em" id="dialog" title="Información">
+				<p >Recuerda que todos los campos deben estar rellenos.</p>
+				<p >El nick debe ser único.</p>
+				<p >El RSS debe existir.</p>
+				<p >Y la contraseña debe tener al menos 6 caracteres.</p>
+			</div>
+		{% endblock contenido %}
+		</div>
+	</body>
+</html>
