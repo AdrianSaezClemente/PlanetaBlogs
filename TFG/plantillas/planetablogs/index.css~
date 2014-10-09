@@ -1,8 +1,0 @@
-
-
-#contenedor li{
-  background: #253575;
-  color: #B5C4E3;
-  font-weight: bold;
-  margin: .9em;
-}
