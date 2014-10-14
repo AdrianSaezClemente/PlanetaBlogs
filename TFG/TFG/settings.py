@@ -26,7 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-TEMPLATE_DIRS = ('/home/adri/Escritorio/Proyecto/TFG/plantillas')
+TEMPLATE_DIRS = ('/home/adri/Escritorio/ProyectoGit/TFG/plantillas')
 
 # Application definition
 
@@ -87,5 +87,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join('/home/adri/Escritorio/Proyecto/TFG/', "static"),
+    os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/', "static"),
 )

@@ -34,7 +34,8 @@ h6, .h6 {
 	height:70px;
 	margin-bottom:1.2em;
 	background-color: #B9C5CD;
-	box-shadow:0.1em 0.1em 0.2em black;
+	border:0.3em solid black;
+	box-shadow:0 0 0.7em black;
 	height:auto;
 	overflow:hidden;
 	font-size:0.7em;
@@ -61,10 +62,10 @@ h6, .h6 {
 
 #entrada {
 	height:70px;
-	/*border:0.15em solid black;*/
+	border:0.4em solid #3399FF;
 	margin-bottom:1.2em;
 	background-color: #DCDCDC;
-	box-shadow:0.1em 0.1em 0.2em black;
+	box-shadow:0 0 0.2em black;
 	height:auto;
 	overflow:hidden;
 }
