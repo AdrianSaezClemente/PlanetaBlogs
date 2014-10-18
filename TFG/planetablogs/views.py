@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
@@ -84,22 +85,21 @@ def ActualizarUsuarios():
 	for usuario in lista_usuarios:
 		rss = ObtenerRss(usuario.rss)
 		lon = len(rss.entries)
-		url_blog = rss.feed.link
-		if (usuario.url_blog=='') & (usuario.entradas==0):	#Usuario se acaba de registrar
-			usuario.url_blog = url_blog						#Guardar url del blog
-			usuario.entradas = lon							#y un contador de entradas del blog
-			usuario.save()
-			GuardarEntradas(usuario,lon)
-			actualizacion = actualizacion + 1
-		else:
-			actualizacion = ComprobarEntradas(usuario,lon,actualizacion)		
-	if actualizacion>0:
-		print "Actualizaciones: "+str(actualizacion)
-		lista_usuarios = Usuario.objects.all()
-		return lista_usuarios
-	else:
-		print "No ha habido actualizaciones: "+str(actualizacion)
-		return lista_usuarios
+		while i<lon:
+			fecha = rss.entries[i].published_parsed
+			fechaEntrada = datetime.fromtimestamp(mktime(fecha))
+			print fechaEntrada
+			if (fechaEntrada>now):
+				titulo = rss.entries[i].title
+				link = rss.entries[i].link
+				descripcion = rss.entries[i].description
+				entrada = Entrada(titulo=titulo,link=link,fecha=fechaEntrada,descripcion=descripcion)
+			else:
+				print "Es menor"+ fechaEntrada
+				
+	now = datetime.datetime.now()
+	print now
+	return render(request,'planetablogs/index.html',{"entradas": entradas,'lista_entradas':lista_entradas,'lista_usuarios':lista_usuarios,'json_usuarios':json_usuarios})
 
 
 #Autenticar usuario con nick y clave (NO TERMINADO)
@@ -188,6 +188,5 @@ def nuevo_usuario(request):
 	return render(request, 'planetablogs/nuevousuario.html', {'formulario': formulario,'lista_usuarios':lista_usuarios})
 
 
-
-
-
+if __name__ == '__main__':
+	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")

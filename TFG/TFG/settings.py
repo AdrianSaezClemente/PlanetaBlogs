@@ -28,6 +28,7 @@ ALLOWED_HOSTS = []
 
 TEMPLATE_DIRS = ('/home/adri/Escritorio/ProyectoGit/TFG/plantillas')
 
+# DJANGO_SETTINGS_MODULE = 'planetablogs.settings'
 # Application definition
 
 INSTALLED_APPS = (
