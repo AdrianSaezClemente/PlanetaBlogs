@@ -1,18 +1,28 @@
 $(document).ready(function(){
 	$("#dialog").hide();
+	$("#result").hide();
 	$("#nick").keypress(nickPress);
 	$("#nick").keydown(nickDown);
 	$("#nick").keyup(nickUp);
-	$("#contraseña").keypress(contraseñaPress);
-	$("#contraseña").keydown(contraseñaDown);
-	$("#contraseña").keyup(contraseñaUp);
+	//$("#contraseña").keypress(contraseñaPress);
+	//$("#contraseña").keydown(contraseñaDown);
+	//$("#contraseña").keyup(contraseñaUp);
 	$("#imagen").mouseover(function(evento){
 		$("#dialog").show({width: 590,
             height: 150,
-            show: "Blind"
+            show: "Puff"
 		});
 	});
+	ComprobarInfo();
 })
+
+
+function ComprobarInfo(){
+	if (info == 'False'){
+		$("#result").show("Puff");
+	}
+}
+
 
 function ComprobarNick(){
 	var entrada = document.getElementById("nick").value;
@@ -52,7 +62,7 @@ function nickPress(evento){
 		$("#anima").removeClass("animacion");
 	}
 }
-
+/*
 function contraseñaDown(evento){
 	$("#contraseñaSalida").removeClass("animacion");
 	$("#contraseñaSalida").html(""); 
@@ -67,4 +77,4 @@ function contraseñaPress(evento){
 	$("#contraseñaSalida").addClass("animacion");
 }
 
-
+*/

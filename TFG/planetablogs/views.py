@@ -165,7 +165,7 @@ def ComprobarRegistro(form):
 
 #Introducir datos de registro
 def nuevo_usuario(request):
-	info = "Tus datos son erróneos. Introdúcelos otra vez."
+	info = "False"
 	json_serializer = serializers.get_serializer("json")()
 	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
 	if request.method=='POST':

@@ -12,6 +12,7 @@
 	   	<script>
 	   	var tmp = '{{ lista_usuarios|escapejs }}';
 	   	var usuario = JSON.parse(tmp);
+	   	var info = '{{ info }}';
 	   	</script>
 		<title>TFG</title>
 	</head>
@@ -38,37 +39,45 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Nick</label>
 							<div class="col-lg-10">
-								<input id="nick" style="font-style:oblique;font-size:0.7em;" type="email" class="form-control" placeholder="Pon tu nick" autocomplete="off" name="nick">
+								<input id="nick" style="font-style:oblique;font-size:0.7em;" type="text" class="form-control" placeholder="Pon tu nick" autocomplete="off" name="nick">
 								<div id="anima"></div><div id="salida" style="font-size:0.8em"></div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Nombre</label>
 							<div class="col-lg-10">
-								<input id="nombre" type="password" style="font-style:oblique;font-size:0.7em;" class="form-control" name="nombre_apellidos" placeholder="Nombre y apellidos completos" autocomplete="off">
+								<input id="nombre" type="text" style="font-style:oblique;font-size:0.7em;" class="form-control" name="nombre_apellidos" placeholder="Nombre y apellidos completos" autocomplete="off">
 								<div id="salida"></div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Rss</label>
 							<div class="col-lg-10">
-								<input id="rss" type="password" style="font-style:oblique;font-size:0.7em;" class="form-control" name="rss" placeholder="Rss válido" autocomplete="off">
+								<input id="rss" type="url" style="font-style:oblique;font-size:0.7em;" class="form-control" name="rss" placeholder="Rss válido" autocomplete="off">
 								<div id="salida"></div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Contraseña</label>
 							<div class="col-lg-10">
-								<input id="contraseña" type="text" style="font-style:oblique;font-size:0.7em;" class="form-control" name="password" placeholder="Introduce al menos 6 caracteres" autocomplete="off">
+								<input id="contraseña" type="password" style="font-style:oblique;font-size:0.7em;" class="form-control" name="password" placeholder="Introduce al menos 6 caracteres" autocomplete="off">
 								<div id="contraseñaSalida"></div>
 							</div>
 						</div>
-						<div id="boton"><button id="guardar" type="submit" class="btn btn-success">Guardar datos</button><span id="result">{{ info }}</span>
+						<div id="boton"><button id="guardar" type="submit" class="btn btn-success">Guardar datos</button>
 							<span id="img"><img id="imagen" src="{{ STATIC_URL }}imagenes/info.png" height="12" width="12"/><span style="font-size:0.5em">Información</span></span>
 							<a href="/planetablogs/"><button id="volver" type="button" class="btn btn-primary">Volver</button></a>
 						</div></br>
 					</form>
-					<div class="">
+					<div>
+						<span id="result" class="alert alert-danger">
+							<button id="buttondialog" type="button" class="close" data-dismiss="alert">&times;</button>
+							<span>
+									¡Información errónea! Introdúcela otra vez.
+							</span>
+						</span>
+					</div>
+					<div>
 						<span id="dialog" title="Información" class="alert-info help-block">
 							<button id="buttondialog" type="button" class="close" data-dismiss="alert">&times;</button>
 							<span>Recuerda que todos los campos deben estar rellenos.</span></br>
@@ -77,10 +86,6 @@
 							<span>Y la contraseña debe tener al menos 6 caracteres.</span></br>
 						</span>
 					</div>
-
-
-					
-					
 					{% endblock contenido %}
 				</div>
 			</div>
