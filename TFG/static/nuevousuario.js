@@ -7,12 +7,9 @@ $(document).ready(function(){
 	$("#contraseña").keydown(contraseñaDown);
 	$("#contraseña").keyup(contraseñaUp);
 	$("#imagen").mouseover(function(evento){
-		$("#dialog").dialog({width: 590,
+		$("#dialog").show({width: 590,
             height: 150,
-            show: "blind",
-            hide: "clip",
-            resizable: "false",
-            position: "center", position: { my: "bottom", at: "bottom", of: window } 
+            show: "Blind"
 		});
 	});
 })
