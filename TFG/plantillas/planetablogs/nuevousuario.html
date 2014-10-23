@@ -4,8 +4,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	   	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}nuevousuario.css" title="style" />
 	   	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
 	   	<script src="{{ STATIC_URL }}nuevousuario.js"></script>
 	   	<script>
 	   	var tmp = '{{ lista_usuarios|escapejs }}';
@@ -15,6 +17,27 @@
 	</head>
 
 	<body>
+		<!-- CABECERA -->
+		<div id="cabecerarelativa" class="row">
+			<div id="cabecera" class="col-xs-12 blog-masthead">
+				<nav class="blog-nav">
+					<a class="blog-nav-item" href="/planetablogs/">Página principal</a>
+					<a class="blog-nav-item" href="#">Identifícate</a>
+					<a class="blog-nav-item active" href="/planetablogs/nuevousuario/">Regístrate</a>
+					
+				</nav>
+			</div>
+		</div>
+		<!-- CONTENEDOR -->
+		<div class="container">
+			
+			<div class="row">
+				<div id="formulario" class="col-xs-12 col-sm-12 blog-main">
+			
+				</div>
+			</div>
+		</div>
+		<!--
 		<div id="cabecera"><p>Registrar nuevo usuario</p></div>
 		<div id="formulario">	
 			{% block contenido %}
@@ -44,5 +67,6 @@
 			</div>
 		{% endblock contenido %}
 		</div>
+		-->
 	</body>
 </html>

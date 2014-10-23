@@ -3,7 +3,7 @@
  */
 body {
     /*margin:2em;*/
-    background-color: 	#ADD8E6;
+    
     margin:0 auto;
     width:auto;
     text-align: left;
@@ -28,112 +28,6 @@ h6, .h6 {
     color: #333;
 }
 
-/**************************MI CSS**********************************/
-
-#todasentradas {
-	height:70px;
-	margin-bottom:1.2em;
-	background-color: #B9C5CD;
-	border:0.3em solid black;
-	box-shadow:0 0 0.7em black;
-	height:auto;
-	overflow:hidden;
-	font-size:0.7em;
-	padding:3em;
-}
-
-#suscriptores {
-	padding-top:2em;
-	margin:0 auto;
-	height:auto;
-}
-
-#titulo_columna {
-	margin-left:35px;
-	text-align:center;
-	font-weight:bold;
-}
-
-#tablasuscriptores {
-	background-color: #B9C5CD;
-	margin-left:30px;
-	box-shadow: 0 0 30px black;
-}
-
-#entrada {
-	height:70px;
-	border:0.4em solid #3399FF;
-	margin-bottom:1.2em;
-	background-color: #DCDCDC;
-	box-shadow:0 0 0.2em black;
-	height:auto;
-	overflow:hidden;
-}
-
-#entrada h2 {
-	background: #3399FF;
-	margin-top: 0;
-	padding:0.4em;
-	font-style: oblique;
-	font-size:30px;
-	color: black;
-}
-
-#entrada h3 {
-	margin-left:1.5em;
-	margin-right:1.5em;
-	background: #3399FF;
-	position: center;
-	margin-top: 0;
-	padding: 0.3em;
-	font-size:15px;
-	text-align:center;
-}
-
-#entrada h2 span {
-	float:right;
-	color: black;
-	font-size:11px;
-	padding-right: 0.5em;
-	padding-top: 0.3em;
-}
-
-#entrada h3 a {
-	color: black;
-}
-
-#entrada h2 a {
-	color: black;
-	font-size:1em;
-}
-
-#entrada p {
-	padding:20px;
-	font-size:11px;
-	margin-left:1.5em;
-	margin-right:1.5em;
-}
-
-.pagination {
-	margin-left:14em;
-}
-
-.pagination a,.current {
-	font-size:13px;
-	padding:3px;
-}
-
-.pag {
-	box-shadow:0.2em 0.2em 0.2em black;
-	border:2px solid black;
-	border-radius: 5px;
-}
-
-/********************FIN DE MI CSS**********************************/
-/*
- * Override Bootstrap's default container.
- */
-
 .container {
 	max-width: none !important;
     width: 970px;
@@ -157,6 +51,7 @@ h6, .h6 {
   padding: 10px;
   font-weight: 500;
   color: #cdddeb;
+  border-bottom:0.2em solid black;
 }
 .blog-nav-item:hover,
 .blog-nav-item:focus {
@@ -275,20 +170,132 @@ h6, .h6 {
   margin-bottom: 0;
 }
 
+/**************************MI CSS**********************************/
+
+#cabecerarelativa {
+	width:102%;
+	position:fixed;
+}
+
+#cabecera {
+	padding-left:13em;
+}
+
+#todasentradas {
+	height:70px;
+	margin-bottom:1.2em;
+	background-color: #B9C5CD;
+	border:0.3em solid black;
+	box-shadow:0 0 0.7em black;
+	height:auto;
+	overflow:hidden;
+	font-size:0.7em;
+	padding:3em;
+}
+
+#suscriptores {
+	padding-top:2em;
+	margin:0 auto;
+	height:auto;
+}
+
+#titulo_columna {
+	margin-left:35px;
+	text-align:center;
+	font-weight:bold;
+}
+
+#tablasuscriptores {
+	background-color: #B9C5CD;
+	margin-left:30px;
+	box-shadow: 0 0 30px black;
+}
+
+#entrada {
+	height:70px;
+	border:0.4em solid #3399FF;
+	margin-bottom:1.2em;
+	background-color: #DCDCDC;
+	box-shadow:0 0 0.2em black;
+	height:auto;
+	overflow:hidden;
+}
+
+#entrada h2 {
+	background: #3399FF;
+	margin-top: 0;
+	padding:0.4em;
+	font-style: oblique;
+	font-size:30px;
+	color: black;
+}
+
+#entrada h3 {
+	margin-left:1.5em;
+	margin-right:1.5em;
+	background: #3399FF;
+	position: center;
+	margin-top: 0;
+	padding: 0.3em;
+	font-size:15px;
+	text-align:center;
+}
+
+#entrada h2 span {
+	float:right;
+	color: black;
+	font-size:11px;
+	padding-right: 0.5em;
+	padding-top: 0.3em;
+}
+
+#entrada h3 a {
+	color: black;
+}
+
+#entrada h2 a {
+	color: black;
+	font-size:1em;
+}
+
+#entrada p {
+	padding:20px;
+	font-size:11px;
+	margin-left:1.5em;
+	margin-right:1.5em;
+}
+
+.pagination {
+	margin-left:14em;
+}
+
+.pagination a,.current {
+	font-size:13px;
+	padding:3px;
+}
+
+.pag {
+	box-shadow:0.2em 0.2em 0.2em black;
+	border:2px solid black;
+	border-radius: 5px;
+}
+
+/********************FIN DE MI CSS**********************************/
+
+
 
 
 /*********************************INDEX****************************************/
 
+/*
 
 body {
 	background-color: 	#ADD8E6;
 	margin:0 auto;
-    
     text-align: left;
     float:center;
     z-index:0;
 }
-
 
 #header {
 	width:100%;
@@ -309,7 +316,7 @@ body {
 	text-align: center;
 	font-weight: bold;
 	margin: 0 auto;
-	padding-top:0.6em; /*Mirar*/
+	padding-top:0.6em; 
 }
 
 #intercabecera *{
@@ -321,7 +328,7 @@ body {
 #subcabecera {
 	height:40px;
 	background:-moz-linear-gradient(top,#202020 10%,#101010 40%);
-	/*background:-moz-linear-gradient(bottom,#0c0c0c 80%,#008B8B 100%);*/
+	background:-moz-linear-gradient(bottom,#0c0c0c 80%,#008B8B 100%);
 	box-shadow: 0 0 30px black;
 }
 
@@ -343,7 +350,7 @@ body {
 }
 
 #login {
-	/*display:inline-block;position:relative;text-align:center;text-decoration:none;background--image:-moz-linear-gradient(top,rgba(255,255,255,.1)0,rgba(0,0,0,.1)100%);background-repeat:repeat-x;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05);padding:0 15px;line-height:30px;border:1px solid #8B8B8B;border-radius:3px;font-size:14px;vertical-align:middle;cursor:pointer;-moz-user-select:none;*/
+	display:inline-block;position:relative;text-align:center;text-decoration:none;background--image:-moz-linear-gradient(top,rgba(255,255,255,.1)0,rgba(0,0,0,.1)100%);background-repeat:repeat-x;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05);padding:0 15px;line-height:30px;border:1px solid #8B8B8B;border-radius:3px;font-size:14px;vertical-align:middle;cursor:pointer;-moz-user-select:none;
 	float:right;
 	padding:20px;
 }
@@ -383,7 +390,7 @@ body {
 	margin-left:4em;
 	margin-right:4em;
 	margin-top:5em;
-	/*border:0.5em solid black;*/
+	border:0.5em solid black;
 	margin-bottom: 0.4em;
 }
 
@@ -391,7 +398,7 @@ body {
 	margin: 0 auto;
 	padding-top:4em;
 	width:850px;
-	/*border:0.3em solid blue;*/
+	border:0.3em solid blue;
 	float:left;
 }
 
@@ -417,7 +424,7 @@ body {
 }
 
 table {
-	/*text-decoration:underline;*/
+	text-decoration:underline;
 	margin-left:50px;
 }
 
@@ -457,5 +464,6 @@ a {
 	text-align: center;
 	font-weight: bold;
 	margin: 0 auto;
-	padding-top:1.2em; /*Mirar*/
+	padding-top:1.2em; 
 }
+*/
