@@ -185,7 +185,8 @@ body {
 
 #formulario {
 	padding:30px;
-	margin-left:20%;
+	
+	margin-left:22%;
 	margin-top:8%;
 	width:670px;
 	height:auto;
@@ -229,7 +230,7 @@ body {
 
 .animacion {
 	margin-left:7px;
-	margin-top:4px;
+	margin-top:10px;
 	width: 6px;
 	height: 6px;
 	border-radius: 50%;
@@ -261,6 +262,9 @@ body {
 	color:black;
 }
 
+#solucion {
+	float:left;
+}
 
 #salida {
 	margin-top:4px;
