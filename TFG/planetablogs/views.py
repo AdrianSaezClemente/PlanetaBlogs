@@ -188,5 +188,12 @@ def nuevo_usuario(request):
 	return render(request, 'planetablogs/nuevousuario.html', {'formulario': formulario,'lista_usuarios':lista_usuarios})
 
 
+#Pestaña de puntuaciones de usuarios
+def puntuaciones(request):
+	json_serializer = serializers.get_serializer("json")()
+	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
+	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios})
+
+
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")
