@@ -172,6 +172,14 @@ h6, .h6 {
 
 /**************************MI CSS**********************************/
 
+#lista1 {
+	background-color: #3399FF;
+}
+
+#titulolista {
+	margin-top:5em;
+}
+
 #cabecerarelativa {
 	width:102%;
 	position:fixed;
