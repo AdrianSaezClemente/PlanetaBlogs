@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}infopuntuaciones.css" title="style" />
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+	   	<script src="{{ STATIC_URL }}infopuntuaciones.js"></script>
+	   	<script>
+	   	var tmp = '{{ lista_usuarios|escapejs }}';
+	   	var usuario = JSON.parse(tmp);
+	   	var info = '{{ info }}';
+	   	</script>
+		<title>Info</title>
+	</head>
+	
+	<body>
+		<!-- CABECERA -->
+		<div id="cabecerarelativa" class="row">
+			<div id="cabecera" class="col-xs-12 blog-masthead">
+				<nav class="blog-nav">
+					<a class="blog-nav-item active" href="/planetablogs/">Página principal</a>
+					<a class="blog-nav-item" href="#">Identifícate</a>
+					<a class="blog-nav-item" href="/planetablogs/nuevousuario/">Regístrate</a>
+					<a class="blog-nav-item" href="/planetablogs/buscar/">Buscar</a>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							Puntuaciones
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="/planetablogs/puntuaciones/">Ránking</a></li>
+							<li><a href="/planetablogs/infopuntuaciones/">Información</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<!-- FIN CABECERA -->
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<div class="row">
+				<div id="titulo" class="col-xs-12 col-sm-8 col-sm-offset-2 well">
+					<h3 class="centrar"><strong>Bases de las puntuaciones</strong></h3></br>
+					<ol>
+					<li>Por cada entrada, el usuario que blogee dicha entrada recibirá una bonificación de 10 planets.</li></br>
+					<li>Cada "Up" que reciba una entrada, corresponde con una bonificación de 3 planets para el usuario que realizó dicha entrada.</li></br>
+					<li>Cada "Down" que reciba una entrada, corresponde con una penalización de 1 planets para el usuario que realizó dicha entrada.</li></br>
+					<li>Para la consecución de niveles:</li></br></br>
+					</ol>
+					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+						<table id="tablainfo" class="table table-bordered centrar">
+							<thead>
+								<tr>
+								<th class="centrar">Nivel</th>
+								<th class="centrar">Planets</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>0</td>
+									<td><em>00  - 10</em></td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td><em>10  - 25</em></td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td><em>25  - 45</em></td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td><em>45  - 70</em></td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td><em>70  - 100</em></td>
+								</tr>
+								<tr>
+									<td>5</td>
+									<td><em>100 - 135</em></td>
+								</tr>
+								<tr>
+									<td>6</td>
+									<td><em>135 - 175</em></td>
+								</tr>
+								<tr>
+									<td>7</td>
+									<td><em>175 - 220</em></td>
+								</tr>
+								<tr>
+									<td>8</td>
+									<td><em>220 - 270</em></td>
+								</tr>
+								<tr>
+									<td>9</td>
+									<td><em>270 - 325</em></td>
+								</tr>
+								<tr>
+									<td>10</td>
+									<td><em>325 - 385</em></td>
+								</tr>
+								<tr>
+									<td>11</td>
+									<td><em>385 - 450</em></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- FIN CONTENEDOR -->
+	</body>
+</html>
