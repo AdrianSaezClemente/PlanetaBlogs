@@ -8,6 +8,8 @@ urlpatterns = patterns('',
 	#url(r'^ingresar/$',views.ingresar, name='ingresar'),
 	url(r'^nuevousuario/$',views.nuevo_usuario, name='nuevo_usuario'),
 	url(r'^puntuaciones/$',views.puntuaciones, name='puntuaciones'),
+	url(r'^infopuntuaciones/$',views.infopuntuaciones, name='infopuntuaciones'),
+	url(r'^buscar/$',views.buscar, name='buscar'),
     # ex: /PlanetaBlogs/5/
     #url(r'^(?P<preg_id>\d+)/$', views.detail, name='detail'),
     # ex: /PlanetaBlogs/5/results/

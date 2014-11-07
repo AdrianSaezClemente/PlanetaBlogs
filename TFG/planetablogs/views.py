@@ -194,6 +194,18 @@ def puntuaciones(request):
 	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
 	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios})
 
+#Pestaña de información de puntuaciones de usuarios
+def infopuntuaciones(request):
+	json_serializer = serializers.get_serializer("json")()
+	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
+	return render(request, 'planetablogs/infopuntuaciones.html', {'lista_usuarios':lista_usuarios})
+
+#Pestaña de búsqueda
+def buscar(request):
+	json_serializer = serializers.get_serializer("json")()
+	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
+	return render(request, 'planetablogs/buscar.html', {'lista_usuarios':lista_usuarios})
+
 
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")
