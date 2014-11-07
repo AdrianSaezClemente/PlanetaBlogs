@@ -186,3 +186,11 @@ body {
 #titulo {
 	margin-top:5em;
 }
+
+.centrar {
+	text-align:center;
+}
+
+#tablaranking {
+	border:15px solid #e5e5e5;
+}
