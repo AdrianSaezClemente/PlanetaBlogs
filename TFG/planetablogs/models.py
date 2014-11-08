@@ -27,4 +27,4 @@ class Puntuacion(models.Model):
 	total = models.IntegerField()
 	nivel = models.IntegerField()
 	def __unicode__(self):
-		return self.usuario.nombre_apellidos
+		return self.usuario.nombre_apellidos 
