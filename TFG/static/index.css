@@ -160,12 +160,18 @@ h6, .h6 {
  */
 
 .blog-footer {
-  padding: 40px 0;
-  color: #999;
+  color: #D7DBE0;
   text-align: center;
-  background-color: #0066CC;
+  font-style:oblique;
+  font-size:1.5em;
+  background-color: black;
   border-top: 1px solid #e5e5e5;
+  height:60px;
+  margin-top:1em;
+  padding-top:10px;
+  border-top:5px solid #B9C5CD;
 }
+
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
@@ -176,14 +182,30 @@ h6, .h6 {
 	
 }
 
+.col-xs-12 {
+	position:auto;
+}
+
 .pequeña{width: 30px; height: 30px;}
 
+#titulo {
+	text-align:center;
+}
+
 #lista1 {
-	background-color: #3399FF;
+	background-color: #D7DBE0;
+}
+
+#titulo {
+	background-color: #D7DBE0;
+	margin-top:60px;
 }
 
 #titulolista {
 	margin-top:5em;
+	background-color:#B9C5CD;
+	margin-bottom:2em;
+	border:2px solid black;
 }
 
 #cabecerarelativa {
@@ -227,16 +249,19 @@ h6, .h6 {
 
 #entrada {
 	height:70px;
-	border:0.4em solid #3399FF;
+	border:0.4em solid #D7DBE0;
 	margin-bottom:1.2em;
 	background-color: #DCDCDC;
 	box-shadow:0 0 0.2em black;
 	height:auto;
 	overflow:hidden;
+	padding:0.3em;
 }
 
 #entrada h2 {
-	background: #3399FF;
+	border:1px solid black;
+	border-radius:15px;
+	background: #B9C5CD;
 	margin-top: 0;
 	padding:0.4em;
 	font-style: oblique;
@@ -247,7 +272,7 @@ h6, .h6 {
 #entrada h3 {
 	margin-left:1.5em;
 	margin-right:1.5em;
-	background: #3399FF;
+	background: #B9C5CD;
 	position: center;
 	margin-top: 0;
 	padding: 0.3em;
