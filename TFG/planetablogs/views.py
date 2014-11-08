@@ -45,9 +45,7 @@ def ParsearEntrada(rss,i):
 def ParsearRss(usuario):
 	rss = ObtenerRss(usuario.rss)
 	i = 0
-	print len(rss.entries)
 	while i<len(rss.entries):
-		print i
 		entrada = ParsearEntrada(rss,i)
 		entrada.usuario = usuario
 		entrada.up = 0
@@ -109,9 +107,7 @@ def nuevo_usuario(request):
 				usuarios = Usuario.objects.all()
 				for usu in usuarios:
 					if (usu.nick == form.nick):
-						print "bien guardado"
 						ParsearRss(usu)
-						print "parseado"
 						break;
 				return render(request, 'planetablogs/info.html', {'form': form})
 			else:
@@ -138,8 +134,6 @@ def infopuntuaciones(request):
 #Pestaña de búsqueda
 def buscar(request):
 	return render(request, 'planetablogs/buscar.html')
-
-
 
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")

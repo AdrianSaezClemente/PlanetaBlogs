@@ -32,20 +32,20 @@ function CompararNick(nick,contra){
 function Up(identrada,idusuario){
 	for (var i=0;i<usuario.length;i++){
 		var usu = usuario[i]
-		if ((usu.fields.id == idusuario){
-			usu.puntuacion.total += 3
+		if (usu.pk == idusuario){
+			usu.fields.puntuaciontotal += 3
+			usu.save()
 			break;
 		}
 	}
 	for (var i=0;i<entrada.length;i++){
 		var ent = entrada[i]
-		if ((ent.fields.id == identrada){
-			ent.up += 1
+		if (ent.pk == identrada){
+			ent.fields.up += 1
+			ent.save()
 			break;
 		}
 	}
-	alert("Total: "+usu.puntuacion.total)
-	alert("Up: "+ent.up)
 	//$("#up").append("<a href="+url_blog+">"+nombre+"</a>");
 }
 
