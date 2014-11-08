@@ -122,8 +122,11 @@ def index(request):
 	json_serializer = serializers.get_serializer("json")()
 	json_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
 	lista_usuarios = Usuario.objects.order_by('nombre_apellidos')
+	json_entradas = json_serializer.serialize(Entrada.objects.all(), ensure_ascii=False)
 	#lista_usuarios = ActualizarUsuarios()
 	lista_entradas = Entrada.objects.order_by('-fecha')
+	json_puntuaciones = json_serializer.serialize(Puntuacion.objects.all(), ensure_ascii=False)
+	lista_puntuaciones = Puntuacion.objects()
 	
 	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page
 	page = request.GET.get('page')
@@ -144,7 +147,7 @@ def index(request):
 			print acceso
 	else:
 		formulario = FormularioIdentidad()
-	return render(request,'planetablogs/index.html',{"entradas": entradas,'lista_entradas':lista_entradas,'lista_usuarios':lista_usuarios,'json_usuarios':json_usuarios})
+	return render(request,'planetablogs/index.html',{"entradas": entradas,'lista_entradas':lista_entradas,'lista_usuarios':lista_usuarios,'lista_puntuaciones':lista_puntuaciones, 'json_usuarios':json_usuarios, 'json_entradas':json_entradas, 'json_puntuaciones':json_puntuaciones})
 
 
 #Mostrar tabla de usuarios registrados

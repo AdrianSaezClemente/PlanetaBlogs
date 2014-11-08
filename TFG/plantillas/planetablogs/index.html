@@ -12,8 +12,12 @@
 		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 		<script src="{{STATIC_URL}}index.js"></script>
 		<script>
-	   	var tmp = '{{ json_usuarios|escapejs }}';
-	   	var usuario = JSON.parse(tmp);
+	   	var tmpusuario = '{{ json_usuarios|escapejs }}';
+	   	var usuario = JSON.parse(tmpusuario);
+	   	var tmpentrada = '{{ json_entradas|escapejs }}';
+	   	var entrada = JSON.parse(tmpentrada);
+	   	var tmppuntuacion = '{{ json_puntuaciones|escapejs }}';
+	   	var puntuacion = JSON.parse(tmppuntuacion);
 	   	</script>
 		<title>TFG</title>
 		{% endblock head %}
@@ -87,10 +91,10 @@
 										<div id="valoracion">
 											<div class="btn-toolbar" role="toolbar">
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span class="badge"> 0 </span></button></a>
+													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span id="up" class="badge"> 0 </span></button></a>
 												</div> 
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Down('{{ entrada }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span class="badge"> 0 </span></button></a>
+													<a href='javascript:void(0)' onclick="Down('{{ entrada }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span id="down" class="badge"> 0 </span></button></a>
 												</div>
 											</div>
 										</div>

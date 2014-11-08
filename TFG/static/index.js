@@ -30,7 +30,13 @@ function CompararNick(nick,contra){
 }
 
 function Up(identrada,idusuario){
-
+	var usu = usuario[i]
+	for (var i=0;i<usuario.length;i++){
+		if ((usuario[i].fields.id == idusuario){
+			
+			$("#up").append("<a href="+url_blog+">"+nombre+"</a>");
+		}
+	}
 }
 
 function Down(identrada,idusuario){
