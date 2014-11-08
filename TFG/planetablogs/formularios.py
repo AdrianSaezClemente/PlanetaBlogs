@@ -9,7 +9,7 @@ from datetime import datetime
 class FormularioRegistro(ModelForm):
 	class Meta:
 		model = Usuario
-		exclude = ('entradas','url_blog',)
+		exclude = ('entradas','url_blog','puntuaciontotal','nivel')
 
 class FormularioIdentidad(ModelForm):
 	class Meta:

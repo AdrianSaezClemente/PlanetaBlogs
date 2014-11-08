@@ -1,7 +1,10 @@
 from django.db import models  #Para las clases que heredan de models.
 import sys
-
+	
+	
 class Usuario(models.Model):
+	puntuaciontotal = models.IntegerField()
+	nivel = models.IntegerField()
 	nick = models.CharField(max_length=40)
 	nombre_apellidos = models.CharField(max_length=40)	
 	rss = models.URLField()
@@ -11,6 +14,7 @@ class Usuario(models.Model):
 	#email = models.EmailField(max_length=70)
 	def __unicode__(self):
 		return self.nombre_apellidos
+
 
 class Entrada(models.Model):
 	usuario = models.ForeignKey(Usuario)
@@ -24,9 +28,3 @@ class Entrada(models.Model):
 		return self.usuario.nombre_apellidos
 
 
-class Puntuacion(models.Model):
-	usuario = models.ForeignKey(Usuario)
-	total = models.IntegerField()
-	nivel = models.IntegerField()
-	def __unicode__(self):
-		return self.usuario.nombre_apellidos 

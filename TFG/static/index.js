@@ -30,13 +30,23 @@ function CompararNick(nick,contra){
 }
 
 function Up(identrada,idusuario){
-	var usu = usuario[i]
 	for (var i=0;i<usuario.length;i++){
-		if ((usuario[i].fields.id == idusuario){
-			
-			$("#up").append("<a href="+url_blog+">"+nombre+"</a>");
+		var usu = usuario[i]
+		if ((usu.fields.id == idusuario){
+			usu.puntuacion.total += 3
+			break;
 		}
 	}
+	for (var i=0;i<entrada.length;i++){
+		var ent = entrada[i]
+		if ((ent.fields.id == identrada){
+			ent.up += 1
+			break;
+		}
+	}
+	alert("Total: "+usu.puntuacion.total)
+	alert("Up: "+ent.up)
+	//$("#up").append("<a href="+url_blog+">"+nombre+"</a>");
 }
 
 function Down(identrada,idusuario){
