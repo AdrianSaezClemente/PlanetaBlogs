@@ -202,9 +202,7 @@ def infopuntuaciones(request):
 
 #Pestaña de búsqueda
 def buscar(request):
-	json_serializer = serializers.get_serializer("json")()
-	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
-	return render(request, 'planetablogs/buscar.html', {'lista_usuarios':lista_usuarios})
+	return render(request, 'planetablogs/buscar.html')
 
 
 if __name__ == '__main__':

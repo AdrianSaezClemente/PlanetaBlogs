@@ -28,3 +28,11 @@ function CompararNick(nick,contra){
 		}
 	}
 }
+
+function Up(identrada,idusuario){
+
+}
+
+function Down(identrada,idusuario){
+
+}

@@ -84,8 +84,19 @@
 										<h2 class="blog-post-title"><a target="_blank" href={{ entrada.usuario.url_blog }}>{{ entrada }}</a><span class="blog-post-meta">{{ entrada.fecha }} por <a href={{ entrada.usuario.url_blog }}>{{ entrada.usuario.nick }}</a></span></h2>
 										<h3><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
 										<p>{{ entrada.descripcion }}</p>
+										<div id="valoracion">
+											<div class="btn-toolbar" role="toolbar">
+												<div class="btn-group">
+													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span class="badge"> 0 </span></button></a>
+												</div>
+												<div class="btn-group">
+													<a href='javascript:void(0)' onclick="Down('{{ entrada }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span class="badge"> 0 </span></button></a>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
+								
 							{% endfor %}
 							</div>
 					{% else %}

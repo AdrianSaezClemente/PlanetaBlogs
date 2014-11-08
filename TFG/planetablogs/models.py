@@ -20,3 +20,11 @@ class Entrada(models.Model):
 	descripcion = models.TextField()
 	def __unicode__(self):
 		return self.usuario.nombre_apellidos
+
+
+class Puntuacion(models.Model):
+	usuario = models.ForeignKey(Usuario)
+	total = models.IntegerField()
+	nivel = models.IntegerField()
+	def __unicode__(self):
+		return self.usuario.nombre_apellidos
