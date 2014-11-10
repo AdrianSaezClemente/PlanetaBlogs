@@ -183,6 +183,8 @@ body {
     z-index:0;
 }
 
+.pequeña{width: 40px; height: 25px;}
+
 #cabecerarelativa {
 	width:102%;
 	position:fixed;

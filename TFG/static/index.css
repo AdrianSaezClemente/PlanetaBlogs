@@ -189,7 +189,7 @@ h6, .h6 {
 	position:auto;
 }
 
-.pequeña{width: 30px; height: 30px;}
+.pequeña{width: 40px; height: 25px;}
 
 #titulo {
 	text-align:center;
@@ -224,8 +224,8 @@ h6, .h6 {
 	height:70px;
 	margin-bottom:1.2em;
 	background-color: #B9C5CD;
-	border:0.3em solid black;
-	box-shadow:0 0 0.7em black;
+	border:0.3em solid #428bca;
+	/*box-shadow:0 0 0.7em black;*/
 	height:auto;
 	overflow:hidden;
 	font-size:0.7em;
@@ -234,7 +234,7 @@ h6, .h6 {
 
 #suscriptores {
 	padding-top:2em;
-	margin:0 auto;
+
 	height:auto;
 }
 
@@ -246,8 +246,7 @@ h6, .h6 {
 
 #tablasuscriptores {
 	background-color: #B9C5CD;
-	margin-left:30px;
-	box-shadow: 0 0 30px black;
+	box-shadow: 0 0 7px black;
 }
 
 #entrada {
