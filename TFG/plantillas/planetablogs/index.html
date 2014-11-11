@@ -28,7 +28,7 @@
 					<a class="blog-nav-item active" href="/planetablogs/">Página principal</a>
 					<a class="blog-nav-item" href="#">Identifícate</a>
 					<a class="blog-nav-item" href="/planetablogs/nuevousuario/">Regístrate</a>
-					<a class="blog-nav-item" href="/planetablogs/buscar/">Buscar</a>
+					<a class="blog-nav-item" href="/planetablogs/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a>
 					<div class="btn-group">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 							Puntuaciones <img class="pequeña" src="../../static/imagenes/planets41.png">
@@ -36,7 +36,7 @@
 						</button>
 						<ul class="dropdown-menu">
 							<li><a href="/planetablogs/puntuaciones/">Ránking</a></li>
-							<li><a href="/planetablogs/infopuntuaciones/">Información</a></li>
+							<li><a href="/planetablogs/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign"></span> Información</a></li>
 						</ul>
 					</div>
 				</nav>
@@ -78,85 +78,91 @@
 					</div>
 				</div>
 			</div>
-			<div id="entradassuscrip" class="row">
-				<div id="todasentradas" class="col-xs-12 col-sm-8 blog-main">
-					{% if lista_usuarios %}
-							<div id="entradas">
-							{% for entrada in entradas %}
-								<div class="blog-post">
-									<div id="entrada">
-										<h2 class="blog-post-title"><a target="_blank" href={{ entrada.usuario.url_blog }}>{{ entrada }}</a><span class="blog-post-meta">{{ entrada.fecha }} por <a href={{ entrada.usuario.url_blog }}>{{ entrada.usuario.nick }}</a></span></h2>
-										<h3><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
-										<p>{{ entrada.descripcion }}</p>
-										<div id="valoracion">
-											<div class="btn-toolbar" role="toolbar">
-												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span id="up" class="badge"> 0 </span></button></a>
-												</div> 
-												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span id="down" class="badge"> 0 </span></button></a>
+			<div class="row">
+				<div id="entradassuscrip" class="col-xs-12 col-sm-12">
+					<div id="todasentradas" class="col-xs-12 col-sm-8 blog-main">
+						{% if lista_usuarios %}
+								<div id="entradas">
+								{% for entrada in entradas %}
+									<div class="blog-post">
+										<div id="entrada">
+											<h2 class="blog-post-title"><a target="_blank" href={{ entrada.usuario.url_blog }}>{{ entrada }}</a><span class="blog-post-meta">{{ entrada.fecha }} por <a href={{ entrada.usuario.url_blog }}>{{ entrada.usuario.nick }}</a></span></h2>
+											<h3><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
+											<p>{{ entrada.descripcion }}</p>
+											<div id="valoracion">
+												<div class="btn-toolbar" role="toolbar">
+													<div class="btn-group">
+														<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span id="up" class="badge"> 0 </span></button></a>
+													</div> 
+													<div class="btn-group">
+														<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span id="down" class="badge"> 0 </span></button></a>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+									
+								{% endfor %}
 								</div>
-								
-							{% endfor %}
-							</div>
-					{% else %}
-						<p>No hay entradas en Educational Planet</p>
-					{% endif %}
-					
-					<div class="paginador">
-						<ul class="pagination">
-							<li>
-								{% if entradas.has_previous %}
-									{% if entradas.previous_page_number == 1 %}
-										<span class="pag"><a href="/planetablogs/">&larr; Anterior</a></span>
-									{% else %}
-										<span class="pag"><a href="?page={{ entradas.previous_page_number }}">&larr; Anterior</a></span>
+						{% else %}
+							<p>No hay entradas en Educational Planet</p>
+						{% endif %}
+						
+						<div class="paginador">
+							<ul class="pagination">
+								<li>
+									{% if entradas.has_previous %}
+										{% if entradas.previous_page_number == 1 %}
+											<span class="pag"><a href="/planetablogs/">&larr; Anterior</a></span>
+										{% else %}
+											<span class="pag"><a href="?page={{ entradas.previous_page_number }}">&larr; Anterior</a></span>
+										{% endif %}
 									{% endif %}
-								{% endif %}
-							</li>
-							<li>
-								<span class="current">
-									Página {{ entradas.number }} de {{ entradas.paginator.num_pages }}
-								</span>
-							</li>
-							<li>
-								{% if entradas.has_next %}
-									<span class="pag"><a href="?page={{ entradas.next_page_number }}">Siguiente &rarr;</a></span>
-								{% endif %}
-							</li>
-						</ul>
-					</div> 
-				</div>
-				<div class="clearfix visible-xs"></div>
-				<div id="suscriptores" class="col-xs-12 col-sm-4 blog-main">
-					<div id="titulo_columna">Suscriptores</div></br>
-					<table id="tablasuscriptores" class="table table-hover">
-						<thead>
-							<tr>
-							<th>Usuario</th>
-							<th>Blog</th>
-							<th>Rss</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for usuario in lista_usuarios %}
-							<tr>
-								<td>{{ usuario.nick }}</td>
-								<td><a style="font-size:0.7em" target="_blank" href="{{ usuario.url_blog }}">{{ usuario }}</a></td>
-								<td><a style="font-size:0.7em" target="_blank" href="{{ usuario.rss }}"> feed</a></td>
-							</tr>
-							{% empty %}
-							<tr><td colspan="4">No hay personas suscritas</td></tr>
-							{% endfor %}
-						</tbody>
-					</table>
+								</li>
+								<li>
+									<span class="current">
+										Página {{ entradas.number }} de {{ entradas.paginator.num_pages }}
+									</span>
+								</li>
+								<li>
+									{% if entradas.has_next %}
+										<span class="pag"><a href="?page={{ entradas.next_page_number }}">Siguiente &rarr;</a></span>
+									{% endif %}
+								</li>
+							</ul>
+						</div> 
+					</div>
+					<div class="clearfix visible-xs"></div>
+					<div id="suscriptores" class="col-xs-12 col-sm-4 blog-main">
+						<div id="titulo_columna">Suscriptores</div></br>
+						<table id="tablasuscriptores" class="table table-hover">
+							<thead>
+								<tr>
+								<th>Usuario</th>
+								<th>Blog</th>
+								<th>Rss</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for usuario in lista_usuarios %}
+								<tr>
+									<td>{{ usuario.nick }}</td>
+									<td><a style="font-size:0.7em" target="_blank" href="{{ usuario.url_blog }}">{{ usuario }}</a></td>
+									<td><a style="font-size:0.7em" target="_blank" href="{{ usuario.rss }}"> feed</a></td>
+								</tr>
+								{% empty %}
+								<tr><td colspan="4">No hay personas suscritas</td></tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
+			<div id="subir" class="btn btn-default btn-lg">
+				<a href='javascript:void(0)'><span class="glyphicon glyphicon-circle-arrow-up"></span></a>
+			</div>
 		</div>
+		
 		<!-- FIN CONTENEDOR -->
 		<!-- Pie de página -->
 		<div>
@@ -166,37 +172,3 @@
 		</div>
 	</body>
 </html>
-
-
-<!--
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-  </table>
- -->

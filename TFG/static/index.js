@@ -1,22 +1,4 @@
-$(document).ready(function(){
-	$("#intercabecera").hide();
-	$("#iden").click(function(event){
-		$("#intercabecera").toggle("blind");
-	});
-	$("#boton_iden").click(function(event){
-		nick = document.getElementById("intro_nick").value;
-		contra = document.getElementById("intro_pass").value;
-		$.ajax({
-			data: {'nick':nick,'password':contra},
-			url: '/planetablogs',
-			type: 'get',
-			success: function(data){
-				console.log(data)
-			}
-		})
-		CompararNick(nick,contra);
-	});
-});
+
 
 function CompararNick(nick,contra){
 	alert(nick+contra)
@@ -52,3 +34,23 @@ function Up(identrada,idusuario){
 function Down(identrada,idusuario){
 
 }
+
+$.noConflict();
+$(document).ready(function() {
+	$("#subir").hide();
+	$(function () {
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 200) {
+				$('#subir').fadeIn();
+			} else {
+				$('#subir').fadeOut();
+			}
+		});
+		$('#subir a').click(function () {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 800);
+			return false;
+		});
+	});
+});
