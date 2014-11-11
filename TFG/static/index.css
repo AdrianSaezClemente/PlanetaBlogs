@@ -84,7 +84,7 @@ h6, .h6 {
 
 .blog-header {
   padding-top: 20px;
-  padding-bottom: 20px;
+  
 }
 .blog-title {
   margin-top: 30px;
@@ -185,30 +185,29 @@ h6, .h6 {
 	
 }
 
-.col-xs-12 {
-	position:auto;
-}
-
 .pequeña{width: 40px; height: 25px;}
 
 #titulo {
 	text-align:center;
+	background-color: #DCDCDC;
 }
 
 #lista1 {
-	background-color: #D7DBE0;
+	background-color: #DCDCDC;
 }
 
-#titulo {
-	background-color: #D7DBE0;
-	margin-top:60px;
+.list-group-item {
+	font-size: 11px;
+	line-height: 0.3;
 }
 
 #titulolista {
 	margin-top:5em;
-	background-color:#B9C5CD;
-	margin-bottom:2em;
-	border:2px solid black;
+	margin-bottom:3em;
+	background-color:#F7F7F7;
+	/*background-color:#B9C5CD;*/
+	border:3px solid black;
+	border-style:double;
 }
 
 #cabecerarelativa {
@@ -220,16 +219,26 @@ h6, .h6 {
 	padding-left:13em;
 }
 
+#entradassuscrip {
+	border:0.1em solid #428bca;
+	border-style:dashed;
+	background-color:#F7F7F7;
+}
+
 #todasentradas {
 	height:70px;
 	margin-bottom:1.2em;
-	background-color: #B9C5CD;
-	border:0.3em solid #428bca;
+	/*background-color: #B9C5CD;*/
 	/*box-shadow:0 0 0.7em black;*/
 	height:auto;
 	overflow:hidden;
 	font-size:0.7em;
-	padding:3em;
+	padding-top:3em;
+	padding-left:3em;
+	padding-bottom:3em;
+	padding-right:2em;
+	/*border-right:0.5em solid #D7DBE0;
+	border-right-style:dotted;*/
 }
 
 #suscriptores {
@@ -239,7 +248,6 @@ h6, .h6 {
 }
 
 #titulo_columna {
-	margin-left:35px;
 	text-align:center;
 	font-weight:bold;
 }
@@ -252,6 +260,7 @@ h6, .h6 {
 #entrada {
 	height:70px;
 	border:0.4em solid #D7DBE0;
+	border-style:ridge;
 	margin-bottom:1.2em;
 	background-color: #DCDCDC;
 	box-shadow:0 0 0.2em black;
@@ -261,8 +270,8 @@ h6, .h6 {
 }
 
 #entrada h2 {
-	border:1px solid black;
-	border-radius:15px;
+	/*border:1px solid black;
+	border-radius:15px;*/
 	background: #B9C5CD;
 	margin-top: 0;
 	padding:0.4em;
