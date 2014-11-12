@@ -183,6 +183,43 @@ body {
     z-index:0;
 }
 
+.nivel0 {
+	background-color:#CC0000;
+}
+.nivel1 {
+	background-color:#FF0000;
+}
+.nivel2 {
+	background-color:#FF3300;
+}
+.nivel3 {
+	background-color:#CC6600;
+}
+.nivel4 {
+	background-color:#FF9900;
+}
+.nivel5 {
+	background-color:#CC9900;
+}
+.nivel6 {
+	background-color:#CCCC00;
+}
+.nivel7 {
+	background-color:#99CC00;
+}
+.nivel8 {
+	background-color:#669900;
+}
+.nivel9 {
+	background-color:#009900;
+}
+.nivel10 {
+	background-color:#009933;
+}
+.nivel11 {
+	background-color:green;
+}
+
 #subir {
 	position: fixed;
 	bottom: 30px; /* Distancia desde abajo */
