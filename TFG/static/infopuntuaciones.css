@@ -183,6 +183,19 @@ body {
     z-index:0;
 }
 
+#subir {
+	position: fixed;
+	bottom: 30px; /* Distancia desde abajo */
+	right: 30px; /* Distancia desde la derecha */
+	border:1px solid #428bca;
+	box-shadow:0 0 0.7em #428bca;
+}
+
+#subir span {
+	display: block;
+	background: no-repeat center center;
+}
+
 .pequeña{width: 40px; height: 25px;}
 
 #cabecerarelativa {

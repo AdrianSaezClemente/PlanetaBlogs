@@ -185,17 +185,13 @@ h6, .h6 {
 	position: fixed;
 	bottom: 30px; /* Distancia desde abajo */
 	right: 30px; /* Distancia desde la derecha */
-	border:1px solid blue;
+	border:1px solid #428bca;
+	box-shadow:0 0 0.7em #428bca;
 }
 
 #subir span {
 	display: block;
 	background: no-repeat center center;
-}
-
-.grande {
-	width: 60px; /* Ancho del botón */
-	height: 60px; /* Alto del botón */
 }
 
 .pequeña{width: 40px; height: 25px;}
@@ -218,9 +214,8 @@ h6, .h6 {
 #titulolista {
 	margin-top:5em;
 	margin-bottom:3em;
-	background-color:#F7F7F7;
-	/*background-color:#B9C5CD;*/
-	border:3px solid black;
+	background-color:#1E1E1E;
+	border:7px solid white;
 	border-style:double;
 }
 
