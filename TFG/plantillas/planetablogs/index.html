@@ -105,10 +105,10 @@
 								{% endfor %}
 								</div>
 						{% else %}
-							<p>No hay entradas en Educational Planet</p>
+							<p id="nohayent">No hay entradas en Educational Planet</br> ¡Anímate a escribir en tu blog! </p>
 						{% endif %}
 						
-						<div class="paginador">
+						<div id="paginador" class="col-xs-12 col-sm-7 col-sm-offset-5">
 							<ul class="pagination">
 								<li>
 									{% if entradas.has_previous %}
@@ -151,7 +151,7 @@
 									<td><a style="font-size:0.7em" target="_blank" href="{{ usuario.rss }}"> feed</a></td>
 								</tr>
 								{% empty %}
-								<tr><td colspan="4">No hay personas suscritas</td></tr>
+								<tr><td id="nohaysuscrip" colspan="4">No hay personas suscritas</td></tr>
 								{% endfor %}
 							</tbody>
 						</table>

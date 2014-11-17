@@ -231,7 +231,7 @@ h6, .h6 {
 #entradassuscrip {
 	border:0.1em solid #428bca;
 	border-style:dashed;
-	background-color:#F7F7F7;
+	background-color:#DEDEDE;
 }
 
 #todasentradas {
@@ -250,10 +250,26 @@ h6, .h6 {
 	border-right-style:dotted;*/
 }
 
+#nohayent {
+	text-align:center;
+	padding:30px;
+	font-style:oblique;
+	font-weight:bold;
+	font-size:1.5em;
+	border:0.1em solid red;
+	box-shadow:0 0 0.7em red;
+}
+
 #suscriptores {
 	padding-top:2em;
-
 	height:auto;
+}
+
+#nohaysuscrip {
+	text-align:center;
+	padding:15px;
+	font-style:oblique;
+	font-size:0.8em;
 }
 
 #titulo_columna {
@@ -263,7 +279,7 @@ h6, .h6 {
 
 #tablasuscriptores {
 	background-color: #B9C5CD;
-	box-shadow: 0 0 7px black;
+	box-shadow: 0 0 2px black;
 }
 
 #entrada {
