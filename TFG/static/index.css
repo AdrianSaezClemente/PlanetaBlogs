@@ -216,6 +216,11 @@ h6, .h6 {
 	line-height: 0.3;
 }
 
+#grupolista2 {
+	overflow:scroll;
+	height:150px;
+}
+
 #titulolista {
 	margin-top:5em;
 	margin-bottom:3em;

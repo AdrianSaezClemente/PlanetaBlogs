@@ -57,22 +57,13 @@
 						<div id="grupolista1" class="list-group">
 							<li id="lista1" class="list-group-item"><h4 class="list-group-item-heading">Entradas más valoradas</h4>
 								<div id="grupolista2" class="list-group">
-									<a href="#" class="list-group-item">
-										<span class="list-group-item-heading">Título del elemento de la lista</span>
-										<p class="list-group-item-text">...</p>
-									</a>
-									<a href="#" class="list-group-item">
-										<span class="list-group-item-heading">Título del elemento de la lista</span>
-										<p class="list-group-item-text">...</p>
-									</a>
-									<a href="#" class="list-group-item">
-										<span class="list-group-item-heading">Título del elemento de la lista</span>
-										<p class="list-group-item-text">...</p>
-									</a>
-									<a href="#" class="list-group-item">
-										<span class="list-group-item-heading">Título del elemento de la lista</span>
-										<p class="list-group-item-text">...</p>
-									</a>
+									{% for ent in lista_entradas_valoradas %}
+										<a href="#" class="list-group-item">
+											<p class="list-group-item-heading">{{ ent.titulo }}</p>
+											<p class="list-group-item-text">Fecha: {{ ent.fecha }}</p>
+											<p class="list-group-item-text">Valoración: {{ ent.up }} Up</p>
+										</a>
+									{% endfor %}
 								</div>
 							</li>
 						</div>
@@ -102,7 +93,6 @@
 											</div>
 										</div>
 									</div>
-									
 								{% endfor %}
 								</div>
 						{% else %}

@@ -64,7 +64,8 @@ def index(request):
 	json_entradas = json_serializer.serialize(Entrada.objects.all(), ensure_ascii=False)
 	#lista_usuarios = ActualizarUsuarios()
 	lista_entradas = Entrada.objects.order_by('-fecha')
-		
+	lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
+	
 	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page
 	page = request.GET.get('page')
 	try:
@@ -74,7 +75,7 @@ def index(request):
 	except EmptyPage:	# If page is out of range (e.g. 9999), deliver last page of results.
 		entradas = paginator.page(paginator.num_pages)
 	
-	return render(request,'planetablogs/index.html',{"entradas": entradas,'lista_entradas':lista_entradas,'lista_usuarios':lista_usuarios, 'json_usuarios':json_usuarios, 'json_entradas':json_entradas})
+	return render(request,'planetablogs/index.html',{"entradas": entradas,'lista_entradas':lista_entradas,'lista_usuarios':lista_usuarios, 'lista_entradas_valoradas':lista_entradas_valoradas, 'json_usuarios':json_usuarios, 'json_entradas':json_entradas})
 
 
 #Comprueba si ha sido exitoso el formulario (Sólo por nick. Implementar para contraseña)
