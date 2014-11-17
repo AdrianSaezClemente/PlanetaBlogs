@@ -11,8 +11,26 @@ function CompararNick(nick,contra){
 	}
 }
 
-function Up(identrada,idusuario){
-	for (var i=0;i<usuario.length;i++){
+function Up(identrada){
+	$.ajax({
+		data: {'id':identrada},
+		url: '/planetablogs/up/',
+		type: 'GET',
+		success: function(datos){
+			alert( "Se guardaron los datos: " + datos);
+		},
+		/*success: function(data){
+			for (var i=0;i<entrada.length;i++){
+				var ent = entrada[i]
+				if (ent.pk == identrada){
+					ent.fields.up += 1
+					ent.save()
+					break;
+				}
+			}*/
+		
+	});
+	/*for (var i=0;i<usuario.length;i++){
 		var usu = usuario[i]
 		if (usu.pk == idusuario){
 			usu.fields.puntuaciontotal += 3
@@ -27,12 +45,29 @@ function Up(identrada,idusuario){
 			ent.save()
 			break;
 		}
-	}
+	}*/
 	//$("#up").append("<a href="+url_blog+">"+nombre+"</a>");
 }
 
-function Down(identrada,idusuario){
-
+function Down(identrada){
+	$.ajax({
+		data: {'id':identrada},
+		url: '/planetablogs/down/',
+		type: 'GET',
+		success: function(datos){
+			alert( "Se guardaron los datos: " + datos);
+		},
+		/*success: function(data){
+			for (var i=0;i<entrada.length;i++){
+				var ent = entrada[i]
+				if (ent.pk == identrada){
+					ent.fields.up += 1
+					ent.save()
+					break;
+				}
+			}*/
+		
+	});
 }
 
 $.noConflict();

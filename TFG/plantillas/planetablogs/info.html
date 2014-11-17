@@ -3,23 +3,75 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}info.css" title="style" />
-		<title>TFG</title>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+	   	<script>
+	   	var tmp = '{{ lista_usuarios|escapejs }}';
+	   	var usuario = JSON.parse(tmp);
+	   	var info = '{{ info }}';
+	   	</script>
+		<title>Información de registro</title>
 	</head>
 	
 	<body>
-		<div id="cabecera"><p>Información de registro</p></div>
-		<div id="informacion">
-			<div id="exito">Registro realizado con éxito</div>
-			{% block contenido %}
-				<div id="info">
-					<p>Tu información:</p>
-					<p>Nick: {{ form.nick }}</p>
-					<p>Nombre y apellidos: {{ form.nombre_apellidos }}</p>
-					<p>Rss: {{ form.rss }}</p>
-					<p>Contraseña: {{ form.password }}</p>
+		<!-- CABECERA -->
+		<div id="cabecerarelativa" class="row">
+			<div id="cabecera" class="col-xs-12 blog-masthead">
+				<nav class="blog-nav">
+					<a class="blog-nav-item" href="/planetablogs/">Página principal</a>
+					<a class="blog-nav-item" href="#">Identifícate</a>
+					<a class="blog-nav-item" href="/planetablogs/nuevousuario/">Regístrate</a>
+					<a class="blog-nav-item" href="/planetablogs/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							Puntuaciones <img class="pequeña" src="../../static/imagenes/planets41.png">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="/planetablogs/puntuaciones/"><span class="glyphicon glyphicon-stats"></span>  Ránking</a></li>
+							<li><a href="/planetablogs/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign"></span>  Información</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<!-- FIN CABECERA -->
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<div class="row">
+				<div id="formulario" class="col-xs-12 col-sm-12 blog-main">
+					{% block contenido %}
+					<div id="informacion" class="well">
+							<div id="info">
+								<p>Tu información:</p>
+								<p>Nick: {{ form.nick }}</p>
+								<p>Nombre y apellidos: {{ form.nombre_apellidos }}</p>
+								<p>Rss: {{ form.rss }}</p>
+								<p>Contraseña: ******</p>
+							</div>
+							<a href="/planetablogs/"><button id="volver" type="button" class="btn btn-primary">Volver <span  class="glyphicon glyphicon-share-alt"></button></a>
+					</div>
+					<div>
+						<span id="result" class="alert alert-success">
+							<span>
+									¡Registro realizado con éxito!
+							</span>
+						</span>
+					</div>
+					{% endblock contenido %}
 				</div>
-				<a id="boton" href="/planetablogs/"><button onclick="">Continuar</button></a>
-			{% endblock contenido %}
+			</div>
+		</div>
+		<!-- FIN CONTENEDOR -->
+		<!-- Pie de página -->
+		<div>
+			<div class="blog-footer">
+				<p>Soy el pie de página</p>
+			</div>
 		</div>
 	</body>
 </html>

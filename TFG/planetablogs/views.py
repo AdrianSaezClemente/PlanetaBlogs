@@ -60,10 +60,11 @@ def index(request):
 	json_serializer = serializers.get_serializer("json")()
 	json_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
 	lista_usuarios = Usuario.objects.order_by('nombre_apellidos')
+
 	json_entradas = json_serializer.serialize(Entrada.objects.all(), ensure_ascii=False)
 	#lista_usuarios = ActualizarUsuarios()
 	lista_entradas = Entrada.objects.order_by('-fecha')
-	
+		
 	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page
 	page = request.GET.get('page')
 	try:
@@ -125,11 +126,32 @@ def puntuaciones(request):
 	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
 	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios})
 
+
 #Pestaña de información de puntuaciones de usuarios
 def infopuntuaciones(request):
 	json_serializer = serializers.get_serializer("json")()
 	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
 	return render(request, 'planetablogs/infopuntuaciones.html', {'lista_usuarios':lista_usuarios})
+
+
+def up(request):
+	lista_entradas = Entrada.objects.order_by('-fecha')
+	if request.method=='GET':
+		entrada = Entrada.objects.filter(id=request.GET['id'])
+		entrada.up = 1
+		entrada.save()
+		ctx = serializers.serialize('json', entrada)
+		print ctx
+	return HttpResponse(ctx, mimetype='application/json')
+	
+	
+def down(request):
+	lista_entradas = Entrada.objects.order_by('-fecha')
+	if request.method=='GET':
+		entrada = Entrada.objects.filter(id=request.GET['id'])
+		ctx = serializers.serialize('json', entrada)
+	return HttpResponse(ctx, mimetype='application/json')
+
 
 #Pestaña de búsqueda
 def buscar(request):

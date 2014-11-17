@@ -14,8 +14,8 @@
 		<script>
 	   	var tmpusuario = '{{ json_usuarios|escapejs }}';
 	   	var usuario = JSON.parse(tmpusuario);
-	   	var tmpentrada = '{{ json_entradas|escapejs }}';
-	   	var entrada = JSON.parse(tmpentrada);
+	   	//var tmpentrada = '{{ json_entradas|escapejs }}';
+	   	//var entrada = JSON.parse(tmpentrada);
 	   	</script>
 		<title>TFG</title>
 		{% endblock head %}
@@ -50,7 +50,7 @@
 					<div id="titulo" class="col-xs-12 col-sm-6 blog-header">
 						<img class="pequeñologo" src="../../static/imagenes/planet.png">
 						<h2>Educational Planet</h2>
-						<p class="lead blog-description">El planeta educativo del momento</p>
+						<p class="lead blog-description">El planeta educativo</p>
 					</div>
 					<div id="conjuntolista" class="col-xs-12 col-sm-5 col-sm-offset-1 blog-header">
 						<div id="grupolista1" class="list-group">
@@ -95,7 +95,7 @@
 														<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span id="up" class="badge"> 0 </span></button></a>
 													</div> 
 													<div class="btn-group">
-														<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span id="down" class="badge"> 0 </span></button></a>
+														<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span id="down" class="badge"> 0 </span></button></a>
 													</div>
 												</div>
 											</div>
