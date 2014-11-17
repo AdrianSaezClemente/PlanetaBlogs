@@ -23,6 +23,7 @@ h6, .h6 {
 .container {
 	max-width: none !important;
     width: 970px;
+	height:auto;
 }
 
 

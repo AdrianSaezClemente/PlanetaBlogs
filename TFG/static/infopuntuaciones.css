@@ -163,7 +163,7 @@ h6, .h6 {
   padding-top:10px;
   border-top:10px solid #B9C5CD;
   bottom: 0 !important;
-  position: absolute;
+  position: auto;
   width:100%;
 }
 

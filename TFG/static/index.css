@@ -150,10 +150,14 @@ h6, .h6 {
   font-size: 40px;
 }
 .blog-post-meta {
-  margin-bottom: 20px;
+  margin-bottom:10px;
   color: #999;
 }
 
+.blog-post-meta a {
+	font-size:1.3em;
+	font-weight:bold;
+}
 
 /*
  * Footer
@@ -180,6 +184,7 @@ h6, .h6 {
 }
 
 /**************************MI CSS**********************************/
+
 
 #subir {
 	position: fixed;
@@ -231,7 +236,7 @@ h6, .h6 {
 #entradassuscrip {
 	border:0.1em solid #428bca;
 	border-style:dashed;
-	background-color:#DEDEDE;
+	background-color:#F2F2F2;
 }
 
 #todasentradas {
@@ -330,7 +335,6 @@ h6, .h6 {
 
 #entrada h2 a {
 	color: black;
-	font-size:1em;
 }
 
 #entrada p {

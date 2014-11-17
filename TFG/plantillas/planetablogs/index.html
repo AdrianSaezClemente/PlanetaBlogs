@@ -17,7 +17,8 @@
 	   	//var tmpentrada = '{{ json_entradas|escapejs }}';
 	   	//var entrada = JSON.parse(tmpentrada);
 	   	</script>
-		<title>TFG</title>
+	   	<link rel="shortcut icon" href="../../static/imagenes/planet.png" type="image/png" />
+		<title>Educational Planet</title>
 		{% endblock head %}
 	</head>
 	<body>
@@ -108,7 +109,7 @@
 							<p id="nohayent">No hay entradas en Educational Planet</br> ¡Anímate a escribir en tu blog! </p>
 						{% endif %}
 						
-						<div id="paginador" class="col-xs-12 col-sm-7 col-sm-offset-5">
+						<div id="paginador" class="col-xs-12 col-sm-9 col-sm-offset-3">
 							<ul class="pagination">
 								<li>
 									{% if entradas.has_previous %}
