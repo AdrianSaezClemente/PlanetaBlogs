@@ -57,13 +57,17 @@
 						<div id="grupolista1" class="list-group">
 							<li id="lista1" class="list-group-item"><h4 class="list-group-item-heading">Entradas más valoradas</h4>
 								<div id="grupolista2" class="list-group">
+								{% if lista_entradas_valoradas %}
 									{% for ent in lista_entradas_valoradas %}
 										<a href="#" class="list-group-item">
-											<p class="list-group-item-heading">{{ ent.titulo }}</p>
+											<p style="font-weight:bold;font-style:oblique;" class="list-group-item-heading">{{ ent.titulo }}</p>
 											<p class="list-group-item-text">Fecha: {{ ent.fecha }}</p>
 											<p class="list-group-item-text">Valoración: {{ ent.up }} Up</p>
 										</a>
 									{% endfor %}
+								{% else %}
+									<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No hay entradas en Educational Planet</br></br></br></br> ¡Anímate a escribir en tu blog! </p>
+								{% endif %}
 								</div>
 							</li>
 						</div>

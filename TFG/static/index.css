@@ -199,8 +199,14 @@ h6, .h6 {
 	background: no-repeat center center;
 }
 
-.pequeña{width: 40px; height: 25px;}
-.pequeñologo{width: 100px; height: 80px;}
+.pequeña{
+	width: 40px; height: 25px;
+}
+
+.pequeñologo{
+	width: 100px; height: 80px;
+}
+
 #titulo {
 	margin-top:2em;
 	text-align:center;
@@ -209,6 +215,10 @@ h6, .h6 {
 
 #lista1 {
 	background-color: #DCDCDC;
+}
+
+#lista1 h4 {
+	text-align:center;
 }
 
 .list-group-item {
@@ -268,6 +278,7 @@ h6, .h6 {
 	font-size:1.5em;
 	border:0.1em solid red;
 	box-shadow:0 0 0.7em red;
+	height:160px;
 }
 
 #suscriptores {
