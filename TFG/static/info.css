@@ -195,20 +195,20 @@ body {
 }
 
 #formulario {
-	padding:30px;
-	margin-left:22%;
-	margin-top:8%;
-	width:670px;
-	height:auto;
-	overflow:hidden;
-	box-shadow:0 0 0.4em black;
-	border-radius:10px;
+	margin-top:5em;
 }
 
-#informacion {
-	margin-left:25%;
-	padding:30px;
+#info {
+	padding-left:40px;
+	padding-right:40px;
+	padding-top:10px;
+	padding-bottom:5px;
+	font-size:0.8em;
 	height:auto;
+}
+
+#info p {
+	font-style:oblique;
 }
 
 /*
@@ -232,14 +232,10 @@ body {
 }
 
 #volver {
-	float:top right;
+	float:right;
 }
 
 #result {
-	margin-left:7px;
-	margin-top:20px;
-	color:red;
-	font-size:0.8em;
-	width:590px;
-	padding:1em;
+	text-align:center;
+	font-size:0.73em;
 }

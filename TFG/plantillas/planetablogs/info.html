@@ -45,25 +45,25 @@
 		<div class="container">
 			<div class="row">
 				<div id="formulario" class="col-xs-12 col-sm-12 blog-main">
-					{% block contenido %}
-					<div id="informacion" class="well">
-							<div id="info">
-								<p>Tu información:</p>
-								<p>Nick: {{ form.nick }}</p>
-								<p>Nombre y apellidos: {{ form.nombre_apellidos }}</p>
-								<p>Rss: {{ form.rss }}</p>
-								<p>Contraseña: ******</p>
-							</div>
-							<a href="/planetablogs/"><button id="volver" type="button" class="btn btn-primary">Volver <span  class="glyphicon glyphicon-share-alt"></button></a>
-					</div>
-					<div>
-						<span id="result" class="alert alert-success">
+					<div id="result" class="col-xs-12 col-sm-6 col-sm-offset-3">
+						<div class="alert alert-success">
 							<span>
-									¡Registro realizado con éxito!
+									Registro realizado con éxito. <strong>¡Enhorabuena!</strong>
 							</span>
-						</span>
+						</div>
 					</div>
-					{% endblock contenido %}
+					<div id="informacion" class="col-xs-12 col-sm-6 col-sm-offset-3 well">
+							<div id="info">
+								<p><label>Nick:</label> {{ form.nick }}</p>
+								<p><label>Nombre y apellidos:</label> {{ form.nombre_apellidos }}</p>
+								<p><label>Rss:</label> {{ form.rss }}</p>
+								<p><label>Contraseña:</label> ******</p>
+							</div>
+							<div id="boton" class="col-xs-12 col-sm-12 blog-main">
+								<a href="/planetablogs/"><button id="volver" type="button" class="btn btn-primary">Aceptar <span  class="glyphicon glyphicon-share-alt"></button></a>
+							</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
