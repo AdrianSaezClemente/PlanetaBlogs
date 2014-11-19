@@ -16,7 +16,7 @@ from time import mktime
 from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
-
+from django.utils import simplejson
 
 #Obtiene el RSS con feedparser
 def ObtenerRss(url):
@@ -159,15 +159,28 @@ def buscar(request):
 	return render(request, 'planetablogs/buscar.html')
 
 #Buscar por nick de usuario
-def buscarNickUsuario():
+def buscarNickUsuario(request):
 	if request.method=='GET':
 		usu = Usuario.objects.filter(nick=request.GET['texto'])
-		nombre = usuario.nombre_apellidos
-		lista_entradas = Entrada.objects.filter(id=request.GET['idopcion'],usuario=nombre)
-		usuario = serializers.serialize('json', usu)
-		entradas = serializers.serialize('json', lista_entradas)
-		print usu
-	return render(request, 'planetablogs/buscar.html',  {'usuario':usuario, 'entradas':entradas})
+		lista_entradas = Entrada.objects.filter(usuario=usu)
+		json_serializer = serializers.get_serializer("json")()
+		json_usuario = json_serializer.serialize(usu, ensure_ascii=False)
+		json_entradas = json_serializer.serialize(lista_entradas, ensure_ascii=False)
+	return render(request, 'planetablogs/buscar.html', {'lista_entradas':lista_entradas})
+	'''return render(request, 'planetablogs/buscar.html', {'json_usuario':json_usuario,'json_entradas':json_entradas})'''
+'''
+#Buscar por nick de usuario
+def buscarNickUsuario(request):
+	if request.method=='GET':
+		usu = Usuario.objects.filter(nick=request.GET['texto'])
+		lista_entradas = Entrada.objects.filter(usuario=usu)
+		json_serializer = serializers.get_serializer("json")()
+		json_usuario = json_serializer.serialize(usu, ensure_ascii=False)
+		json_entradas = json_serializer.serialize(lista_entradas, ensure_ascii=False)
+		s1 = {'json_usuario':json_usuario, 'json_entradas':json_entradas}
+		json = simplejson.dumps(s1, cls=simplejson.encoder.JSONEncoderForHTML)
+	return HttpResponse(s1, mimetype='application/json')
+'''
 
 
 if __name__ == '__main__':
