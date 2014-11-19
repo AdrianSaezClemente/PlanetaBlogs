@@ -158,6 +158,18 @@ def down(request):
 def buscar(request):
 	return render(request, 'planetablogs/buscar.html')
 
+#Buscar por nick de usuario
+def buscarNickUsuario():
+	if request.method=='GET':
+		usu = Usuario.objects.filter(nick=request.GET['texto'])
+		nombre = usuario.nombre_apellidos
+		lista_entradas = Entrada.objects.filter(id=request.GET['idopcion'],usuario=nombre)
+		usuario = serializers.serialize('json', usu)
+		entradas = serializers.serialize('json', lista_entradas)
+		print usu
+	return render(request, 'planetablogs/buscar.html',  {'usuario':usuario, 'entradas':entradas})
+
+
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")
 

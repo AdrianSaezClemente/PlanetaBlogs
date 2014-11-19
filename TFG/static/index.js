@@ -57,16 +57,6 @@ function Down(identrada){
 		success: function(datos){
 			alert( "Se guardaron los datos: " + datos);
 		},
-		/*success: function(data){
-			for (var i=0;i<entrada.length;i++){
-				var ent = entrada[i]
-				if (ent.pk == identrada){
-					ent.fields.up += 1
-					ent.save()
-					break;
-				}
-			}*/
-		
 	});
 }
 

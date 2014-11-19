@@ -10,9 +10,9 @@
 		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
 	   	<script src="{{ STATIC_URL }}buscar.js"></script>
 	   	<script>
-	   	var tmp = '{{ lista_usuarios|escapejs }}';
-	   	var usuario = JSON.parse(tmp);
-	   	var info = '{{ info }}';
+	   	//var tmp = '{{ lista_usuarios|escapejs }}';
+	    //var usuario = JSON.parse(tmp);
+	   	//var info = '{{ info }}';
 	   	</script>
 	   	<link rel="shortcut icon" href="../../static/imagenes/planet.png" type="image/png" />
 		<title>Búsqueda</title>
@@ -43,8 +43,31 @@
 		<!-- CONTENEDOR -->
 		<div class="container">
 			<div class="row">
-				<div id="titulo" class="col-xs-12 col-sm-4 blog-header">
-					<h2> Búsqueda </h2>
+				<div id="buscador" class="col-xs-12 col-sm-12 well">
+					<div id="titulo" class="col-xs-12 col-sm-12 blog-header">
+						<h2> Búsqueda avanzada </h2>
+					</div>
+					<div id="formulario" class="col-xs-12 col-sm-12 form-group">
+						<label class="col-xs-12 col-sm-3 col-sm-offset-2 control-label">
+							<select class="form-control">
+								<option value="1">Nombre de usuario</option>
+								<option value="2">Nick de usuario</option>
+								<option value="3">Identificador de entrada</option>
+								<option value="4">-</option>
+							</select>
+						</label>
+						<div class="col-xs-12 col-sm-4">
+							<input type="text" class="form-control" id="texto" placeholder="Introduce un texto válido">
+						</div>
+						<div class="col-xs-12 col-sm-2">
+							<button id="buscar" type="button" class="btn btn-primary active"><span style="color:black" class="glyphicon glyphicon-search"> Buscar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div id="resultado" class="col-xs-12 col-sm-12 well">
+					
 				</div>
 			</div>
 		</div>
