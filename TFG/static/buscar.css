@@ -203,3 +203,77 @@ body {
 	background-color:#99CCFF;
 	margin-top:5em;
 }
+
+
+#todasentradas {
+	height:70px;
+	margin-bottom:1.2em;
+	/*background-color: #B9C5CD;*/
+	/*box-shadow:0 0 0.7em black;*/
+	height:auto;
+	overflow:hidden;
+	font-size:0.7em;
+	padding-top:3em;
+	padding-left:3em;
+	padding-bottom:3em;
+	padding-right:2em;
+	/*border-right:0.5em solid #D7DBE0;
+	border-right-style:dotted;*/
+}
+
+#entrada {
+	height:70px;
+	border:0.4em solid #D7DBE0;
+	border-style:ridge;
+	margin-bottom:1.2em;
+	background-color: #DCDCDC;
+	box-shadow:0 0 0.2em black;
+	height:auto;
+	overflow:hidden;
+	padding:0.3em;
+}
+
+#entrada h2 {
+	/*border:1px solid black;
+	border-radius:15px;*/
+	background: #B9C5CD;
+	margin-top: 0;
+	padding:0.7em;
+	font-style: oblique;
+	font-size:17px;
+	color: black;
+}
+
+#entrada h3 {
+	margin-left:1.5em;
+	margin-right:1.5em;
+	background: #B9C5CD;
+	position: center;
+	margin-top: 0;
+	padding: 0.3em;
+	font-size:12px;
+	text-align:center;
+}
+
+#entrada h2 span {
+	float:right;
+	color: black;
+	font-size:11px;
+	padding-right: 0.5em;
+	padding-top: 0.3em;
+}
+
+#entrada h3 a {
+	color: black;
+}
+
+#entrada h2 a {
+	color: black;
+}
+
+#entrada p {
+	padding:20px;
+	font-size:11px;
+	margin-left:1.5em;
+	margin-right:1.5em;
+}

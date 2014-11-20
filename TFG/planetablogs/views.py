@@ -158,29 +158,18 @@ def down(request):
 def buscar(request):
 	return render(request, 'planetablogs/buscar.html')
 
+
 #Buscar por nick de usuario
 def buscarNickUsuario(request):
 	if request.method=='GET':
 		usu = Usuario.objects.filter(nick=request.GET['texto'])
-		lista_entradas = Entrada.objects.filter(usuario=usu)
-		json_serializer = serializers.get_serializer("json")()
-		json_usuario = json_serializer.serialize(usu, ensure_ascii=False)
-		json_entradas = json_serializer.serialize(lista_entradas, ensure_ascii=False)
-	return render(request, 'planetablogs/buscar.html', {'lista_entradas':lista_entradas})
-	'''return render(request, 'planetablogs/buscar.html', {'json_usuario':json_usuario,'json_entradas':json_entradas})'''
-'''
-#Buscar por nick de usuario
-def buscarNickUsuario(request):
-	if request.method=='GET':
-		usu = Usuario.objects.filter(nick=request.GET['texto'])
-		lista_entradas = Entrada.objects.filter(usuario=usu)
-		json_serializer = serializers.get_serializer("json")()
-		json_usuario = json_serializer.serialize(usu, ensure_ascii=False)
-		json_entradas = json_serializer.serialize(lista_entradas, ensure_ascii=False)
-		s1 = {'json_usuario':json_usuario, 'json_entradas':json_entradas}
-		json = simplejson.dumps(s1, cls=simplejson.encoder.JSONEncoderForHTML)
-	return HttpResponse(s1, mimetype='application/json')
-'''
+		entradas = Entrada.objects.filter(usuario=usu)
+		json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
+		list_usuario = simplejson.loads(json_usuario)
+		json_entradas = serializers.serialize('json', entradas, ensure_ascii=False)
+		list_entradas = simplejson.loads(json_entradas)
+		json_data = simplejson.dumps( {'usuario':list_usuario, 'entradas':list_entradas} )
+	return HttpResponse(json_data, mimetype='application/json')
 
 
 if __name__ == '__main__':
