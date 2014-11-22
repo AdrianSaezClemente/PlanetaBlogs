@@ -18,7 +18,10 @@ $(document).ready(function() {
 					type: 'GET',
 					success: function(datos){
 						$("#resultado").html("");
-						if(datos.entradas.length == 0){
+						if (texto==""){
+							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>Elige una opción y escribe un texto antes de buscar, por favor.</h5>"); 
+						}
+						if(datos.entradas.length == 0 & texto!=""){
 							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>"+texto+" no tiene ninguna entrada.</h5>"); 
 						}
 						else{
@@ -39,7 +42,10 @@ $(document).ready(function() {
 					type: 'GET',
 					success: function(datos){
 						$("#resultado").html("");
-						if(datos.entradas.length == 0){
+						if (texto==""){
+							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>Elige una opción y escribe un texto antes de buscar, por favor.</h5>"); 
+						}
+						if(datos.entradas.length == 0 & texto!=""){
 							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>"+texto+" no tiene ninguna entrada.</h5>"); 
 						}
 						else{
@@ -60,7 +66,10 @@ $(document).ready(function() {
 					type: 'GET',
 					success: function(datos){
 						$("#resultado").html("");
-						if(datos.entrada.length == 0){
+						if (texto==""){
+							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>Elige una opción y escribe un texto antes de buscar, por favor.</h5>"); 
+						}
+						if(datos.entrada.length == 0 & texto!=""){
 							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>No hay ninguna entrada con identificador #"+texto+". La entrada ha sido eliminada o nunca existió.</h5>"); 
 						}
 						else{
