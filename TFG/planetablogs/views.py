@@ -172,6 +172,32 @@ def buscarNickUsuario(request):
 	return HttpResponse(json_data, mimetype='application/json')
 
 
+#Buscar por nombre de usuario
+def buscarNombreUsuario(request):
+	if request.method=='GET':
+		usu = Usuario.objects.filter(nombre_apellidos=request.GET['texto'])
+		entradas = Entrada.objects.filter(usuario=usu)
+		json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
+		list_usuario = simplejson.loads(json_usuario)
+		json_entradas = serializers.serialize('json', entradas, ensure_ascii=False)
+		list_entradas = simplejson.loads(json_entradas)
+		json_data = simplejson.dumps( {'usuario':list_usuario, 'entradas':list_entradas} )
+	return HttpResponse(json_data, mimetype='application/json')
+
+
+#Buscar por id de entrada
+def buscarIdEntrada(request):
+	if request.method=='GET':
+		entrada = Entrada.objects.filter(id=request.GET['texto'])
+		usuarios = Usuario.objects.all()
+		json_usuarios = serializers.serialize('json', usuarios, ensure_ascii=False)
+		list_usuarios = simplejson.loads(json_usuarios)
+		json_entrada = serializers.serialize('json', entrada, ensure_ascii=False)
+		list_entrada = simplejson.loads(json_entrada)
+		json_data = simplejson.dumps({'usuarios':list_usuarios, 'entrada':list_entrada} )
+	return HttpResponse(json_data, mimetype='application/json')
+
+
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")
 

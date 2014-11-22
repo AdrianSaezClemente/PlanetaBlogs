@@ -13,6 +13,8 @@ urlpatterns = patterns('',
 	url(r'^up/$',views.up, name='up'),
 	url(r'^down/$',views.down, name='down'),
 	url(r'^buscarNickUsuario/$',views.buscarNickUsuario, name='buscarNickUsuario'),
+	url(r'^buscarNombreUsuario/$',views.buscarNombreUsuario, name='buscarNombreUsuario'),
+	url(r'^buscarIdEntrada/$',views.buscarIdEntrada, name='buscarIdEntrada'),
 	
     # ex: /PlanetaBlogs/5/
     #url(r'^(?P<preg_id>\d+)/$', views.detail, name='detail'),
