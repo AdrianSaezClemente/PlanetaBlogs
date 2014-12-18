@@ -88,10 +88,10 @@
 										<div id="valoracion">
 											<div class="btn-toolbar" role="toolbar">
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ entrada.usuario.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span id="up" class="badge"> 0 </span></button></a>
+													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span id="up{{ entrada.id }}" class="badge">0</span></button></a>
 												</div> 
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span id="down" class="badge"> 0 </span></button></a>
+													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span id="down{{ entrada.id }}" class="badge">0</span></button></a>
 												</div>
 											</div>
 										</div>
@@ -108,9 +108,9 @@
 								<li>
 									{% if entradas.has_previous %}
 										{% if entradas.previous_page_number == 1 %}
-											<span class="pag"><a href="/planetablogs/">&larr; Anterior</a></span>
+											<span class="pag"><a href="/planetablogs/"><span class="glyphicon glyphicon-chevron-left"></span> Anterior</a></span>
 										{% else %}
-											<span class="pag"><a href="?page={{ entradas.previous_page_number }}">&larr; Anterior</a></span>
+											<span class="pag"><a href="?page={{ entradas.previous_page_number }}"><span class="glyphicon glyphicon-chevron-left"></span> Anterior</a></span>
 										{% endif %}
 									{% endif %}
 								</li>
@@ -121,7 +121,7 @@
 								</li>
 								<li>
 									{% if entradas.has_next %}
-										<span class="pag"><a href="?page={{ entradas.next_page_number }}">Siguiente &rarr;</a></span>
+										<span class="pag"><a href="?page={{ entradas.next_page_number }}">Siguiente <span class="glyphicon glyphicon-chevron-right"></span></a></span>
 									{% endif %}
 								</li>
 							</ul>

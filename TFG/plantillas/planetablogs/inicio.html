@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}inicio.css" title="style" />
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+	   	<script src="{{ STATIC_URL }}inicio.js"></script>
+	   	<link rel="shortcut icon" href="../../static/imagenes/planet.png" type="image/png" />
+		<title>Educational Planet</title>
+	</head>
+	
+	<body>
+		<div class="container">
+			<div class="row">
+				<span>Identifícate para entrar en Educational Planet. ¡Entra y consigue muchos planets! !Bienvenido¡</span>
+				<div class="col-sm-6 col-md-4 col-md-offset-4">
+					<h1 class="text-center login-title">Identifícate</h1>
+					<div class="account-wall">
+						<img class="profile-img tamaño" src="../../static/imagenes/planet.png">
+						<form class="form-signin" method="POST">{% csrf_token %}
+							<input type="text" name="nick" class="form-control" placeholder="Nick" required autofocus>
+							<input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+							<button class="btn btn-lg btn-primary btn-block" type="submit">
+							Aceptar</button>
+							<label class="checkbox pull-left">
+							<input type="checkbox" value="remember-me">
+							Recuérdame
+							</label>
+							<a href="#" class="pull-right need-help">Ayuda</a><span class="clearfix"></span>
+						</form>
+					</div>
+					<a href="/planetablogs/nuevousuario/" class="text-center new-account">Si no tienes cuenta. !Regístrate aquí¡ </a>
+					{% if login == True %}
+						<span class="text-center" style="color:red;text-align:center;font-style:oblique;margin-left:20px;">"Tus datos son erróneos. Introdúcelos otra vez."</span>
+					{% endif %}
+				</div>
+			</div>
+		</div> 
+		
+	</body>
+</html>

@@ -23,8 +23,8 @@ h6, .h6 {
 .container {
 	max-width: none !important;
     width: 970px;
+	height:100%;
 }
-
 
 /*
  * Masthead for nav
@@ -158,13 +158,13 @@ h6, .h6 {
   font-size:1em;
   background-color: black;
   border-top: 1px solid #e5e5e5;
-  height:60px;
   margin-top:1em;
   padding-top:10px;
   border-top:10px solid #B9C5CD;
   bottom: 0 !important;
-  position: absolute;
   width:100%;
+  height:60px;
+  position: fixed;
 }
 
 .blog-footer p:last-child {
@@ -196,12 +196,16 @@ body {
 
 #titulo {
 	text-align:center;
-	font-size:1.2em;
+	font-size:0.4em;
+	font-family:italic;
+	padding-bottom:5px;
 }
 
 #buscador {
 	background-color:#99CCFF;
 	margin-top:5em;
+	padding-top:0px;
+	padding-bottom:5px;
 }
 
 
@@ -277,3 +281,4 @@ body {
 	margin-left:1.5em;
 	margin-right:1.5em;
 }
+

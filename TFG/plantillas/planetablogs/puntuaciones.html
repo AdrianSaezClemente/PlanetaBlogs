@@ -11,7 +11,7 @@
 	   	<script src="{{ STATIC_URL }}puntuaciones.js"></script>
 	   	<script>
 	   	var tmp = '{{ lista_usuarios|escapejs }}';
-	   	var usuario = JSON.parse(tmp);
+	   	var usuarios = JSON.parse(tmp);
 	   	var info = '{{ info }}';
 	   	</script>
 	   	<link rel="shortcut icon" href="../../static/imagenes/planet.png" type="image/png" />
@@ -56,11 +56,15 @@
 								</tr>
 							</thead>
 							<tbody>
+								{% for usu in lista_usuarios %}
 								<tr>
-									<td>0</td>
-									<td><em style="color:#8F6B00">0 </em><img class="pequeña" src="../../static/imagenes/planets41.png"></td>
-									<td>0</td>
+								
+									<td>{{ usu }}</td>
+									<td><em style="color:#8F6B00">{{ usu.puntuaciontotal }} </em><img class="pequeña" src="../../static/imagenes/planets41.png"></td>
+									<td>{{ usu.nivel }}</td>
+								
 								</tr>
+								{% endfor %}
 							</tbody>
 						</table>
 					</div>

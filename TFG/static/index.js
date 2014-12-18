@@ -1,5 +1,3 @@
-
-
 function CompararNick(nick,contra){
 	alert(nick+contra)
 	for (var i=0;i<usuario.length;i++){
@@ -12,52 +10,30 @@ function CompararNick(nick,contra){
 }
 
 function Up(identrada){
+	var up = $("#up"+identrada).text();
 	$.ajax({
-		data: {'id':identrada},
+		data: {'id':identrada, 'up':up},
 		url: '/planetablogs/up/',
 		type: 'GET',
 		success: function(datos){
-			alert( "Se guardaron los datos: " + datos);
+
 		},
-		/*success: function(data){
-			for (var i=0;i<entrada.length;i++){
-				var ent = entrada[i]
-				if (ent.pk == identrada){
-					ent.fields.up += 1
-					ent.save()
-					break;
-				}
-			}*/
-		
 	});
-	/*for (var i=0;i<usuario.length;i++){
-		var usu = usuario[i]
-		if (usu.pk == idusuario){
-			usu.fields.puntuaciontotal += 3
-			usu.save()
-			break;
-		}
-	}
-	for (var i=0;i<entrada.length;i++){
-		var ent = entrada[i]
-		if (ent.pk == identrada){
-			ent.fields.up += 1
-			ent.save()
-			break;
-		}
-	}*/
-	//$("#up").append("<a href="+url_blog+">"+nombre+"</a>");
+	$("#up"+identrada).text(parseInt(up)+1);
 }
 
 function Down(identrada){
+	var down = $("#down"+identrada).text();
 	$.ajax({
-		data: {'id':identrada},
+		data: {'id':identrada, 'down':down},
 		url: '/planetablogs/down/',
 		type: 'GET',
 		success: function(datos){
-			alert( "Se guardaron los datos: " + datos);
+			//datos.entrada[0].fields.down += 1
+			//console.log(datos.entrada[0].fields.down)
 		},
 	});
+	$("#down"+identrada).text(parseInt(down)+1);
 }
 
 $.noConflict();

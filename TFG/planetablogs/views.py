@@ -17,6 +17,7 @@ from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 from django.utils import simplejson
+from django.contrib import auth
 
 #Obtiene el RSS con feedparser
 def ObtenerRss(url):
@@ -53,8 +54,35 @@ def ParsearRss(usuario):
 		entrada.save()
 		i = i + 1
 	
-	
-#Main
+
+#Página de inicio. Registro e identificación.
+def inicio(request):
+	usuarios = Usuario.objects.all()
+	error = None
+	print usuarios
+	if request.method == 'POST':
+		print "hola"
+		username = request.POST.get('nick', '')
+		print username
+		password = request.POST.get('password', '')
+		print password
+		user = auth.authenticate(username=username, password=password)
+		print user
+		if user is not None and user.is_active:
+			error = False
+			# Correct password, and the user is marked "active"
+			auth.login(request, user)
+			print "logeado"
+			# Redirect to dashboard
+			return HttpResponseRedirect('planetablogs/index.html')
+		else:
+			error = True
+			return render(request, 'planetablogs/inicio.html', {'login': error})
+	return render(request, 'planetablogs/inicio.html', {'login': error})
+
+
+
+#Página principal
 def index(request):
 	info = "Tus datos son erróneos. Introdúcelos otra vez."
 	json_serializer = serializers.get_serializer("json")()
@@ -123,8 +151,8 @@ def nuevo_usuario(request):
 
 #Pestaña de puntuaciones de usuarios
 def puntuaciones(request):
-	json_serializer = serializers.get_serializer("json")()
-	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
+	lista_usuarios = Usuario.objects.order_by('nombre_apellidos')
+	print lista_usuarios
 	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios})
 
 
@@ -135,23 +163,26 @@ def infopuntuaciones(request):
 	return render(request, 'planetablogs/infopuntuaciones.html', {'lista_usuarios':lista_usuarios})
 
 
+#Dar al botón UP
 def up(request):
 	lista_entradas = Entrada.objects.order_by('-fecha')
 	if request.method=='GET':
 		entrada = Entrada.objects.filter(id=request.GET['id'])
-		entrada.up = 1
-		entrada.save()
-		ctx = serializers.serialize('json', entrada)
-		print ctx
-	return HttpResponse(ctx, mimetype='application/json')
+		ctx = serializers.serialize('json', entrada, ensure_ascii=False)
+		list_entrada = simplejson.loads(ctx)
+		json_data = simplejson.dumps( {'entrada':list_entrada} )
+	return HttpResponse(json_data, mimetype='application/json')
 	
 	
+#Dar al botón DOWN
 def down(request):
 	lista_entradas = Entrada.objects.order_by('-fecha')
 	if request.method=='GET':
 		entrada = Entrada.objects.filter(id=request.GET['id'])
-		ctx = serializers.serialize('json', entrada)
-	return HttpResponse(ctx, mimetype='application/json')
+		ctx = serializers.serialize('json', entrada, ensure_ascii=False)
+		list_entrada = simplejson.loads(ctx)
+		json_data = simplejson.dumps( {'entrada':list_entrada} )
+	return HttpResponse(json_data, mimetype='application/json')
 
 
 #Pestaña de búsqueda

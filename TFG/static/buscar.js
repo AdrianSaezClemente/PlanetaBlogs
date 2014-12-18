@@ -22,7 +22,7 @@ $(document).ready(function() {
 							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>Elige una opción y escribe un texto antes de buscar, por favor.</h5>"); 
 						}
 						if(datos.entradas.length == 0 & texto!=""){
-							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>"+texto+" no tiene ninguna entrada.</h5>"); 
+							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>"+texto+" no existe o no tiene ninguna entrada.</h5>"); 
 						}
 						else{
 							for (var i=0; i<datos.entradas.length; i++){
@@ -46,7 +46,7 @@ $(document).ready(function() {
 							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>Elige una opción y escribe un texto antes de buscar, por favor.</h5>"); 
 						}
 						if(datos.entradas.length == 0 & texto!=""){
-							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>"+texto+" no tiene ninguna entrada.</h5>"); 
+							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>"+texto+" no existe o no tiene ninguna entrada.</h5>"); 
 						}
 						else{
 							for (var i=0; i<datos.entradas.length; i++){
