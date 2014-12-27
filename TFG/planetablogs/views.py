@@ -5,8 +5,10 @@ import os
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from planetablogs.models import Entrada, Usuario
 from planetablogs.formularios import FormularioRegistro, FormularioIdentidad
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -55,11 +57,37 @@ def ParsearRss(usuario):
 		i = i + 1
 	
 
+#Introducir datos de registro
+def nuevo_usuario(request):
+	if request.method == 'POST':
+		form = FormularioRegistro(request.POST)
+		if form.is_valid():
+			username = form.cleaned_data["username"]
+			password = form.cleaned_data["password"]
+			email = form.cleaned_data["email"]
+			first_name = form.cleaned_data["first_name"]
+			last_name = form.cleaned_data["last_name"]
+
+			user = User.objects.create_user(username, email, password)
+			user.first_name = first_name
+			user.last_name = last_name
+
+			user.save()
+			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
+	else:
+		form = FormularioRegistro()
+
+	data = {
+		'form': form,
+	}
+	return render(request, 'planetablogs/nuevousuario.html')
+
+
 #Página de inicio. Registro e identificación.
 def inicio(request):
-	usuarios = Usuario.objects.all()
+	user = User.objects.all()
 	error = None
-	print usuarios
+	print user
 	if request.method == 'POST':
 		print "hola"
 		username = request.POST.get('nick', '')
@@ -74,15 +102,15 @@ def inicio(request):
 			auth.login(request, user)
 			print "logeado"
 			# Redirect to dashboard
-			return HttpResponseRedirect('planetablogs/index.html')
+			return HttpResponseRedirect(reverse('index'))
 		else:
 			error = True
 			return render(request, 'planetablogs/inicio.html', {'login': error})
 	return render(request, 'planetablogs/inicio.html', {'login': error})
 
 
-
 #Página principal
+@login_required()
 def index(request):
 	info = "Tus datos son erróneos. Introdúcelos otra vez."
 	json_serializer = serializers.get_serializer("json")()
@@ -103,20 +131,15 @@ def index(request):
 	except EmptyPage:	# If page is out of range (e.g. 9999), deliver last page of results.
 		entradas = paginator.page(paginator.num_pages)
 	
-	return render(request,'planetablogs/index.html',{"entradas": entradas,'lista_entradas':lista_entradas,'lista_usuarios':lista_usuarios, 'lista_entradas_valoradas':lista_entradas_valoradas, 'json_usuarios':json_usuarios, 'json_entradas':json_entradas})
+	return render(request,'planetablogs/index.html',{'user': request.user})
 
 
-#Comprueba si ha sido exitoso el formulario (Sólo por nick. Implementar para contraseña)
-def ComprobarRegistro(form):
-	lista_usuarios = Usuario.objects.all()
-	exitoso = True
-	for usu in lista_usuarios:
-		if (usu.nick == form.nick):
-			exitoso = False
-	return exitoso
+def salir(request):
+	logout(request)
+	return HttpResponseRedirect(reverse('login'))
 
 
-#Introducir datos de registro
+'''
 def nuevo_usuario(request):
 	info = "False"
 	json_serializer = serializers.get_serializer("json")()
@@ -147,9 +170,10 @@ def nuevo_usuario(request):
 	else:
 		formulario = FormularioRegistro()
 	return render(request, 'planetablogs/nuevousuario.html', {'formulario': formulario,'lista_usuarios':lista_usuarios})
-
+'''
 
 #Pestaña de puntuaciones de usuarios
+@login_required()
 def puntuaciones(request):
 	lista_usuarios = Usuario.objects.order_by('nombre_apellidos')
 	print lista_usuarios
@@ -157,6 +181,7 @@ def puntuaciones(request):
 
 
 #Pestaña de información de puntuaciones de usuarios
+@login_required()
 def infopuntuaciones(request):
 	json_serializer = serializers.get_serializer("json")()
 	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
@@ -164,6 +189,7 @@ def infopuntuaciones(request):
 
 
 #Dar al botón UP
+@login_required()
 def up(request):
 	lista_entradas = Entrada.objects.order_by('-fecha')
 	if request.method=='GET':
@@ -175,6 +201,7 @@ def up(request):
 	
 	
 #Dar al botón DOWN
+@login_required()
 def down(request):
 	lista_entradas = Entrada.objects.order_by('-fecha')
 	if request.method=='GET':
@@ -186,11 +213,13 @@ def down(request):
 
 
 #Pestaña de búsqueda
+@login_required()
 def buscar(request):
 	return render(request, 'planetablogs/buscar.html')
 
 
 #Buscar por nick de usuario
+@login_required()
 def buscarNickUsuario(request):
 	if request.method=='GET':
 		usu = Usuario.objects.filter(nick=request.GET['texto'])
@@ -204,6 +233,7 @@ def buscarNickUsuario(request):
 
 
 #Buscar por nombre de usuario
+@login_required()
 def buscarNombreUsuario(request):
 	if request.method=='GET':
 		usu = Usuario.objects.filter(nombre_apellidos=request.GET['texto'])
@@ -217,6 +247,7 @@ def buscarNombreUsuario(request):
 
 
 #Buscar por id de entrada
+@login_required()
 def buscarIdEntrada(request):
 	if request.method=='GET':
 		entrada = Entrada.objects.filter(id=request.GET['texto'])
@@ -281,31 +312,4 @@ def ComprobarEntradas(usuario,lon,actualizacion):
 		GuardarEntradasNuevas(usuario,nuevas)
 		actualizacion = actualizacion + 1
 	return actualizacion
-'''
-
-'''
-#Si alguien se identifica
-	if request.method=='POST':
-		formulario = FormularioIdentidad(request.POST)
-		if formulario.is_valid:
-			nick = request.POST['nick']
-			clave = request.POST['password']
-			print "nick: "+str(nick)+" pass: "+str(clave)
-			acceso = autenticar(nick,clave)
-			print acceso
-	else:
-		formulario = FormularioIdentidad()
-
-#Autenticar usuario con nick y clave (NO TERMINADO)
-def autenticar(nick,clave):
-	lista_usuarios = Usuario.objects.all()
-	for x in lista_usuarios:
-		if (x.nick == nick) & (x.password == clave):
-			salir = True
-			x.conectado = True
-			x.save()
-			break
-		else:
-			salir = False
-	return salir	
 '''

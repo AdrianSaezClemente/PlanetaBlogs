@@ -31,6 +31,11 @@ TEMPLATE_DIRS = ('/home/adri/Escritorio/ProyectoGit/TFG/plantillas')
 # DJANGO_SETTINGS_MODULE = 'planetablogs.settings'
 # Application definition
 
+# Redirect when login is correct.
+LOGIN_REDIRECT_URL = "/planetablogs"
+# Redirect when login is not correct.
+LOGIN_URL = '/planetablogs/login'
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
