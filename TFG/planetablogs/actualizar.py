@@ -4,7 +4,7 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
-from planetablogs.models import Entrada, Usuario
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura
 from planetablogs.formularios import FormularioRegistro, FormularioIdentidad
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout

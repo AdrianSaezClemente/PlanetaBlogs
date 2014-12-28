@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from planetablogs.models import Entrada, Usuario
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura
 from planetablogs.formularios import FormularioRegistro, FormularioIdentidad
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -21,6 +21,7 @@ from django.core import serializers
 from django.utils import simplejson
 from django.contrib import auth
 
+'''
 #Obtiene el RSS con feedparser
 def ObtenerRss(url):
 	rss = feedparser.parse(url)
@@ -51,14 +52,41 @@ def ParsearRss(usuario):
 	while i<len(rss.entries):
 		entrada = ParsearEntrada(rss,i)
 		entrada.usuario = usuario
-		entrada.up = 0
-		entrada.down = 0
 		entrada.save()
 		i = i + 1
-	
+'''
 
-#Introducir datos de registro
-def nuevo_usuario(request):
+#Introducir datos de registro de alumno
+def nuevo_alumno(request):
+	if request.method == 'POST':
+		form = FormularioRegistro(request.POST)
+		if form.is_valid():
+			info = True
+			username = form.cleaned_data["username"]
+			password = form.cleaned_data["password"]
+			email = form.cleaned_data["email"]
+			first_name = form.cleaned_data["first_name"]
+			last_name = form.cleaned_data["last_name"]
+
+			user = User.objects.create_user(username, email, password)
+			user.first_name = first_name
+			user.last_name = last_name
+			user.save()
+			
+			alum = Alumno(alumno=user)
+			alum.save()
+			
+			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
+		else:
+			info = False
+	else:
+		form = FormularioRegistro()
+	return render(request, 'planetablogs/nuevoalumno.html', {'info': info})
+
+
+#Introducir datos de registro de profesor
+def nuevo_profesor(request):
+	info = True
 	if request.method == 'POST':
 		form = FormularioRegistro(request.POST)
 		if form.is_valid():
@@ -71,37 +99,29 @@ def nuevo_usuario(request):
 			user = User.objects.create_user(username, email, password)
 			user.first_name = first_name
 			user.last_name = last_name
-
 			user.save()
+			
+			profe = Profesor(profesor=user)
+			profe.save()
+			
 			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
+		else:
+			info = False
 	else:
 		form = FormularioRegistro()
-
-	data = {
-		'form': form,
-	}
-	return render(request, 'planetablogs/nuevousuario.html')
+	return render(request, 'planetablogs/nuevoprofesor.html', {'info': info})
 
 
 #Página de inicio. Registro e identificación.
 def inicio(request):
-	user = User.objects.all()
 	error = None
-	print user
 	if request.method == 'POST':
-		print "hola"
 		username = request.POST.get('nick', '')
-		print username
 		password = request.POST.get('password', '')
-		print password
 		user = auth.authenticate(username=username, password=password)
-		print user
 		if user is not None and user.is_active:
 			error = False
-			# Correct password, and the user is marked "active"
 			auth.login(request, user)
-			print "logeado"
-			# Redirect to dashboard
 			return HttpResponseRedirect(reverse('index'))
 		else:
 			error = True
@@ -112,15 +132,16 @@ def inicio(request):
 #Página principal
 @login_required()
 def index(request):
+	'''
 	info = "Tus datos son erróneos. Introdúcelos otra vez."
 	json_serializer = serializers.get_serializer("json")()
-	json_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
-	lista_usuarios = Usuario.objects.order_by('nombre_apellidos')
+	json_usuarios = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
+	lista_usuarios = Alumno.objects.order_by('nombre_apellidos')
 
 	json_entradas = json_serializer.serialize(Entrada.objects.all(), ensure_ascii=False)
-	#lista_usuarios = ActualizarUsuarios()
-	lista_entradas = Entrada.objects.order_by('-fecha')
 	lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
+	'''
+	lista_entradas = Entrada.objects.order_by('-fecha')
 	
 	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page
 	page = request.GET.get('page')
@@ -139,43 +160,10 @@ def salir(request):
 	return HttpResponseRedirect(reverse('login'))
 
 
-'''
-def nuevo_usuario(request):
-	info = "False"
-	json_serializer = serializers.get_serializer("json")()
-	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
-	
-	if request.method=='POST':
-		formulario = FormularioRegistro(request.POST)
-		if formulario.is_valid():
-			form = formulario.save(commit = False)
-			exitoso = ComprobarRegistro(form)
-			if(exitoso):
-				form.puntuaciontotal = 0
-				form.nivel = 0
-				form.entradas = 0
-				form.url_blog = ''
-				form.conectado = False
-				form.save()
-				usuarios = Usuario.objects.all()
-				for usu in usuarios:
-					if (usu.nick == form.nick):
-						ParsearRss(usu)
-						break;
-				return render(request, 'planetablogs/info.html', {'form': form})
-			else:
-				return render(request, 'planetablogs/nuevousuario.html', {'lista_usuarios':lista_usuarios,'info': info})
-		else:
-			return render(request, 'planetablogs/nuevousuario.html', {'lista_usuarios':lista_usuarios,'info': info})
-	else:
-		formulario = FormularioRegistro()
-	return render(request, 'planetablogs/nuevousuario.html', {'formulario': formulario,'lista_usuarios':lista_usuarios})
-'''
-
 #Pestaña de puntuaciones de usuarios
 @login_required()
 def puntuaciones(request):
-	lista_usuarios = Usuario.objects.order_by('nombre_apellidos')
+	lista_usuarios = Alumno.objects.order_by('nombre_apellidos')
 	print lista_usuarios
 	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios})
 
@@ -184,7 +172,7 @@ def puntuaciones(request):
 @login_required()
 def infopuntuaciones(request):
 	json_serializer = serializers.get_serializer("json")()
-	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
+	lista_usuarios = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
 	return render(request, 'planetablogs/infopuntuaciones.html', {'lista_usuarios':lista_usuarios})
 
 
@@ -222,7 +210,7 @@ def buscar(request):
 @login_required()
 def buscarNickUsuario(request):
 	if request.method=='GET':
-		usu = Usuario.objects.filter(nick=request.GET['texto'])
+		usu = Alumno.objects.filter(nick=request.GET['texto'])
 		entradas = Entrada.objects.filter(usuario=usu)
 		json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
 		list_usuario = simplejson.loads(json_usuario)
@@ -236,7 +224,7 @@ def buscarNickUsuario(request):
 @login_required()
 def buscarNombreUsuario(request):
 	if request.method=='GET':
-		usu = Usuario.objects.filter(nombre_apellidos=request.GET['texto'])
+		usu = Alumno.objects.filter(nombre_apellidos=request.GET['texto'])
 		entradas = Entrada.objects.filter(usuario=usu)
 		json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
 		list_usuario = simplejson.loads(json_usuario)
@@ -251,7 +239,7 @@ def buscarNombreUsuario(request):
 def buscarIdEntrada(request):
 	if request.method=='GET':
 		entrada = Entrada.objects.filter(id=request.GET['texto'])
-		usuarios = Usuario.objects.all()
+		usuarios = Alumno.objects.all()
 		json_usuarios = serializers.serialize('json', usuarios, ensure_ascii=False)
 		list_usuarios = simplejson.loads(json_usuarios)
 		json_entrada = serializers.serialize('json', entrada, ensure_ascii=False)
@@ -312,4 +300,38 @@ def ComprobarEntradas(usuario,lon,actualizacion):
 		GuardarEntradasNuevas(usuario,nuevas)
 		actualizacion = actualizacion + 1
 	return actualizacion
+'''
+
+
+'''
+def nuevo_usuario(request):
+	info = "False"
+	json_serializer = serializers.get_serializer("json")()
+	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
+	
+	if request.method=='POST':
+		formulario = FormularioRegistro(request.POST)
+		if formulario.is_valid():
+			form = formulario.save(commit = False)
+			exitoso = ComprobarRegistro(form)
+			if(exitoso):
+				form.puntuaciontotal = 0
+				form.nivel = 0
+				form.entradas = 0
+				form.url_blog = ''
+				form.conectado = False
+				form.save()
+				usuarios = Usuario.objects.all()
+				for usu in usuarios:
+					if (usu.nick == form.nick):
+						ParsearRss(usu)
+						break;
+				return render(request, 'planetablogs/info.html', {'form': form})
+			else:
+				return render(request, 'planetablogs/nuevousuario.html', {'lista_usuarios':lista_usuarios,'info': info})
+		else:
+			return render(request, 'planetablogs/nuevousuario.html', {'lista_usuarios':lista_usuarios,'info': info})
+	else:
+		formulario = FormularioRegistro()
+	return render(request, 'planetablogs/nuevousuario.html', {'formulario': formulario,'lista_usuarios':lista_usuarios})
 '''
