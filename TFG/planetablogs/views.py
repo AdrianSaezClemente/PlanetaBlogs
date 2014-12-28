@@ -58,6 +58,7 @@ def ParsearRss(usuario):
 
 #Introducir datos de registro de alumno
 def nuevo_alumno(request):
+	info = False
 	if request.method == 'POST':
 		form = FormularioRegistro(request.POST)
 		if form.is_valid():
@@ -78,18 +79,21 @@ def nuevo_alumno(request):
 			
 			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
 		else:
-			info = False
+			return render(request, 'planetablogs/nuevoalumno.html', {'info': info})
 	else:
 		form = FormularioRegistro()
+	print info
 	return render(request, 'planetablogs/nuevoalumno.html', {'info': info})
 
 
 #Introducir datos de registro de profesor
 def nuevo_profesor(request):
-	info = True
+	info = False
 	if request.method == 'POST':
 		form = FormularioRegistro(request.POST)
+		print info
 		if form.is_valid():
+			info = True
 			username = form.cleaned_data["username"]
 			password = form.cleaned_data["password"]
 			email = form.cleaned_data["email"]
@@ -106,9 +110,10 @@ def nuevo_profesor(request):
 			
 			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
 		else:
-			info = False
+			return render(request, 'planetablogs/nuevoprofesor.html', {'info': info})
 	else:
 		form = FormularioRegistro()
+	
 	return render(request, 'planetablogs/nuevoprofesor.html', {'info': info})
 
 
