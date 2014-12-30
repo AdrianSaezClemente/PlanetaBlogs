@@ -6,13 +6,13 @@ import sys
 class Profesor(models.Model):
 	profesor = models.ForeignKey(User)
 	def __unicode__(self):
-		return self.profesor
+		return self.profesor.first_name
 
 
 class Alumno(models.Model):
 	alumno = models.ForeignKey(User)
 	def __unicode__(self):
-		return self.nick
+		return self.alumno.first_name
 
 
 class Entrada(models.Model):

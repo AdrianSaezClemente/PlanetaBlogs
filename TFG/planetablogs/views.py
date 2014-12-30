@@ -127,12 +127,35 @@ def inicio(request):
 		if user is not None and user.is_active:
 			error = False
 			auth.login(request, user)
-			return HttpResponseRedirect(reverse('index'))
+			return HttpResponseRedirect(reverse('presentacion'))
 		else:
 			error = True
 			return render(request, 'planetablogs/inicio.html', {'login': error})
 	return render(request, 'planetablogs/inicio.html', {'login': error})
 
+def ComprobarUsuario(idusuario):
+	alumnos = Alumno.objects.all()
+	print alumnos
+	for i in alumnos:
+		if (i.id == idusuario):
+			usuario = "Alumno"
+			break;
+		else:
+			usuario = "Profesor"
+			break;
+	return usuario
+	
+@login_required()
+def presentacion(request):
+	usuario = ComprobarUsuario(request.user.id)
+	
+	if usuario == "Alumno":
+		print "soy un alumnooo"
+		return render(request,'planetablogs/presentacionalum.html',{'user': request.user})
+	else:
+		print "soy un profesoor"
+		return render(request,'planetablogs/presentacionprof.html',{'user': request.user})
+		
 
 #Página principal
 @login_required()
