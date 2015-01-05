@@ -133,9 +133,9 @@ def inicio(request):
 			return render(request, 'planetablogs/inicio.html', {'login': error})
 	return render(request, 'planetablogs/inicio.html', {'login': error})
 
+
 def ComprobarUsuario(idusuario):
 	alumnos = Alumno.objects.all()
-	print alumnos
 	for i in alumnos:
 		if (i.id == idusuario):
 			usuario = "Alumno"
@@ -144,6 +144,7 @@ def ComprobarUsuario(idusuario):
 			usuario = "Profesor"
 			break;
 	return usuario
+	
 	
 @login_required()
 def presentacion(request):
