@@ -25,3 +25,15 @@ class FormularioRegistro(ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
+		
+
+class FormularioHilo(ModelForm):
+	class Meta:
+		model = Asignatura
+		fields = ['titulo', 'descripcion']
+		
+		
+class FormularioAgregarHilo(ModelForm):
+	class Meta:
+		model = Asignatura
+		fields = ['titulo']

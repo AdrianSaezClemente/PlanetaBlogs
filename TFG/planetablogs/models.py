@@ -30,9 +30,9 @@ class Asignatura(models.Model):
 	profesores = models.ManyToManyField(Profesor)
 	titulo = models.CharField(max_length=80)
 	descripcion = models.TextField()
-	rss = models.URLField()
-	puntuaciontotal = models.IntegerField()
-	nivel = models.IntegerField()
+	#rss = models.URLField()
+	#puntuaciontotal = models.IntegerField()
+	#nivel = models.IntegerField()
 	def __unicode__(self):
 		return self.titulo
 

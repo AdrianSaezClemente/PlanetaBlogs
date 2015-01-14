@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from planetablogs.models import Entrada, Alumno, Profesor, Asignatura
-from planetablogs.formularios import FormularioRegistro, FormularioIdentidad
+from planetablogs.formularios import FormularioRegistro, FormularioIdentidad, FormularioHilo
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -56,6 +56,7 @@ def ParsearRss(usuario):
 		i = i + 1
 '''
 
+
 #Introducir datos de registro de alumno
 def nuevo_alumno(request):
 	info = False
@@ -86,6 +87,7 @@ def nuevo_alumno(request):
 	return render(request, 'planetablogs/nuevoalumno.html', {'info': info})
 
 
+
 #Introducir datos de registro de profesor
 def nuevo_profesor(request):
 	info = False
@@ -113,8 +115,22 @@ def nuevo_profesor(request):
 			return render(request, 'planetablogs/nuevoprofesor.html', {'info': info})
 	else:
 		form = FormularioRegistro()
-	
 	return render(request, 'planetablogs/nuevoprofesor.html', {'info': info})
+
+
+
+#Comprobar si un usuario es alumno o profesor
+def ComprobarUsuario(idusuario):
+	alumnos = Alumno.objects.all()
+	for i in alumnos:
+		if (i.id == idusuario):
+			usuario = "Alumno"
+			break;
+		else:
+			usuario = "Profesor"
+			break;
+	return usuario
+
 
 
 #Página de inicio. Registro e identificación.
@@ -127,37 +143,118 @@ def inicio(request):
 		if user is not None and user.is_active:
 			error = False
 			auth.login(request, user)
-			return HttpResponseRedirect(reverse('presentacion'))
+			usuario = ComprobarUsuario(user.id)
+			if (usuario == "Alumno"):
+				return HttpResponseRedirect(reverse('presentacionalumno'))
+			else:
+				return HttpResponseRedirect(reverse('presentacionprofesor'))
 		else:
 			error = True
 			return render(request, 'planetablogs/inicio.html', {'login': error})
 	return render(request, 'planetablogs/inicio.html', {'login': error})
 
 
-def ComprobarUsuario(idusuario):
-	alumnos = Alumno.objects.all()
-	for i in alumnos:
-		if (i.id == idusuario):
-			usuario = "Alumno"
-			break;
-		else:
-			usuario = "Profesor"
-			break;
-	return usuario
-	
-	
-@login_required()
-def presentacion(request):
-	usuario = ComprobarUsuario(request.user.id)
-	
-	if usuario == "Alumno":
-		print "soy un alumnooo"
-		return render(request,'planetablogs/presentacionalum.html',{'user': request.user})
-	else:
-		print "soy un profesoor"
-		return render(request,'planetablogs/presentacionprof.html',{'user': request.user})
-		
 
+#Agregar asignatura a los hilos de un profesor
+def agregarasignaturaalumno(request):
+	if request.method=='GET':
+		hilo = Asignatura.objects.get(id=request.GET['id'])
+		hilo.alumnos.add(request.user.id)
+		lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
+		lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
+	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+
+
+
+#Eliminar asignatura de los hilos de un profesor
+def eliminarasignaturaalumno(request):
+	if request.method=='GET':
+		hilo = Asignatura.objects.get(id=request.GET['id'])
+		hilo.alumnos.remove(request.user.id)
+		lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
+		lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
+	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+
+
+
+@login_required()
+def presentacionalumno(request):
+	asignaturas = Asignatura.objects.all()
+	lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
+	lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
+	print "soy un alumno"
+	if request.method == 'POST':
+		'''
+		formAgregar = FormularioAgregarHilo(request.POST)
+		if formAgregar.is_valid():
+			hilo = formAgregar.save(commit=False)
+			hilo.save()
+			hilo.profesores.add(request.user.id)
+			return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'asignaturas': asignaturas})
+		else:
+			print "NO VALIDO formAgregar"
+		'''
+		formHilo = FormularioHilo(request.POST)
+		if formHilo.is_valid():
+			hilo = formHilo.save(commit=False)
+			hilo.save()
+			return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+		else:
+			print "NO VALIDO formHilo"
+	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+
+		
+		
+#Agregar asignatura a los hilos de un profesor
+def agregarasignaturaprofesor(request):
+	if request.method=='GET':
+		hilo = Asignatura.objects.get(id=request.GET['id'])
+		hilo.profesores.add(request.user.id)
+		lista_asignaturas = Asignatura.objects.filter(profesores=request.user.id)
+		lista_no_asignaturas = Asignatura.objects.all().exclude(profesores=request.user.id)
+	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+
+
+
+#Eliminar asignatura de los hilos de un profesor
+def eliminarasignaturaprofesor(request):
+	if request.method=='GET':
+		hilo = Asignatura.objects.get(id=request.GET['id'])
+		hilo.profesores.remove(request.user.id)
+		lista_asignaturas = Asignatura.objects.filter(profesores=request.user.id)
+		lista_no_asignaturas = Asignatura.objects.all().exclude(profesores=request.user.id)
+	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+
+
+
+@login_required()
+def presentacionprofesor(request):
+	asignaturas = Asignatura.objects.all()
+	lista_asignaturas = Asignatura.objects.filter(profesores=request.user.id)
+	lista_no_asignaturas = Asignatura.objects.all().exclude(profesores=request.user.id)
+	print "soy un profesor"
+	if request.method == 'POST':
+		'''
+		formAgregar = FormularioAgregarHilo(request.POST)
+		if formAgregar.is_valid():
+			hilo = formAgregar.save(commit=False)
+			hilo.save()
+			hilo.profesores.add(request.user.id)
+			return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'asignaturas': asignaturas})
+		else:
+			print "NO VALIDO formAgregar"
+		'''
+		formHilo = FormularioHilo(request.POST)
+		if formHilo.is_valid():
+			hilo = formHilo.save(commit=False)
+			hilo.save()
+			return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+		else:
+			print "NO VALIDO formHilo"
+	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+
+	
+	
 #Página principal
 @login_required()
 def index(request):
@@ -184,9 +281,11 @@ def index(request):
 	return render(request,'planetablogs/index.html',{'user': request.user})
 
 
+
 def salir(request):
 	logout(request)
 	return HttpResponseRedirect(reverse('login'))
+
 
 
 #Pestaña de puntuaciones de usuarios
@@ -197,12 +296,14 @@ def puntuaciones(request):
 	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios})
 
 
+
 #Pestaña de información de puntuaciones de usuarios
 @login_required()
 def infopuntuaciones(request):
 	json_serializer = serializers.get_serializer("json")()
 	lista_usuarios = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
 	return render(request, 'planetablogs/infopuntuaciones.html', {'lista_usuarios':lista_usuarios})
+
 
 
 #Dar al botón UP
@@ -217,6 +318,7 @@ def up(request):
 	return HttpResponse(json_data, mimetype='application/json')
 	
 	
+	
 #Dar al botón DOWN
 @login_required()
 def down(request):
@@ -229,10 +331,12 @@ def down(request):
 	return HttpResponse(json_data, mimetype='application/json')
 
 
+
 #Pestaña de búsqueda
 @login_required()
 def buscar(request):
 	return render(request, 'planetablogs/buscar.html')
+
 
 
 #Buscar por nick de usuario
@@ -249,6 +353,7 @@ def buscarNickUsuario(request):
 	return HttpResponse(json_data, mimetype='application/json')
 
 
+
 #Buscar por nombre de usuario
 @login_required()
 def buscarNombreUsuario(request):
@@ -261,6 +366,7 @@ def buscarNombreUsuario(request):
 		list_entradas = simplejson.loads(json_entradas)
 		json_data = simplejson.dumps( {'usuario':list_usuario, 'entradas':list_entradas} )
 	return HttpResponse(json_data, mimetype='application/json')
+
 
 
 #Buscar por id de entrada
