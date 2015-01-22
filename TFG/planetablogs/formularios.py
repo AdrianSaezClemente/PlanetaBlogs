@@ -22,6 +22,7 @@ class FormularioRegistro(ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password', 'email', 'first_name', 'last_name']
+        #exclude = ('rss',)
         widgets = {
             'password': forms.PasswordInput(),
         }
@@ -37,3 +38,9 @@ class FormularioAgregarHilo(ModelForm):
 	class Meta:
 		model = Asignatura
 		fields = ['titulo']
+		
+
+class FormularioAgregarRSS(ModelForm):
+	class Meta:
+		model = Alumno
+		fields = ['rss']

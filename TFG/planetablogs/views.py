@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from planetablogs.models import Entrada, Alumno, Profesor, Asignatura
-from planetablogs.formularios import FormularioRegistro, FormularioIdentidad, FormularioHilo
+from planetablogs.formularios import FormularioRegistro, FormularioIdentidad, FormularioHilo, FormularioAgregarRSS
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -122,13 +122,14 @@ def nuevo_profesor(request):
 #Comprobar si un usuario es alumno o profesor
 def ComprobarUsuario(idusuario):
 	alumnos = Alumno.objects.all()
+	NoEncontrado = True
 	for i in alumnos:
-		if (i.id == idusuario):
+		if (i.alumno_id == idusuario):
+			NoEncontrado = False
 			usuario = "Alumno"
 			break;
-		else:
-			usuario = "Profesor"
-			break;
+	if (NoEncontrado):
+		usuario = "Profesor"
 	return usuario
 
 
@@ -157,11 +158,24 @@ def inicio(request):
 
 #Agregar asignatura a los hilos de un profesor
 def agregarasignaturaalumno(request):
-	if request.method=='GET':
-		hilo = Asignatura.objects.get(id=request.GET['id'])
-		hilo.alumnos.add(request.user.id)
-		lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
-		lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
+	if request.method == 'POST':
+		formAgregar = FormularioAgregarRSS(request.POST)
+		if formAgregar.is_valid():
+			print "correcto"
+			'''
+			alumno = formAgregar.save(commit=False)
+			print alumno
+			alumno.save()
+			#alumno.alumnos.add(request.user.id)
+			if request.method=='GET':
+				hilo = Asignatura.objects.get(id=request.GET['id'])
+				hilo.alumnos.add(request.user.id)
+				lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
+				lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
+			return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'asignaturas': asignaturas})
+		'''
+		else:
+			print "NO VALIDO formAgregar"
 	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 
 
@@ -183,24 +197,7 @@ def presentacionalumno(request):
 	lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
 	lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
 	print "soy un alumno"
-	if request.method == 'POST':
-		'''
-		formAgregar = FormularioAgregarHilo(request.POST)
-		if formAgregar.is_valid():
-			hilo = formAgregar.save(commit=False)
-			hilo.save()
-			hilo.profesores.add(request.user.id)
-			return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'asignaturas': asignaturas})
-		else:
-			print "NO VALIDO formAgregar"
-		'''
-		formHilo = FormularioHilo(request.POST)
-		if formHilo.is_valid():
-			hilo = formHilo.save(commit=False)
-			hilo.save()
-			return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
-		else:
-			print "NO VALIDO formHilo"
+	
 	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 
 		

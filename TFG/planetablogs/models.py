@@ -11,6 +11,7 @@ class Profesor(models.Model):
 
 class Alumno(models.Model):
 	alumno = models.ForeignKey(User)
+	rss = models.URLField()
 	def __unicode__(self):
 		return self.alumno.first_name
 
