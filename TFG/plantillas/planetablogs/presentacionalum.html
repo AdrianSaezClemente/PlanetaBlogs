@@ -12,6 +12,8 @@
 		<script src="{{STATIC_URL}}presentacionalum.js"></script>
 		<script>
 			var asignaturas = '{{ asignaturas|escapejs }}';
+			var info = '{{ info|escapejs }}';
+			var idasignatura = '{{ idasignatura|escapejs }}';
 	   	</script>
 	   	<link rel="shortcut icon" href="../../static/imagenes/planet.png" type="image/png" />
 		<title>Educational Planet</title>
@@ -41,7 +43,7 @@
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
 											<div id="clase_lista_asignaturas">
-												<a id="{{ asig.id }}" href="javascript:void(0)" class="list-group-item">{{ asig.titulo }} - <span>{{ asig.descripcion }}</span><button onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="eliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></a>
+												<a id="eliminar{{ asig.id }}" href="javascript:void(0)" class="list-group-item">{{ asig.titulo }} - <span>{{ asig.descripcion }}</span><button onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></a>
 											</div>
 										{% endfor %}
 									{% else %}
@@ -68,14 +70,23 @@
 														<form role="form" method="POST">{% csrf_token %}
 															<div class="row form-group">
 																<div class="col-sm-9">
-																	<input name="rss" type="text" class="form-control input-sm" placeholder="Introduce Rss para {{ asig.titulo }}">
+																	<input id="rss{{ asig.id }}" name="rss" type="text" class="form-control input-sm" placeholder="Introduce Rss para {{ asig.titulo }}">
+																	<input class="oculto" name="asignatura" value="{{ asig.id }}"></input>
 																</div>
 																<div class="col-sm-3">
-																	<button id="{{ asig.id }}" type="submit" class="btn btn-sm btn-warning">Guardar y añadir</button>
+																	<button id="boton{{ asig.id }}" type="submit" class="btn btn-sm btn-warning">Guardar y añadir</button>
 																</div>
 															</div>
 														</form>
 													</div>
+													{% if info == True %}
+														{% if asig.id = idasignatura %}
+															<div class="alert alert-warning alert-dismissable alert-sm">
+																<button type="button" class="close" data-dismiss="alert">&times;</button>
+																<strong>¡Cuidado!</strong> Es necesario introducir un RSS válido para {{ asig.titulo }}.
+															</div>
+														{% endif %}
+													{% endif %}
 												</li>
 											</div>
 										{% endfor %}

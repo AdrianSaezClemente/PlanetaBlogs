@@ -1,4 +1,4 @@
-from planetablogs.models import Entrada, Alumno, Profesor, Asignatura
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss
 from django import forms
 from django.forms import ModelForm
 from django.utils import timezone  
@@ -42,5 +42,5 @@ class FormularioAgregarHilo(ModelForm):
 
 class FormularioAgregarRSS(ModelForm):
 	class Meta:
-		model = Alumno
-		fields = ['rss']
+		model = Rss
+		fields = ['rss','asignatura']

@@ -11,7 +11,6 @@ class Profesor(models.Model):
 
 class Alumno(models.Model):
 	alumno = models.ForeignKey(User)
-	rss = models.URLField()
 	def __unicode__(self):
 		return self.alumno.first_name
 
@@ -27,16 +26,21 @@ class Entrada(models.Model):
 
 
 class Asignatura(models.Model):
-	alumnos = models.ManyToManyField(Alumno)
+	alumnos = models.ManyToManyField(Alumno, through='Rss')
 	profesores = models.ManyToManyField(Profesor)
 	titulo = models.CharField(max_length=80)
-	descripcion = models.TextField()
-	#rss = models.URLField()
-	#puntuaciontotal = models.IntegerField()
-	#nivel = models.IntegerField()
+	descripcion = models.TextField(max_length=150)
 	def __unicode__(self):
 		return self.titulo
 
+
+class Rss(models.Model):
+	alumno = models.ForeignKey(Alumno)
+	asignatura = models.ForeignKey(Asignatura)
+	rss = models.URLField()
+	def __unicode__(self):
+		return self.rss
+	
 
 class Valoracion(models.Model):
 	alumno = models.ForeignKey(Alumno)
