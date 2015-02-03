@@ -67,16 +67,25 @@
 					</br>
 					<div class="row">
 						<div class="col-sm-8 col-sm-offset-2">
-							<h3>Aquí están todos los hilos disponibles</h3>
-							{% if lista_no_asignaturas %}
-								{% for asig in lista_no_asignaturas %}
-									<div id="clase_lista_no_asignaturas">
-										<a id="{{ asig.id }}" href="javascript:void(0)" class="list-group-item">{{ asig.titulo }} - <span>{{ asig.descripcion }}</span><button onclick="Agregar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="agregar{{ asig.id }}" title="Añadir hilo" type="button" class="btn-xs btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span>Añadir</button></a>
-									</div>
-								{% endfor %}
-							{% else %}
-								<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No hay hilos que puedas agregar</br></p>
-							{% endif %}
+							<div class="panel panel-primary">
+								<div class="panel-heading">Hilos disponibles</div>
+								<div class="panel-body">
+									{% if lista_no_asignaturas %}
+										{% for asig in lista_no_asignaturas %}
+											<div class="list-group">
+												<li id="{{ asig.id }}" class="list-group-item">
+													<div style="word-wrap:break-word;">
+														<h6 class="list-group-item-heading">{{ asig.titulo }} - {{ asig.descripcion }} <button onclick="Agregar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="agregar{{ asig.id }}" title="Añadir hilo" type="button" class="btn-xs btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span>Añadir</button></h6>
+													</div>
+												</li>
+											</div>
+										{% endfor %}
+									{% else %}
+										<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No hay hilos que puedas agregar</br></p>
+									{% endif %}
+								</div>
+							</div>
+							
 						</div>
 					</div>
 				</div>

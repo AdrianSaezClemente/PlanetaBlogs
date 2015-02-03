@@ -10,7 +10,7 @@ $(document).ready(function(){
 function Agregar(idasignatura,titulo,descripcion){
 	$('#agregar'+idasignatura).hide();
 	var html = '<button title="Hilo añadido" type="button" class="btn-xs btn-success pull-right">Añadido<span class="glyphicon glyphicon-ok"></span></button>'
-	$('a#'+idasignatura).append(html);
+	$('li#'+idasignatura+' h6').append(html);
 	//$('#'+idasignatura).hide();
 	$.ajax({
 		data: {'id':idasignatura},

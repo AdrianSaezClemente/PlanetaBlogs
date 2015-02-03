@@ -185,6 +185,11 @@ h6, .h6 {
 
 /**************************MI CSS**********************************/
 
+#login {
+	padding:0.5em;
+	margin-right:2em;
+	color:black;
+}
 
 #subir {
 	position: fixed;

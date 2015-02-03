@@ -185,10 +185,8 @@ def presentacionalumno(request):
 			hilo = formRSS.save(commit=False)
 			hilo.alumno_id = request.user.id
 			hilo.save()
-			return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas, 'info': info, 'idasignatura':idasignatura})
 		else:
 			info = True
-			print "NO VALIDO formRSS"
 	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas, 'info': info, 'idasignatura':idasignatura})
 
 
@@ -232,10 +230,9 @@ def presentacionprofesor(request):
 	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 
 	
-	
-#Página principal
+
 @login_required()
-def index(request):
+def mostrarhilo(request,asignatura_id):
 	'''
 	info = "Tus datos son erróneos. Introdúcelos otra vez."
 	json_serializer = serializers.get_serializer("json")()
@@ -255,7 +252,12 @@ def index(request):
 		entradas = paginator.page(1)
 	except EmptyPage:	# If page is out of range (e.g. 9999), deliver last page of results.
 		entradas = paginator.page(paginator.num_pages)
+	return render(request,'planetablogs/index.html',{'user': request.user})
 	
+	
+#Página principal
+@login_required()
+def index(request):
 	return render(request,'planetablogs/index.html',{'user': request.user})
 
 

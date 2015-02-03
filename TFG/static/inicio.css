@@ -1,10 +1,23 @@
 /*
 body {
-	border:4em solid #5478E4;
+	border-right:2em solid #5478E4;
+	border-left:2em solid #5478E4;
 	padding:1.5em;
 	border-radius:30px;
+}*/
+
+.container {
+	margin-top:5em;
+	background-color:black;
+	/*border-right:2em solid #5478E4;
+	border-left:2em solid #5478E4;*/
+	border-radius:30px;
 }
-*/
+
+.registro {
+	margin-top:10em;
+}
+
 .row {
 	border-radius:30px;
 }
@@ -14,6 +27,7 @@ body {
 	padding: 15px;
 	margin: 0 auto;
 }
+
 .form-signin .form-signin-heading, .form-signin .checkbox {
 	margin-bottom: 10px;
 }
@@ -54,7 +68,7 @@ body {
 	background-color: #f7f7f7;
 	-moz-box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.3);
 	-webkit-box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.3);
-	box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.4);
+	box-shadow: 0px 5px 8px white;
 }
 
 .login-title {
