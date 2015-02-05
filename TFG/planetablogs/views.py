@@ -230,18 +230,28 @@ def presentacionprofesor(request):
 	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 
 	
+	
+#A través del id de la asignatura te devuelve la lista de los alumnos que están inscritos en esa asignatura
+def ConseguirListaAlumnos(idasignatura):
+	lista_alumno_rss = []
+	lista_usuarios = []
+	rss = Rss.objects.filter(asignatura_id=idasignatura)
+	for i in rss:
+		alumno = Alumno.objects.get(alumno_id=i.alumno_id)
+		lista_alumno_rss = [alumno,i]
+		lista_usuarios.append(lista_alumno_rss)
+	return lista_usuarios
+	
+	
 
+#Página principal de cada hilo
 @login_required()
-def mostrarhilo(request,asignatura_id):
-	'''
-	info = "Tus datos son erróneos. Introdúcelos otra vez."
-	json_serializer = serializers.get_serializer("json")()
-	json_usuarios = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
-	lista_usuarios = Alumno.objects.order_by('nombre_apellidos')
-
-	json_entradas = json_serializer.serialize(Entrada.objects.all(), ensure_ascii=False)
+def mostrarhilo(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	lista_usuarios = ConseguirListaAlumnos(idasignatura)
+	
 	lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
-	'''
+	
 	lista_entradas = Entrada.objects.order_by('-fecha')
 	
 	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page
@@ -252,13 +262,7 @@ def mostrarhilo(request,asignatura_id):
 		entradas = paginator.page(1)
 	except EmptyPage:	# If page is out of range (e.g. 9999), deliver last page of results.
 		entradas = paginator.page(paginator.num_pages)
-	return render(request,'planetablogs/index.html',{'user': request.user})
-	
-	
-#Página principal
-@login_required()
-def index(request):
-	return render(request,'planetablogs/index.html',{'user': request.user})
+	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios})
 
 
 
@@ -270,19 +274,21 @@ def salir(request):
 
 #Pestaña de puntuaciones de usuarios
 @login_required()
-def puntuaciones(request):
-	lista_usuarios = Alumno.objects.order_by('nombre_apellidos')
+def puntuaciones(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	lista_usuarios = User.objects.order_by('username')
 	print lista_usuarios
-	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios})
+	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios, 'user': request.user, 'asignatura': asignatura})
 
 
 
 #Pestaña de información de puntuaciones de usuarios
 @login_required()
-def infopuntuaciones(request):
+def infopuntuaciones(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
 	json_serializer = serializers.get_serializer("json")()
-	lista_usuarios = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
-	return render(request, 'planetablogs/infopuntuaciones.html', {'lista_usuarios':lista_usuarios})
+	lista_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
+	return render(request, 'planetablogs/infopuntuaciones.html', {'lista_usuarios':lista_usuarios, 'user': request.user, 'asignatura': asignatura})
 
 
 
@@ -314,8 +320,9 @@ def down(request):
 
 #Pestaña de búsqueda
 @login_required()
-def buscar(request):
-	return render(request, 'planetablogs/buscar.html')
+def buscar(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	return render(request,'planetablogs/buscar.html',{'user': request.user, 'asignatura': asignatura})
 
 
 
@@ -449,4 +456,11 @@ def nuevo_usuario(request):
 	else:
 		formulario = FormularioRegistro()
 	return render(request, 'planetablogs/nuevousuario.html', {'formulario': formulario,'lista_usuarios':lista_usuarios})
+'''
+
+'''
+JSON:
+#json_serializer = serializers.get_serializer("json")()
+	#json_usuarios = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
+	#json_entradas = json_serializer.serialize(Entrada.objects.all(), ensure_ascii=False)
 '''

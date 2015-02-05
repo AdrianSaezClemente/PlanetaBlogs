@@ -40,8 +40,8 @@
 								<div id="lista_asignaturas" class="list-group">
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
-											<div id="clase_lista_asignaturas">
-												<a id="{{ asig.id }}" href="javascript:void(0)" class="list-group-item">{{ asig.titulo }} - <span>{{ asig.descripcion }}</span><button onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="eliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></a>
+											<div style="word-wrap:break-word;" id="clase_lista_asignaturas">
+												<a id="{{ asig.id }}" href="javascript:void(0)" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span><button style="position:fixed;" onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="eliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></a>
 											</div>
 										{% endfor %}
 									{% else %}

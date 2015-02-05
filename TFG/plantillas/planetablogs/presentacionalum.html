@@ -26,16 +26,6 @@
 				<nav class="blog-nav">
 					<a class="blog-nav-item active" href="/planetablogs/alumnos/">Mis hilos</a>
 					<a class="blog-nav-item" href="/planetablogs/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							Puntuaciones <img class="pequeña" src="../../static/imagenes/planets41.png">
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li><a href="/planetablogs/puntuaciones/"><span class="glyphicon glyphicon-stats"></span>  Ránking</a></li>
-							<li><a href="/planetablogs/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign"></span> Información</a></li>
-						</ul>
-					</div>
 					<div id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}">Desconectar</a></div>
 				</nav>
 			</div>
@@ -58,8 +48,8 @@
 								<div id="lista_asignaturas" class="list-group">
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
-											<div id="clase_lista_asignaturas">
-												<a id="eliminar{{ asig.id }}" href="/planetablogs/alumnos/hilo/{{ asig.id }}" class="list-group-item">{{ asig.titulo }} - <span>{{ asig.descripcion }}</span><button onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></a>
+											<div style="word-wrap:break-word;" id="clase_lista_asignaturas">
+												<a id="eliminar{{ asig.id }}" href="/planetablogs/alumnos/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span><button onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></a>
 											</div>
 										{% endfor %}
 									{% else %}
