@@ -266,7 +266,7 @@ def ConseguirListaEntradas(lista_id_alumnos):
 		for j in entradas:
 			if (j.alumno_id == i):
 				lista_entradas.append(j)
-	return lista_entradas
+	return lista_entradas[::-1]		#Invierte la lista, para que salga ordenada por fecha
 
 
 
