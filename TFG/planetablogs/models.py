@@ -21,7 +21,7 @@ class Entrada(models.Model):
 	fecha = models.DateTimeField()
 	descripcion = models.TextField()
 	def __unicode__(self):
-		return self.alumno
+		return self.titulo
 
 
 class Asignatura(models.Model):

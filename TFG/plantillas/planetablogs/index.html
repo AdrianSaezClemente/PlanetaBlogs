@@ -82,7 +82,7 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.id }} </label><a target="_blank" href={{ entrada.usuario.url_blog }}> {{ entrada }}</a><span class="blog-post-meta">{{ entrada.fecha }} por <a href={{ entrada.usuario.url_blog }}>{{ entrada.usuario.nick }}</a></span></h2>
+										<h2 class="blog-post-title"><label> #{{ entrada.id }} </label><a target="_blank" href={{ entrada.usuario.url_blog }}> {{ entrada.alumno.alumno.first_name }} {{ entrada.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.fecha }} por <a href={{ entrada.usuario.url_blog }}>{{ entrada.alumno.alumno.username }}</a></span></h2>
 										<h3><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
 										<p>{{ entrada.descripcion }}</p>
 										<div id="valoracion">

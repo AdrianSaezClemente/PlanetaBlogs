@@ -245,14 +245,29 @@ def ConseguirListaAlumnos(idasignatura):
 	return lista_usuarios
 	
 	
+	
+#A través del id de la asignatura te devuelve la lista de los ids de los alumnos que están inscritos en esa asignatura
+def ConseguirIdAlumnos(idasignatura):
+	lista_id_alumnos = []
+	rss = Rss.objects.filter(asignatura_id=idasignatura)
+	for i in rss:
+		alumnos = Alumno.objects.filter(alumno_id=i.alumno_id)
+		for j in alumnos:
+			lista_id_alumnos.append(j.id)
+	return lista_id_alumnos
 
-def ConseguirListaEntradas(lista_usuarios):
+
+
+#A través la lista de ids de los alumnos inscritos en una asignatura determinada te devuelve la lista de las entradas
+def ConseguirListaEntradas(lista_id_alumnos):
 	lista_entradas = []
-	for i in lista_usuarios:
-		entradas = Entrada.objects.filter(alumno_id=i[0].id)
-		lista_entradas.append(str(entradas))
-		print lista_entradas
+	for i in lista_id_alumnos:
+		entradas = Entrada.objects.all()
+		for j in entradas:
+			if (j.alumno_id == i):
+				lista_entradas.append(j)
 	return lista_entradas
+
 
 
 #Página principal de cada hilo
@@ -262,8 +277,9 @@ def mostrarhilo(request,idasignatura):
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	
 	#lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
-	ConseguirListaEntradas(lista_usuarios)
-	lista_entradas = Entrada.objects.filter().order_by('-fecha')
+	lista_id_alumnos = ConseguirIdAlumnos(idasignatura)
+	lista_entradas = ConseguirListaEntradas(lista_id_alumnos)
+	print lista_entradas
 	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page
 	page = request.GET.get('page')
 	try:
@@ -272,7 +288,7 @@ def mostrarhilo(request,idasignatura):
 		entradas = paginator.page(1)
 	except EmptyPage:	# If page is out of range (e.g. 9999), deliver last page of results.
 		entradas = paginator.page(paginator.num_pages)
-	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'lista_entradas':lista_entradas})
+	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas})
 
 
 
