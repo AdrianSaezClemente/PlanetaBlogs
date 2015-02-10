@@ -246,21 +246,24 @@ def ConseguirListaAlumnos(idasignatura):
 	
 	
 
+def ConseguirListaEntradas(lista_usuarios):
+	lista_entradas = []
+	for i in lista_usuarios:
+		entradas = Entrada.objects.filter(alumno_id=i[0].id)
+		lista_entradas.append(str(entradas))
+		print lista_entradas
+	return lista_entradas
 
-#def ActualizarUsuarios(idasignatura):
-	
-	
-	
+
 #Página principal de cada hilo
 @login_required()
 def mostrarhilo(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	
-	#ActualizarUsuarios(idasignatura)
 	#lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
-	lista_entradas = Entrada.objects.order_by('-fecha')
-	
+	ConseguirListaEntradas(lista_usuarios)
+	lista_entradas = Entrada.objects.filter().order_by('-fecha')
 	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page
 	page = request.GET.get('page')
 	try:
@@ -269,7 +272,7 @@ def mostrarhilo(request,idasignatura):
 		entradas = paginator.page(1)
 	except EmptyPage:	# If page is out of range (e.g. 9999), deliver last page of results.
 		entradas = paginator.page(paginator.num_pages)
-	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios})
+	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'lista_entradas':lista_entradas})
 
 
 
