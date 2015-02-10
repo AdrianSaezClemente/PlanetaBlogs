@@ -184,6 +184,8 @@ def presentacionalumno(request):
 			info = False
 			hilo = formRSS.save(commit=False)
 			hilo.alumno_id = request.user.id
+			fechaActual = datetime.now()
+			hilo.ultima_fecha = fechaActual
 			hilo.save()
 		else:
 			info = True
@@ -230,7 +232,7 @@ def presentacionprofesor(request):
 	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 
 	
-	
+
 #A través del id de la asignatura te devuelve la lista de los alumnos que están inscritos en esa asignatura
 def ConseguirListaAlumnos(idasignatura):
 	lista_alumno_rss = []
@@ -244,14 +246,19 @@ def ConseguirListaAlumnos(idasignatura):
 	
 	
 
+
+#def ActualizarUsuarios(idasignatura):
+	
+	
+	
 #Página principal de cada hilo
 @login_required()
 def mostrarhilo(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	
-	lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
-	
+	#ActualizarUsuarios(idasignatura)
+	#lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
 	lista_entradas = Entrada.objects.order_by('-fecha')
 	
 	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page

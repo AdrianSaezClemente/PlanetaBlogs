@@ -18,8 +18,7 @@ class Alumno(models.Model):
 class Entrada(models.Model):
 	alumno = models.ForeignKey(Alumno)
 	titulo = models.CharField(max_length=80)
-	link = models.URLField()
-	fecha = models.CharField(max_length=40)
+	fecha = models.DateTimeField()
 	descripcion = models.TextField()
 	def __unicode__(self):
 		return self.alumno
@@ -38,6 +37,8 @@ class Rss(models.Model):
 	alumno = models.ForeignKey(Alumno)
 	asignatura = models.ForeignKey(Asignatura)
 	rss = models.URLField()
+	ultima_fecha = models.DateTimeField(auto_now_add=True)
+	url_blog = models.URLField()
 	def __unicode__(self):
 		return self.rss
 	

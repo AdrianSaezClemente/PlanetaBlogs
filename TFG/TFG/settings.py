@@ -23,12 +23,11 @@ SECRET_KEY = '+2#5&97_k1$8j4nwf47oo#b*8=t2nynb5b!5_va#^4og+6%yny'
 DEBUG = True 
 
 TEMPLATE_DEBUG = True
-
+USE_TZ=False
 ALLOWED_HOSTS = []
 
 TEMPLATE_DIRS = ('/home/adri/Escritorio/ProyectoGit/TFG/plantillas')
 
-# DJANGO_SETTINGS_MODULE = 'planetablogs.settings'
 # Application definition
 
 # Redirect when login is correct.
