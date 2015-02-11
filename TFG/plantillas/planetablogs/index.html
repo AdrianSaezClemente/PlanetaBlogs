@@ -111,8 +111,12 @@
 										{% for comentario in lista_comentarios %}
 											{% if entrada.id == comentario.entrada_id %}
 											<div id="comentarios">
-												<span class="pull-left">Comentario publicado por {{ user.username }}</span><span class="pull-right">{{ comentario.fecha }}</span>
-												 <p>{{ comentario.descripcion }}</p>
+												<div class="panel panel-info">
+													<div class="panel-heading"><span class="pull-left">Comentario publicado por {{ user.username }}</span><span class="pull-right">{{ comentario.fecha }}</span></div>
+													<div class="panel-body">
+														{{ comentario.descripcion }}
+													</div>
+												</div>
 											</div>
 											{% endif %}
 										{% endfor %}
