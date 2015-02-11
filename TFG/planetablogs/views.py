@@ -168,6 +168,18 @@ def eliminarasignaturaalumno(request):
 
 
 
+#método que válida un rss de tal forma que si el enlace rss ya existe en base de datos, el formulario es erróneo.
+def ValidarRss(rss):
+	lista_rss = Rss.objects.all()
+	valido = True
+	for i in lista_rss:
+		if (rss == i.rss):
+			valido = False
+			break;
+	return valido
+
+	
+	
 #Se usa el formulario FormularioAgregarRSS para establecer una relación entre asignatura, alumno y RSS
 @login_required()
 def presentacionalumno(request):
@@ -176,17 +188,19 @@ def presentacionalumno(request):
 	asignaturas = Asignatura.objects.all()
 	lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
 	lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
-	print "soy un alumno"
 	if request.method == 'POST':
 		formRSS = FormularioAgregarRSS(request.POST)
 		idasignatura = request.POST.get('asignatura', '')
+		rss = request.POST.get('rss', '')
 		if formRSS.is_valid():
-			info = False
-			hilo = formRSS.save(commit=False)
-			hilo.alumno_id = request.user.id
-			fechaActual = datetime.now()
-			hilo.ultima_fecha = fechaActual
-			hilo.save()
+			valido = ValidarRss(rss)
+			if valido == True:
+				info = False
+				hilo = formRSS.save(commit=False)
+				hilo.alumno_id = request.user.id
+				fechaActual = datetime.now()
+				hilo.ultima_fecha = fechaActual
+				hilo.save()
 		else:
 			info = True
 	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas, 'info': info, 'idasignatura':idasignatura})
