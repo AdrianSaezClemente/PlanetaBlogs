@@ -95,18 +95,26 @@
 												</div>
 											</div>
 										</div>
-										<div id="escribircomentario">
-											<div class="input-group">
-												<span class="input-group-addon">#{{ entrada.id }}</span>
-												<textarea class="form-control" rows="1" placeholder="Escribe tu comentario..."></textarea>
-												<span class="input-group-btn">
-													<button class="btn btn-default" type="button">Enviar <span class="glyphicon glyphicon-send"></span></button>
-												</span>
+										<form role="form" method="POST">{% csrf_token %}
+											<div id="escribircomentario">
+												<div class="input-group">
+													<span class="input-group-addon">#{{ entrada.id }}</span>
+													<textarea class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
+													<input class="oculto" name="entrada" value="{{ entrada.id }}"></input>
+													<span class="input-group-btn">
+														<button class="btn btn-success" type="submit">Enviar <span class="glyphicon glyphicon-send"></span></button>
+													</span>
+												</div>
 											</div>
-										</div>
-										<div id="comentarios">
-											ESTOS SON TODOS LOS COMENTARIOS
-										</div>
+										</form>
+										ESTOS SON TODOS LOS COMENTARIOS
+										{% for comentario in lista_comentarios %}
+											{% if entrada.id == comentario.entrada_id %}
+											<div id="comentarios">
+												<span>{{ comentario.fecha }} {{ comentario.descripcion }}</span>
+											</div>
+											{% endif %}
+										{% endfor %}
 									</div>
 								</div>
 							{% endfor %}

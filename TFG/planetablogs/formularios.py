@@ -1,4 +1,4 @@
-from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario
 from django import forms
 from django.forms import ModelForm
 from django.utils import timezone  
@@ -44,3 +44,9 @@ class FormularioAgregarRSS(ModelForm):
 	class Meta:
 		model = Rss
 		fields = ['rss','asignatura']
+		
+
+class FormularioAgregarComentario(ModelForm):
+	class Meta:
+		model = Comentario
+		fields = ['descripcion','entrada']

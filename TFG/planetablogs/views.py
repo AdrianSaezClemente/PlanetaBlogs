@@ -6,8 +6,8 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss
-from planetablogs.formularios import FormularioRegistro, FormularioIdentidad, FormularioHilo, FormularioAgregarRSS
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario
+from planetablogs.formularios import FormularioRegistro, FormularioIdentidad, FormularioHilo, FormularioAgregarRSS, FormularioAgregarComentario
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -284,25 +284,54 @@ def ConseguirListaEntradas(lista_id_alumnos):
 
 
 
+#A través del id de la asignatura te devuelve la lista de los ids de los alumnos que están inscritos en esa asignatura
+def ConseguirListaComentarios(idasignatura):
+	lista_comentarios = Comentario.objects.filter(asignatura_id=idasignatura)
+	return lista_comentarios
+
+
+
+#Obtener un id de un alumno a través del id como usuario (alumnos más profesores)
+def ConseguirIdAlumno(iduser):
+	alumno = Alumno.objects.get(alumno_id=iduser)
+	return alumno.id
+
+	
 #Página principal de cada hilo
 @login_required()
 def mostrarhilo(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
-	
+	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	#lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
 	lista_id_alumnos = ConseguirIdAlumnos(idasignatura)
 	lista_entradas = ConseguirListaEntradas(lista_id_alumnos)
-	print lista_entradas
-	paginator = Paginator(lista_entradas, 5) # Show 5 contacts per page
+	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
 	try:
 		entradas = paginator.page(page)
-	except PageNotAnInteger:	# If page is not an integer, deliver first page.
+	except PageNotAnInteger:	
 		entradas = paginator.page(1)
-	except EmptyPage:	# If page is out of range (e.g. 9999), deliver last page of results.
+	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
-	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas})
+	
+	if request.method == 'POST':
+		formComentario = FormularioAgregarComentario(request.POST)
+		print formComentario
+		descripcion = request.POST.get('descripcion', '')
+		entrada = request.POST.get('entrada', '')
+		alumno = ConseguirIdAlumno(request.user.id)
+		if formComentario.is_valid():
+			print "formulario válido"
+			comentario = formComentario.save(commit=False)
+			comentario.entrada_id = entrada
+			comentario.alumno_id = alumno
+			comentario.asignatura_id = idasignatura
+			comentario.fecha = datetime.now()
+			comentario.save()
+		else:
+			print "FORM COMENTARIO NO VALIDO"
+	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas, 'lista_comentarios':lista_comentarios})
 
 
 

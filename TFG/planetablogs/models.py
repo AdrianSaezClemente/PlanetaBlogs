@@ -54,11 +54,11 @@ class Valoracion(models.Model):
 	
 
 class Comentario(models.Model):
+	asignatura = models.ForeignKey(Asignatura)
 	alumno = models.ForeignKey(Alumno)
 	entrada = models.ForeignKey(Entrada)
-	fecha = models.CharField(max_length=40)
-	descripcion = models.CharField(max_length=1000)
-	
+	fecha = models.DateTimeField()
+	descripcion = models.TextField()
 	def __unicode__(self):
 		return self.alumno
 	

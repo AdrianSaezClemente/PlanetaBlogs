@@ -38,6 +38,7 @@ function Down(identrada){
 
 $.noConflict();
 $(document).ready(function() {
+	$(".oculto").hide();
 	$("#subir").hide();
 	$(function () {
 		$(window).scroll(function () {
