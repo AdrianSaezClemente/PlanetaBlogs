@@ -245,8 +245,8 @@ def presentacionprofesor(request):
 			print "NO VALIDO formHilo"
 	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 
-	
 
+	
 #A través del id de la asignatura te devuelve la lista de los alumnos que están inscritos en esa asignatura
 def ConseguirListaAlumnos(idasignatura):
 	lista_alumno_rss = []
@@ -280,7 +280,7 @@ def ConseguirListaEntradas(lista_id_alumnos):
 		for j in entradas:
 			if (j.alumno_id == i):
 				lista_entradas.append(j)
-	return lista_entradas[::-1]		#Invierte la lista, para que salga ordenada por fecha
+	return lista_entradas		#Invierte la lista, para que salga ordenada por fecha
 
 
 
@@ -297,6 +297,16 @@ def ConseguirIdAlumno(iduser):
 	return alumno.id
 
 	
+
+#Elimina comentario
+def eliminarcomentario(request):
+	if request.method=='GET':
+		comentario = Comentario.objects.get(id=request.GET['idcomentario'])
+		comentario.delete()
+	return render(request,'planetablogs/index.html',{'user': request.user})
+	
+	
+	
 #Página principal de cada hilo
 @login_required()
 def mostrarhilo(request,idasignatura):
@@ -311,7 +321,7 @@ def mostrarhilo(request,idasignatura):
 	try:
 		entradas = paginator.page(page)
 	except PageNotAnInteger:	
-		entradas = paginator.page(1)
+		entradas = paginator.page(2)
 	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
 	
@@ -322,7 +332,6 @@ def mostrarhilo(request,idasignatura):
 		entrada = request.POST.get('entrada', '')
 		alumno = ConseguirIdAlumno(request.user.id)
 		if formComentario.is_valid():
-			print "formulario válido"
 			comentario = formComentario.save(commit=False)
 			comentario.entrada_id = entrada
 			comentario.alumno_id = alumno
@@ -331,7 +340,7 @@ def mostrarhilo(request,idasignatura):
 			comentario.save()
 		else:
 			print "FORM COMENTARIO NO VALIDO"
-	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas, 'lista_comentarios':lista_comentarios})
+	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas[::-1], 'lista_comentarios':lista_comentarios[::-1]})
 
 
 

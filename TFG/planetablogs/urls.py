@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 	url(r'^eliminarasignaturaprofesor/$', views.eliminarasignaturaprofesor, name='eliminarasignaturaprofesor'),
 	url(r'^eliminarasignaturaalumno/$', views.eliminarasignaturaalumno, name='eliminarasignaturaalumno'),
 	url(r'^alumnos/hilo/(?P<idasignatura>\d+)/$', views.mostrarhilo, name='mostrarhilo'),
-	
+	url(r'^eliminarcomentario/$', views.eliminarcomentario, name='eliminarcomentario'),
 	url(r'^nuevoalumno/$',views.nuevo_alumno, name='nuevo_alumno'),
 	url(r'^nuevoprofesor/$',views.nuevo_profesor, name='nuevo_profesor'),
 	url(r'^alumnos/hilo/(?P<idasignatura>\d+)/puntuaciones/$',views.puntuaciones, name='puntuaciones'),

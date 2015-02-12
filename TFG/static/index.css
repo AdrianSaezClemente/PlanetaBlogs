@@ -185,6 +185,14 @@ h6, .h6 {
 
 /**************************MI CSS**********************************/
 
+#comentarios {
+	margin-top:10px;
+}
+
+#titulopanel *{
+	font-size:12px;
+}
+
 #login {
 	padding:0.5em;
 	margin-right:2em;

@@ -36,6 +36,19 @@ function Down(identrada){
 	$("#down"+identrada).text(parseInt(down)+1);
 }
 
+function EliminarComentario(idcomentario,idasignatura){
+	console.log(idcomentario)
+	$('#comentario'+idcomentario).hide("slow");
+	$.ajax({
+		data: {'idcomentario':idcomentario,'idasignatura':idasignatura},
+		url: '/planetablogs/eliminarcomentario/',
+		type: 'GET',
+		success: function(datos){
+			
+		},
+	});
+}
+
 $.noConflict();
 $(document).ready(function() {
 	$(".oculto").hide();
