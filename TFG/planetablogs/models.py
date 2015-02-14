@@ -46,13 +46,30 @@ class Rss(models.Model):
 
 class Valoracion(models.Model):
 	alumno = models.ForeignKey(Alumno)
-	entrada = models.ForeignKey(Entrada)
-	up = models.IntegerField()
-	down = models.IntegerField()
+	asignatura = models.ForeignKey(Asignatura)
+	puntos = models.IntegerField()
 	def __unicode__(self):
 		return self.alumno
 	
 
+class Up(models.Model):
+	asignatura = models.ForeignKey(Asignatura)
+	alumno = models.ForeignKey(Alumno)
+	entrada = models.ForeignKey(Entrada)
+	total = models.IntegerField()
+	def __unicode__(self):
+		return self.total
+	
+	
+class Down(models.Model):
+	asignatura = models.ForeignKey(Asignatura)
+	alumno = models.ForeignKey(Alumno)
+	entrada = models.ForeignKey(Entrada)
+	total = models.IntegerField()
+	def __unicode__(self):
+		return self.total
+	
+	
 class Comentario(models.Model):
 	asignatura = models.ForeignKey(Asignatura)
 	alumno = models.ForeignKey(Alumno)

@@ -9,23 +9,25 @@ function CompararNick(nick,contra){
 	}
 }
 
-function Up(identrada){
-	var up = $("#up"+identrada).text();
+
+function Up(identrada,idusuario,idasignatura){
+	var up1 = $("#up"+identrada).text();
+	var up = parseInt(up1) + parseInt(1)
 	$.ajax({
-		data: {'id':identrada, 'up':up},
+		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura,'up':up},
 		url: '/planetablogs/up/',
 		type: 'GET',
 		success: function(datos){
 
 		},
 	});
-	$("#up"+identrada).text(parseInt(up)+1);
+	$("#up"+identrada).text(parseInt(up));
 }
 
-function Down(identrada){
-	var down = $("#down"+identrada).text();
+function Down(identrada,idusuario,idasignatura){
+	var down = $("#down"+identrada).text()+1;
 	$.ajax({
-		data: {'id':identrada, 'down':down},
+		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura,'down':down},
 		url: '/planetablogs/down/',
 		type: 'GET',
 		success: function(datos){
@@ -37,7 +39,6 @@ function Down(identrada){
 }
 
 function EliminarComentario(idcomentario,idasignatura){
-	console.log(idcomentario)
 	$('#comentario'+idcomentario).hide("slow");
 	$.ajax({
 		data: {'idcomentario':idcomentario,'idasignatura':idasignatura},

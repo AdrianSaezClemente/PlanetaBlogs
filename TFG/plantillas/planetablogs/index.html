@@ -12,8 +12,8 @@
 		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 		<script src="{{STATIC_URL}}index.js"></script>
 		<script>
-	   	var tmpusuario = '{{ json_usuarios|escapejs }}';
-	   	var usuario = JSON.parse(tmpusuario);
+	   	//var tmpusuario = '{{ json_usuarios|escapejs }}';
+	   	//var usuario = JSON.parse(tmpusuario);
 	   	//var tmpentrada = '{{ json_entradas|escapejs }}';
 	   	//var entrada = JSON.parse(tmpentrada);
 	   	</script>
@@ -88,10 +88,10 @@
 										<div id="valoracion">
 											<div class="btn-toolbar" role="toolbar">
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}');"><button type="button" class="btn btn-success btn-xs">Up <span id="up{{ entrada.id }}" class="badge">0</span></button></a>
+													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-success btn-xs">Up <span id="up{{ entrada.id }}" class="badge">0</span></button></a>
 												</div> 
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}');"><button type="button" class="btn btn-danger btn-xs">Down <span id="down{{ entrada.id }}" class="badge">0</span></button></a>
+													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-danger btn-xs">Down <span id="down{{ entrada.id }}" class="badge">0</span></button></a>
 												</div>
 											</div>
 										</div>

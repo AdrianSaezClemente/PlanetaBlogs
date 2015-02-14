@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario, Up, Down, Valoracion
 from planetablogs.formularios import FormularioRegistro, FormularioIdentidad, FormularioHilo, FormularioAgregarRSS, FormularioAgregarComentario
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -370,16 +370,38 @@ def infopuntuaciones(request,idasignatura):
 
 
 
+def ConseguirListaUps(idasignatura):
+	lista_up = []
+	print lista_up
+	lista_ups = Up.objects.filter(asignatura_id=idasignatura)
+	print lista_ups
+	print "hola"
+	for i in lista_ups:
+		print i
+		#lista_up.append(i)
+	return lista_up
+	
+	
+	
 #Dar al botón UP
 @login_required()
 def up(request):
-	lista_entradas = Entrada.objects.order_by('-fecha')
+	#lista_entradas = Entrada.objects.order_by('-fecha')
 	if request.method=='GET':
-		entrada = Entrada.objects.filter(id=request.GET['id'])
-		ctx = serializers.serialize('json', entrada, ensure_ascii=False)
-		list_entrada = simplejson.loads(ctx)
-		json_data = simplejson.dumps( {'entrada':list_entrada} )
-	return HttpResponse(json_data, mimetype='application/json')
+		print "he dado al up"
+		idasignatura = request.GET['idasignatura']
+		idalumno = ConseguirIdAlumno(request.GET['idusuario'])
+		identrada = request.GET['identrada']
+		total=request.GET['up']
+		up = Up(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada,total=total)
+		up.save()
+
+		lista_up = ConseguirListaUps(idasignatura)
+		print lista_up
+		#ctx = serializers.serialize('json', entrada, ensure_ascii=False)
+		#list_entrada = simplejson.loads(ctx)
+		#json_data = simplejson.dumps( {'entrada':list_entrada} )
+	return render(request,'planetablogs/index.html',{'user': request.user, 'lista_up': lista_up})
 	
 	
 	
@@ -388,7 +410,10 @@ def up(request):
 def down(request):
 	lista_entradas = Entrada.objects.order_by('-fecha')
 	if request.method=='GET':
-		entrada = Entrada.objects.filter(id=request.GET['id'])
+		entrada = Entrada.objects.filter(id=request.GET['identrada'])
+		asignatura = Asignatura.objects.filter(id=request.GET['idasignatura'])
+		idalumno = ConseguirIdAlumno(request.GET['idusuario'])
+		alumno = Alumno.objects.filter(id=idalumno)
 		ctx = serializers.serialize('json', entrada, ensure_ascii=False)
 		list_entrada = simplejson.loads(ctx)
 		json_data = simplejson.dumps( {'entrada':list_entrada} )
