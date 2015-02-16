@@ -20,6 +20,8 @@ class Entrada(models.Model):
 	titulo = models.CharField(max_length=80)
 	fecha = models.DateTimeField()
 	descripcion = models.TextField()
+	totalup = models.IntegerField()
+	totaldown = models.IntegerField()
 	#numero_comentarios = models.IntegerField()
 	def __unicode__(self):
 		return self.titulo
@@ -56,18 +58,16 @@ class Up(models.Model):
 	asignatura = models.ForeignKey(Asignatura)
 	alumno = models.ForeignKey(Alumno)
 	entrada = models.ForeignKey(Entrada)
-	total = models.IntegerField()
 	def __unicode__(self):
-		return self.total
+		return self.entrada
 	
 	
 class Down(models.Model):
 	asignatura = models.ForeignKey(Asignatura)
 	alumno = models.ForeignKey(Alumno)
 	entrada = models.ForeignKey(Entrada)
-	total = models.IntegerField()
 	def __unicode__(self):
-		return self.total
+		return self.entrada
 	
 	
 class Comentario(models.Model):

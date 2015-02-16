@@ -25,7 +25,8 @@ function Up(identrada,idusuario,idasignatura){
 }
 
 function Down(identrada,idusuario,idasignatura){
-	var down = $("#down"+identrada).text()+1;
+	var down1 = $("#down"+identrada).text();
+	var down = parseInt(down1) + parseInt(1)
 	$.ajax({
 		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura,'down':down},
 		url: '/planetablogs/down/',
@@ -35,7 +36,7 @@ function Down(identrada,idusuario,idasignatura){
 			//console.log(datos.entrada[0].fields.down)
 		},
 	});
-	$("#down"+identrada).text(parseInt(down)+1);
+	$("#down"+identrada).text(parseInt(down));
 }
 
 function EliminarComentario(idcomentario,idasignatura){

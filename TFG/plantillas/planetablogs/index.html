@@ -88,10 +88,10 @@
 										<div id="valoracion">
 											<div class="btn-toolbar" role="toolbar">
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-success btn-xs">Up <span id="up{{ entrada.id }}" class="badge">0</span></button></a>
+													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-success btn-xs">Up <span id="up{{ entrada.id }}" class="badge">{{ entrada.totalup }}</span></button></a>
 												</div> 
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-danger btn-xs">Down <span id="down{{ entrada.id }}" class="badge">0</span></button></a>
+													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-danger btn-xs">Down <span id="down{{ entrada.id }}" class="badge">{{ entrada.totaldown }}</span></button></a>
 												</div>
 											</div>
 										</div>

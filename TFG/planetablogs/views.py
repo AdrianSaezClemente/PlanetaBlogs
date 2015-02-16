@@ -316,6 +316,7 @@ def mostrarhilo(request,idasignatura):
 	#lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
 	lista_id_alumnos = ConseguirIdAlumnos(idasignatura)
 	lista_entradas = ConseguirListaEntradas(lista_id_alumnos)
+	'''
 	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
 	try:
@@ -324,7 +325,7 @@ def mostrarhilo(request,idasignatura):
 		entradas = paginator.page(2)
 	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
-	
+	'''
 	if request.method == 'POST':
 		formComentario = FormularioAgregarComentario(request.POST)
 		print formComentario
@@ -370,54 +371,53 @@ def infopuntuaciones(request,idasignatura):
 
 
 
-def ConseguirListaUps(idasignatura):
-	lista_up = []
-	print lista_up
-	lista_ups = Up.objects.filter(asignatura_id=idasignatura)
-	print lista_ups
-	print "hola"
-	for i in lista_ups:
-		print i
-		#lista_up.append(i)
-	return lista_up
+#Suma 1 Up a la entrada y lo guarda
+def GuardarUp(identrada):
+	print "que pasa"
+	entrada = Entrada.objects.get(id=identrada)
+	print entrada
+	entrada.totalup = entrada.totalup + 1
+	entrada.save()
 	
 	
 	
 #Dar al botón UP
 @login_required()
 def up(request):
-	#lista_entradas = Entrada.objects.order_by('-fecha')
 	if request.method=='GET':
 		print "he dado al up"
 		idasignatura = request.GET['idasignatura']
 		idalumno = ConseguirIdAlumno(request.GET['idusuario'])
 		identrada = request.GET['identrada']
 		total=request.GET['up']
-		up = Up(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada,total=total)
+		up = Up(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada)
 		up.save()
-
-		lista_up = ConseguirListaUps(idasignatura)
-		print lista_up
-		#ctx = serializers.serialize('json', entrada, ensure_ascii=False)
-		#list_entrada = simplejson.loads(ctx)
-		#json_data = simplejson.dumps( {'entrada':list_entrada} )
-	return render(request,'planetablogs/index.html',{'user': request.user, 'lista_up': lista_up})
+		GuardarUp(identrada)
+	return render(request,'planetablogs/index.html',{'user': request.user})
+	
+	
+	
+#Suma 1 Down a la entrada y lo guarda
+def GuardarDown(identrada):
+	entrada = Entrada.objects.get(id=identrada)
+	entrada.totaldown = entrada.totaldown + 1
+	entrada.save()
 	
 	
 	
 #Dar al botón DOWN
 @login_required()
 def down(request):
-	lista_entradas = Entrada.objects.order_by('-fecha')
 	if request.method=='GET':
-		entrada = Entrada.objects.filter(id=request.GET['identrada'])
-		asignatura = Asignatura.objects.filter(id=request.GET['idasignatura'])
+		print "he dado al down"
+		idasignatura = request.GET['idasignatura']
 		idalumno = ConseguirIdAlumno(request.GET['idusuario'])
-		alumno = Alumno.objects.filter(id=idalumno)
-		ctx = serializers.serialize('json', entrada, ensure_ascii=False)
-		list_entrada = simplejson.loads(ctx)
-		json_data = simplejson.dumps( {'entrada':list_entrada} )
-	return HttpResponse(json_data, mimetype='application/json')
+		identrada = request.GET['identrada']
+		total=request.GET['down']
+		down = Down(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada)
+		down.save()
+		GuardarDown(identrada)
+	return render(request,'planetablogs/index.html',{'user': request.user})
 
 
 
