@@ -15,23 +15,23 @@ class Alumno(models.Model):
 		return self.alumno.first_name
 
 
+class Asignatura(models.Model):
+	alumnos = models.ManyToManyField(Alumno, through='Rss')
+	profesores = models.ManyToManyField(Profesor)
+	titulo = models.CharField(max_length=50)
+	descripcion = models.TextField(max_length=150)
+	def __unicode__(self):
+		return self.titulo
+	
+	
 class Entrada(models.Model):
+	asignatura = models.ForeignKey(Asignatura)
 	alumno = models.ForeignKey(Alumno)
 	titulo = models.CharField(max_length=80)
 	fecha = models.DateTimeField()
 	descripcion = models.TextField()
 	totalup = models.IntegerField()
 	totaldown = models.IntegerField()
-	#numero_comentarios = models.IntegerField()
-	def __unicode__(self):
-		return self.titulo
-
-
-class Asignatura(models.Model):
-	alumnos = models.ManyToManyField(Alumno, through='Rss')
-	profesores = models.ManyToManyField(Profesor)
-	titulo = models.CharField(max_length=50)
-	descripcion = models.TextField(max_length=150)
 	def __unicode__(self):
 		return self.titulo
 

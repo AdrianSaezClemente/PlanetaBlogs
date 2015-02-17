@@ -275,12 +275,16 @@ def ConseguirIdAlumnos(idasignatura):
 #A través la lista de ids de los alumnos inscritos en una asignatura determinada te devuelve la lista de las entradas
 def ConseguirListaEntradas(lista_id_alumnos):
 	lista_entradas = []
+	k = 1
 	for i in lista_id_alumnos:
 		entradas = Entrada.objects.all()
 		for j in entradas:
 			if (j.alumno_id == i):
-				lista_entradas.append(j)
-	return lista_entradas		#Invierte la lista, para que salga ordenada por fecha
+				lista_entradas_contador = [j,k]
+				lista_entradas.append(lista_entradas_contador)
+				k = k + 1
+	lista = lista_entradas[::-1]
+	return lista		#Invierte la lista, para que salga ordenada por fecha
 
 
 
@@ -313,8 +317,8 @@ def mostrarhilo(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	lista_entradas_valoradas = Entrada.objects.order_by('-totalup')[:4]
 	lista_id_alumnos = ConseguirIdAlumnos(idasignatura)
+	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
 	lista_entradas = ConseguirListaEntradas(lista_id_alumnos)
 	'''
 	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
@@ -341,7 +345,7 @@ def mostrarhilo(request,idasignatura):
 			comentario.save()
 		else:
 			print "FORM COMENTARIO NO VALIDO"
-	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas[::-1], 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
+	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
 
 
 

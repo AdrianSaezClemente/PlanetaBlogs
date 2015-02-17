@@ -81,23 +81,23 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.id }} </label><a target="_blank" href={{ entrada.usuario.url_blog }}> {{ entrada.alumno.alumno.first_name }} {{ entrada.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.fecha }} por <a href={{ entrada.usuario.url_blog }}>{{ entrada.alumno.alumno.username }}</a></span></h2>
-										<h3><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
+										<h2 class="blog-post-title"><label> #{{ entrada.1 }} </label><a target="_blank" href={{ entrada.0.usuario.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a href={{ entrada.0.usuario.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
+										<h3><a target="_blank" href={{ entrada.link }}>{{ entrada.0.titulo }}</a></h3>
 										<p>{{ entrada.descripcion }}</p>
 										<div id="valoracion">
 											<div class="btn-toolbar" role="toolbar">
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-success btn-xs">Up <span id="up{{ entrada.id }}" class="badge">{{ entrada.totalup }}</span></button></a>
+													<a href='javascript:void(0)' onclick="Up('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-success btn-xs">Up <span id="up{{ entrada.id }}" class="badge">{{ entrada.0.totalup }}</span></button></a>
 												</div> 
 												<div class="btn-group">
-													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-danger btn-xs">Down <span id="down{{ entrada.id }}" class="badge">{{ entrada.totaldown }}</span></button></a>
+													<a href='javascript:void(0)' onclick="Down('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button type="button" class="btn btn-danger btn-xs">Down <span id="down{{ entrada.id }}" class="badge">{{ entrada.0.totaldown }}</span></button></a>
 												</div>
 											</div>
 										</div>
 										<form role="form" method="POST">{% csrf_token %}
 											<div id="escribircomentario">
 												<div class="input-group">
-													<span class="input-group-addon">#{{ entrada.id }}</span>
+													<span class="input-group-addon">#{{ entrada.1 }}</span>
 													<textarea class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
 													<input class="oculto" name="entrada" value="{{ entrada.id }}"></input>
 													<span class="input-group-btn">
@@ -108,7 +108,7 @@
 										</form>
 										
 										{% for comentario in lista_comentarios %}
-											{% if entrada.id == comentario.entrada_id %}
+											{% if entrada.0.id == comentario.entrada_id %}
 											<div id="comentarios">
 												<div id="comentario{{ comentario.id }}" class="panel panel-warning">
 													<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha }}</span></div></div>
