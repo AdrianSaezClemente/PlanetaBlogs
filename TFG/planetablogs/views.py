@@ -313,7 +313,7 @@ def mostrarhilo(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	#lista_entradas_valoradas = Entrada.objects.order_by('-up')[:4]
+	lista_entradas_valoradas = Entrada.objects.order_by('-totalup')[:4]
 	lista_id_alumnos = ConseguirIdAlumnos(idasignatura)
 	lista_entradas = ConseguirListaEntradas(lista_id_alumnos)
 	'''
@@ -341,7 +341,7 @@ def mostrarhilo(request,idasignatura):
 			comentario.save()
 		else:
 			print "FORM COMENTARIO NO VALIDO"
-	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas[::-1], 'lista_comentarios':lista_comentarios[::-1]})
+	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas[::-1], 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
 
 
 

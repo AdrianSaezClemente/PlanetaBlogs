@@ -60,9 +60,8 @@
 								{% if lista_entradas_valoradas %}
 									{% for ent in lista_entradas_valoradas %}
 										<a href="#" class="list-group-item">
-											<p style="font-weight:bold;font-style:oblique;" class="list-group-item-heading">{{ ent.usuario }} // {{ ent.titulo }}</p>
-											<p class="list-group-item-text">Fecha: {{ ent.fecha }}</p>
-											<p class="list-group-item-text">Valoración: {{ ent.up }} Up</p>
+											<p style="font-weight:bold;font-style:oblique;" class="list-group-item-heading">{{ ent.alumno.alumno.username }} // {{ ent.titulo }}<span class="pull-right">{{ ent.fecha }}</span></p>
+											<p class="list-group-item-text">Valoración: <span style="color:green;">{{ ent.totalup }} Up </span><strong>//</strong> <span style="color:red;">{{ ent.totaldown }} Down</span></p>
 										</a>
 									{% endfor %}
 								{% else %}
