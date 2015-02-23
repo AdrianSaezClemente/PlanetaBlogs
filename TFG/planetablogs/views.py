@@ -158,13 +158,11 @@ def inicio(request):
 
 #Eliminar asignatura de los hilos de un alumno
 def eliminarasignaturaalumno(request):
+	idalumno = ConseguirIdAlumno(request.user.id)
 	if request.method=='GET':
-		hilo = Rss.objects.get(asignatura=request.GET['id'],alumno=request.user.id)
-		print hilo
+		hilo = Rss.objects.get(asignatura=request.GET['id'],alumno=idalumno)
 		hilo.delete()
-		lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
-		lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
-	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
+	return render(request,'planetablogs/presentacionalum.html')
 
 
 
@@ -185,9 +183,10 @@ def ValidarRss(rss):
 def presentacionalumno(request):
 	info = None
 	idasignatura = 0
+	idalumno = ConseguirIdAlumno(request.user.id)
 	asignaturas = Asignatura.objects.all()
-	lista_asignaturas = Asignatura.objects.filter(alumnos=request.user.id)
-	lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=request.user.id)
+	lista_asignaturas = Asignatura.objects.filter(alumnos=idalumno)
+	lista_no_asignaturas = Asignatura.objects.all().exclude(alumnos=idalumno)
 	if request.method == 'POST':
 		formRSS = FormularioAgregarRSS(request.POST)
 		idasignatura = request.POST.get('asignatura', '')
@@ -197,7 +196,7 @@ def presentacionalumno(request):
 			if valido == True:
 				info = False
 				hilo = formRSS.save(commit=False)
-				hilo.alumno_id = request.user.id
+				hilo.alumno_id = idalumno
 				fechaActual = datetime.now()
 				hilo.ultima_fecha = fechaActual
 				hilo.save()
@@ -253,37 +252,25 @@ def ConseguirListaAlumnos(idasignatura):
 	lista_usuarios = []
 	rss = Rss.objects.filter(asignatura_id=idasignatura)
 	for i in rss:
-		alumno = Alumno.objects.get(alumno_id=i.alumno_id)
+		alumno = Alumno.objects.get(id=i.alumno_id)
 		lista_alumno_rss = [alumno,i]
 		lista_usuarios.append(lista_alumno_rss)
 	return lista_usuarios
 	
-	
-	
-#A través del id de la asignatura te devuelve la lista de los ids de los alumnos que están inscritos en esa asignatura
-def ConseguirIdAlumnos(idasignatura):
-	lista_id_alumnos = []
-	rss = Rss.objects.filter(asignatura_id=idasignatura)
-	for i in rss:
-		alumnos = Alumno.objects.filter(alumno_id=i.alumno_id)
-		for j in alumnos:
-			lista_id_alumnos.append(j.id)
-	return lista_id_alumnos
-
 
 
 #A través la lista de ids de los alumnos inscritos en una asignatura determinada te devuelve la lista de las entradas
-def ConseguirListaEntradas(lista_id_alumnos):
+def ConseguirListaEntradas(rss):
 	lista_entradas = []
+	entradas = Entrada.objects.all()
 	k = 1
-	for i in lista_id_alumnos:
-		entradas = Entrada.objects.all()
+	for i in rss:
 		for j in entradas:
-			if (j.alumno_id == i):
+			if (j.alumno_id == i.alumno_id):
 				lista_entradas_contador = [j,k]
 				lista_entradas.append(lista_entradas_contador)
 				k = k + 1
-	lista = lista_entradas[::-1]
+	lista = lista_entradas[::-1]	
 	return lista		#Invierte la lista, para que salga ordenada por fecha
 
 
@@ -301,7 +288,7 @@ def ConseguirIdAlumno(iduser):
 	return alumno.id
 
 	
-
+	
 #Elimina comentario
 def eliminarcomentario(request):
 	if request.method=='GET':
@@ -310,16 +297,20 @@ def eliminarcomentario(request):
 	return render(request,'planetablogs/index.html',{'user': request.user})
 	
 	
-	
+
 #Página principal de cada hilo
 @login_required()
 def mostrarhilo(request,idasignatura):
+	idalumno = ConseguirIdAlumno(request.user.id)
 	asignatura = Asignatura.objects.get(id=idasignatura)
+	rss = Rss.objects.filter(asignatura_id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	lista_id_alumnos = ConseguirIdAlumnos(idasignatura)
+	#lista_rss = ConseguirListaRss(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
-	lista_entradas = ConseguirListaEntradas(lista_id_alumnos)
+	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
+	print lista_entradas
+	#lista_entradas = ConseguirListaEntradas(rss)
 	'''
 	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
@@ -335,11 +326,10 @@ def mostrarhilo(request,idasignatura):
 		print formComentario
 		descripcion = request.POST.get('descripcion', '')
 		entrada = request.POST.get('entrada', '')
-		alumno = ConseguirIdAlumno(request.user.id)
 		if formComentario.is_valid():
 			comentario = formComentario.save(commit=False)
 			comentario.entrada_id = entrada
-			comentario.alumno_id = alumno
+			comentario.alumno_id = idalumno
 			comentario.asignatura_id = idasignatura
 			comentario.fecha = datetime.now()
 			comentario.save()

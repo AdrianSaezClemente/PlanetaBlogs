@@ -51,8 +51,14 @@ function EliminarComentario(idcomentario,idasignatura){
 	});
 }
 
+function CalcularPlanetsEntrada(id,up,down){
+	var total = up*3-down*1
+	$("#total"+id).append(total)
+}
+
 $.noConflict();
 $(document).ready(function() {
+	//CalcularPlanetsEntrada(up,down)
 	$(".oculto").hide();
 	$("#subir").hide();
 	$(function () {
