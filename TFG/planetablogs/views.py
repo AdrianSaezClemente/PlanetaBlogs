@@ -259,22 +259,6 @@ def ConseguirListaAlumnos(idasignatura):
 	
 
 
-#A través la lista de ids de los alumnos inscritos en una asignatura determinada te devuelve la lista de las entradas
-def ConseguirListaEntradas(rss):
-	lista_entradas = []
-	entradas = Entrada.objects.all()
-	k = 1
-	for i in rss:
-		for j in entradas:
-			if (j.alumno_id == i.alumno_id):
-				lista_entradas_contador = [j,k]
-				lista_entradas.append(lista_entradas_contador)
-				k = k + 1
-	lista = lista_entradas[::-1]	
-	return lista		#Invierte la lista, para que salga ordenada por fecha
-
-
-
 #A través del id de la asignatura te devuelve la lista de los ids de los alumnos que están inscritos en esa asignatura
 def ConseguirListaComentarios(idasignatura):
 	lista_comentarios = Comentario.objects.filter(asignatura_id=idasignatura)
@@ -306,11 +290,8 @@ def mostrarhilo(request,idasignatura):
 	rss = Rss.objects.filter(asignatura_id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	#lista_rss = ConseguirListaRss(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
 	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
-	print lista_entradas
-	#lista_entradas = ConseguirListaEntradas(rss)
 	'''
 	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')

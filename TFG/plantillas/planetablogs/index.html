@@ -108,7 +108,7 @@
 										</form>
 										
 										{% for comentario in lista_comentarios %}
-											{% if entrada.0.id == comentario.entrada_id %}
+											{% if entrada.id == comentario.entrada_id %}
 											<div id="comentarios">
 												<div id="comentario{{ comentario.id }}" class="panel panel-warning">
 													<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha }}</span></div></div>
