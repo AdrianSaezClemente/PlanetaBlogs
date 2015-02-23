@@ -41,6 +41,7 @@ function Down(identrada,idusuario,idasignatura){
 
 function EliminarComentario(idcomentario,idasignatura){
 	$('#comentario'+idcomentario).hide("slow");
+	$('#infocomentario'+idcomentario).show("slow");
 	$.ajax({
 		data: {'idcomentario':idcomentario,'idasignatura':idasignatura},
 		url: '/planetablogs/eliminarcomentario/',
