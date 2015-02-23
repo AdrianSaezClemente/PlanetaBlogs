@@ -1,4 +1,4 @@
-from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario, Valoracion, Up, Down
 from django import forms
 from django.forms import ModelForm
 from django.utils import timezone  

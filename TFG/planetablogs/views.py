@@ -21,40 +21,6 @@ from django.core import serializers
 from django.utils import simplejson
 from django.contrib import auth
 
-'''
-#Obtiene el RSS con feedparser
-def ObtenerRss(url):
-	rss = feedparser.parse(url)
-	return rss
-	
-
-#Parsear las etiquetas del RSS y devuelve una entrada
-def ParsearEtiquetasRss(rss,i):
-	titulo = rss.entries[i].title
-	link = rss.entries[i].link
-	pubDate = rss.entries[i].published_parsed 
-	fecha = datetime.fromtimestamp(mktime(pubDate))	#Convertir fecha a DateTime
-	descripcion = rss.entries[i].description
-	entrada = Entrada(titulo=titulo,link=link,fecha=fecha,descripcion=descripcion)
-	return entrada
-
-
-#Devuelve una entrada
-def ParsearEntrada(rss,i):
-	entrada = ParsearEtiquetasRss(rss,i)
-	return entrada
-
-
-#Parsea el RSS
-def ParsearRss(usuario):
-	rss = ObtenerRss(usuario.rss)
-	i = 0
-	while i<len(rss.entries):
-		entrada = ParsearEntrada(rss,i)
-		entrada.usuario = usuario
-		entrada.save()
-		i = i + 1
-'''
 
 
 #Introducir datos de registro de alumno
@@ -200,6 +166,11 @@ def presentacionalumno(request):
 				fechaActual = datetime.now()
 				hilo.ultima_fecha = fechaActual
 				hilo.save()
+				#Creo valoración para este usuario en este hilo
+				alumno = Alumno.objects.get(id=idalumno)
+				asig = Asignatura.objects.get(id=idasignatura)
+				valoracion = Valoracion(alumno=alumno,asignatura=asig,puntos=0)
+				valoracion.save()
 		else:
 			info = True
 	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas, 'info': info, 'idasignatura':idasignatura})
@@ -346,11 +317,19 @@ def infopuntuaciones(request,idasignatura):
 
 
 
+#A un alumno de una asignatura, se le suma al total de puntos, 3 puntos por darle al botón UP
+def SumarValoracionUp(idasignatura,idalumno):
+	val1 = Valoracion.objects.filter(asignatura_id=idasignatura)
+	val = val1.filter(alumno_id=idalumno)
+	print val
+	val.puntos = val.puntos + 3
+	val.save()
+	
+
+
 #Suma 1 Up a la entrada y lo guarda
 def GuardarUp(identrada):
-	print "que pasa"
 	entrada = Entrada.objects.get(id=identrada)
-	print entrada
 	entrada.totalup = entrada.totalup + 1
 	entrada.save()
 	
@@ -368,6 +347,7 @@ def up(request):
 		up = Up(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada)
 		up.save()
 		GuardarUp(identrada)
+		SumarValoracionUp(idasignatura,idalumno)
 	return render(request,'planetablogs/index.html',{'user': request.user})
 	
 	
@@ -450,95 +430,3 @@ def buscarIdEntrada(request):
 
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")
-
-
-
-	
-'''
-#Actualiza usuarios
-def ActualizarUsuarios():
-	lista_usuarios = Usuario.objects.all()
-	actualizacion = 0
-	for usuario in lista_usuarios:
-		rss = ObtenerRss(usuario.rss)
-		lon = len(rss.entries)
-		while i<lon:
-			fecha = rss.entries[i].published_parsed
-			fechaEntrada = datetime.fromtimestamp(mktime(fecha))
-			print fechaEntrada
-			if (fechaEntrada>now):
-				titulo = rss.entries[i].title
-				link = rss.entries[i].link
-				descripcion = rss.entries[i].description
-				entrada = Entrada(titulo=titulo,link=link,fecha=fechaEntrada,descripcion=descripcion)
-			else:
-				print "Es menor"+ fechaEntrada
-				
-	now = datetime.datetime.now()
-	print now
-	return render(request,'planetablogs/index.html',{"entradas": entradas,'lista_entradas':lista_entradas,'lista_usuarios':lista_usuarios,'json_usuarios':json_usuarios})
-
-#Guarda la entrada en la bbdd
-def GuardarEntradas(usuario,lon):
-	ParsearRss(usuario,lon)
-
-
-#Guarda entradas que son nuevas
-def GuardarEntradasNuevas(usuario,nuevas):
-	ParsearRss(usuario,nuevas)
-	usuario.entradas = usuario.entradas + nuevas
-
-
-#Comprueba si ha habido actualizacion de entradas en los RSS's
-def ComprobarEntradas(usuario,lon,actualizacion):
-	ent = usuario.entradas
-	print "Entradas de "+usuario.nick+" en el rss: "+str(lon)
-	print "Entradas del "+usuario.nick+" en la bbdd: "+str(ent)
-	if ent<lon:
-		nuevas = lon - ent
-		print "Entradas nuevas de "+usuario.nick+" : "+str(nuevas)
-		GuardarEntradasNuevas(usuario,nuevas)
-		actualizacion = actualizacion + 1
-	return actualizacion
-'''
-
-
-'''
-def nuevo_usuario(request):
-	info = "False"
-	json_serializer = serializers.get_serializer("json")()
-	lista_usuarios = json_serializer.serialize(Usuario.objects.all(), ensure_ascii=False)
-	
-	if request.method=='POST':
-		formulario = FormularioRegistro(request.POST)
-		if formulario.is_valid():
-			form = formulario.save(commit = False)
-			exitoso = ComprobarRegistro(form)
-			if(exitoso):
-				form.puntuaciontotal = 0
-				form.nivel = 0
-				form.entradas = 0
-				form.url_blog = ''
-				form.conectado = False
-				form.save()
-				usuarios = Usuario.objects.all()
-				for usu in usuarios:
-					if (usu.nick == form.nick):
-						ParsearRss(usu)
-						break;
-				return render(request, 'planetablogs/info.html', {'form': form})
-			else:
-				return render(request, 'planetablogs/nuevousuario.html', {'lista_usuarios':lista_usuarios,'info': info})
-		else:
-			return render(request, 'planetablogs/nuevousuario.html', {'lista_usuarios':lista_usuarios,'info': info})
-	else:
-		formulario = FormularioRegistro()
-	return render(request, 'planetablogs/nuevousuario.html', {'formulario': formulario,'lista_usuarios':lista_usuarios})
-'''
-
-'''
-JSON:
-#json_serializer = serializers.get_serializer("json")()
-	#json_usuarios = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
-	#json_entradas = json_serializer.serialize(Entrada.objects.all(), ensure_ascii=False)
-'''
