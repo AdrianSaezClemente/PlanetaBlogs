@@ -20,6 +20,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 from django.utils import simplejson
 from django.contrib import auth
+from django.db.models import F
 
 
 
@@ -314,24 +315,22 @@ def infopuntuaciones(request,idasignatura):
 	json_serializer = serializers.get_serializer("json")()
 	lista_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 	return render(request, 'planetablogs/infopuntuaciones.html', {'lista_usuarios':lista_usuarios, 'user': request.user, 'asignatura': asignatura})
-
-
-
-#A un alumno de una asignatura, se le suma al total de puntos, 3 puntos por darle al botón UP
-def SumarValoracionUp(idasignatura,idalumno):
-	val1 = Valoracion.objects.filter(asignatura_id=idasignatura)
-	val = val1.filter(alumno_id=idalumno)
-	print val
-	val.puntos = val.puntos + 3
-	val.save()
 	
-
-
+	
+	
 #Suma 1 Up a la entrada y lo guarda
 def GuardarUp(identrada):
 	entrada = Entrada.objects.get(id=identrada)
 	entrada.totalup = entrada.totalup + 1
 	entrada.save()
+	
+
+
+#A un alumno de una asignatura, se le suma al total de puntos, 3 puntos por darle al botón UP
+def SumarValoracionUp(idasignatura,idalumno):
+	entrada = Entrada.objects.filter(alumno_id=idalumno)
+	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
+	val.update(puntos=F('puntos')+3)
 	
 	
 	
