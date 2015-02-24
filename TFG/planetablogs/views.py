@@ -245,15 +245,36 @@ def ConseguirIdAlumno(iduser):
 
 	
 	
+#Se resta 5 puntos al alumno que elimina su propio comentario
+def RestarValoracionComentario(idasignatura,idalumno):
+	entrada = Entrada.objects.filter(alumno_id=idalumno)
+	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
+	val.update(puntos=F('puntos')-5)
+	
+	
+	
 #Elimina comentario
 def eliminarcomentario(request):
 	if request.method=='GET':
 		comentario = Comentario.objects.get(id=request.GET['idcomentario'])
+		idasignatura = comentario.asignatura_id
+		print idasignatura
+		idalumno = comentario.alumno_id
+		print idalumno
 		comentario.delete()
+		RestarValoracionComentario(idasignatura,idalumno)
 	return render(request,'planetablogs/index.html',{'user': request.user})
 	
 	
 
+#Se suma 5 puntos al alumno que hace un comentario
+def SumarValoracionComentario(idasignatura,idalumno):
+	entrada = Entrada.objects.filter(alumno_id=idalumno)
+	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
+	val.update(puntos=F('puntos')+5)
+	
+	
+	
 #Página principal de cada hilo
 @login_required()
 def mostrarhilo(request,idasignatura):
@@ -286,6 +307,7 @@ def mostrarhilo(request,idasignatura):
 			comentario.asignatura_id = idasignatura
 			comentario.fecha = datetime.now()
 			comentario.save()
+			SumarValoracionComentario(idasignatura,idalumno)
 		else:
 			print "FORM COMENTARIO NO VALIDO"
 	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
@@ -358,6 +380,14 @@ def GuardarDown(identrada):
 	entrada.save()
 	
 	
+
+#A un alumno de una asignatura, se le resta al total de puntos, 1 puntos por darle al botón DOWN
+def RestarValoracionDown(idasignatura,idalumno):
+	entrada = Entrada.objects.filter(alumno_id=idalumno)
+	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
+	val.update(puntos=F('puntos')-1)
+	
+	
 	
 #Dar al botón DOWN
 @login_required()
@@ -371,6 +401,7 @@ def down(request):
 		down = Down(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada)
 		down.save()
 		GuardarDown(identrada)
+		RestarValoracionDown(idasignatura,idalumno)
 	return render(request,'planetablogs/index.html',{'user': request.user})
 
 
