@@ -10,9 +10,8 @@ function CompararNick(nick,contra){
 }
 
 
-function Up(identrada,idusuario,idasignatura){
-	var up1 = $("#up"+identrada).text();
-	var up = parseInt(up1) + parseInt(1)
+function Up(identrada,idusuario,idasignatura,up,down){
+	var up1 = parseInt(up) + parseInt(1)
 	$.ajax({
 		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura,'up':up},
 		url: '/planetablogs/up/',
@@ -21,7 +20,8 @@ function Up(identrada,idusuario,idasignatura){
 
 		},
 	});
-	$("#up"+identrada).text(parseInt(up));
+	var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'>Up <span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'>Down <span class='badge'>"+down+"</span></button></div>"
+	$("#updown"+identrada).html(html);
 }
 
 function Down(identrada,idusuario,idasignatura){
