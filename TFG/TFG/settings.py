@@ -23,7 +23,11 @@ SECRET_KEY = '+2#5&97_k1$8j4nwf47oo#b*8=t2nynb5b!5_va#^4og+6%yny'
 DEBUG = True 
 
 TEMPLATE_DEBUG = True
-USE_TZ=False
+
+USE_TZ = True
+
+TIME_ZONE = 'Etc/GMT+2'
+
 ALLOWED_HOSTS = []
 
 TEMPLATE_DIRS = ('/home/adri/Escritorio/ProyectoGit/TFG/plantillas')
