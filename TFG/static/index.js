@@ -20,13 +20,12 @@ function Up(identrada,idusuario,idasignatura,up,down){
 
 		},
 	});
-	var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'>Up <span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'>Down <span class='badge'>"+down+"</span></button></div>"
+	var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down+"</span></button></div>"
 	$("#updown"+identrada).html(html);
 }
 
-function Down(identrada,idusuario,idasignatura){
-	var down1 = $("#down"+identrada).text();
-	var down = parseInt(down1) + parseInt(1)
+function Down(identrada,idusuario,idasignatura,up,down){
+	var down1 = parseInt(down) + parseInt(1)
 	$.ajax({
 		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura,'down':down},
 		url: '/planetablogs/down/',
@@ -36,7 +35,8 @@ function Down(identrada,idusuario,idasignatura){
 			//console.log(datos.entrada[0].fields.down)
 		},
 	});
-	$("#down"+identrada).text(parseInt(down));
+	var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down1+"</span></button></div>"
+	$("#updown"+identrada).html(html);
 }
 
 function EliminarComentario(idcomentario,idasignatura){
