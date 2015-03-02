@@ -51,7 +51,6 @@
 											<div style="word-wrap:break-word;" class="row" id="clase_lista_asignaturas">
 												<div class="col-sm-11"><a id="eliminar{{ asig.id }}" href="/planetablogs/alumnos/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span></a></div><div class="col-sm-1"><button style="margin-top:30%;margin-right:30%" href="/planetablogs/alumnos/" onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></div>
 											</div>
-											
 										{% endfor %}
 									{% else %}
 										<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No tiene hilos</br></p>
