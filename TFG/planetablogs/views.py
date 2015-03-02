@@ -231,6 +231,49 @@ def ConseguirListaAlumnos(idasignatura):
 	
 
 
+#Comprueba si una entrada (i) está puntuada como UP por un alumno
+def ComprobarEntradaPuntuadaUp(i,up,lista_entradas_puntuadas):
+	upencontrado = False
+	for j in up:
+		if i.id == j.entrada_id:
+			upencontrado = True
+			entrada = [i,True]
+			lista_entradas_puntuadas.append(entrada)
+			break;
+	return upencontrado
+	
+	
+	
+#Comprueba si una entrada (i) está puntuada como DOWN por un alumno
+def ComprobarEntradaPuntuadaDown(i,down,lista_entradas_puntuadas):
+	downencontrado = False
+	for j in down:
+		if i.id == j.entrada_id:
+			downencontrado = True
+			entrada = [i,True]
+			lista_entradas_puntuadas.append(entrada)
+			break;
+	return downencontrado
+
+
+
+#Obtiene las entradas de un alumno en ese hilo, y si la ha puntuado o no.
+def ConseguirListaEntradas(idasignatura,idalumno):
+	downencontrado = False
+	lista_entradas_puntuadas = []
+	entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
+	up = Up.objects.filter(alumno_id=idalumno)
+	down = Down.objects.filter(alumno_id=idalumno)
+	for i in entradas:
+		upencontrado = ComprobarEntradaPuntuadaUp(i,up,lista_entradas_puntuadas)
+		downencontrado = ComprobarEntradaPuntuadaDown(i,down,lista_entradas_puntuadas)
+		if (downencontrado == False and upencontrado == False):
+			entrada = [i,False]
+			lista_entradas_puntuadas.append(entrada)
+	return lista_entradas_puntuadas
+
+
+
 #A través del id de la asignatura te devuelve la lista de los ids de los alumnos que están inscritos en esa asignatura
 def ConseguirListaComentarios(idasignatura):
 	lista_comentarios = Comentario.objects.filter(asignatura_id=idasignatura)
@@ -242,7 +285,7 @@ def ConseguirListaComentarios(idasignatura):
 def ConseguirIdAlumno(iduser):
 	alumno = Alumno.objects.get(alumno_id=iduser)
 	return alumno.id
-
+	
 	
 	
 #Se resta 5 puntos al alumno que elimina su propio comentario
@@ -284,7 +327,8 @@ def mostrarhilo(request,idasignatura):
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
-	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
+	lista_entradas = ConseguirListaEntradas(idasignatura,idalumno)
+	print lista_entradas
 	'''
 	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
