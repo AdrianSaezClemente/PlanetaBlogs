@@ -26,7 +26,7 @@ function Agregar(idasignatura,titulo,descripcion){
 
 function Eliminar(idasignatura,titulo,descripcion){
 	console.log(idasignatura)
-	$('#eliminar'+idasignatura).hide(2000);
+	$('#eliminar'+idasignatura).hide(1500);
 	$('#botoneliminar'+idasignatura).hide();
 	var html = '<button title="Hilo eliminado" type="button" class="btn-xs btn-danger pull-right">Eliminado<span class="glyphicon glyphicon-ok"></span></button>'
 	$('a#eliminar'+idasignatura).append(html);
