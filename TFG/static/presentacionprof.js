@@ -24,6 +24,7 @@ function Agregar(idasignatura,titulo,descripcion){
 }
 
 
+
 function Eliminar(idasignatura,titulo,descripcion){
 	console.log(idasignatura)
 	$('#eliminar'+idasignatura).hide(1500);

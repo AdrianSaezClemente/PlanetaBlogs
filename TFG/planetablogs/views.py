@@ -20,7 +20,7 @@ from django.core import serializers
 from django.utils import simplejson
 from django.contrib import auth
 from django.db.models import F
-
+import time
 
 
 #Introducir datos de registro de alumno
@@ -127,15 +127,8 @@ def EliminarTodoAlumno(idasignatura,idalumno):
 	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
 	val.delete()
 	entradas = Entrada.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
-	ups = Up.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
-	downs = Down.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
-	comentarios = Comentario.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
-	#AjustarPuntuaciones()	¿Ajustar puntuaciones?
 	entradas.delete()
-	ups.delete()
-	downs.delete()
-	comentarios.delete()
-	
+
 	
 	
 #Eliminar asignatura de los hilos de un alumno
