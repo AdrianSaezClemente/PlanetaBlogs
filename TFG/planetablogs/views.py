@@ -122,12 +122,31 @@ def inicio(request):
 
 
 
+#Al llamar a eliminar asignatura del alumno. Se borra todo lo que contenía ese alumno en ese hilo.
+def EliminarTodoAlumno(idasignatura,idalumno):
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+	val.delete()
+	entradas = Entrada.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
+	ups = Up.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
+	downs = Down.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
+	comentarios = Comentario.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
+	#AjustarPuntuaciones()	¿Ajustar puntuaciones?
+	entradas.delete()
+	ups.delete()
+	downs.delete()
+	comentarios.delete()
+	
+	
+	
 #Eliminar asignatura de los hilos de un alumno
 def eliminarasignaturaalumno(request):
 	idalumno = ConseguirIdAlumno(request.user.id)
+	idasignatura=request.GET['id']
 	if request.method=='GET':
-		hilo = Rss.objects.get(asignatura=request.GET['id'],alumno=idalumno)
+		hilo = Rss.objects.get(asignatura=idasignatura,alumno=idalumno)
 		hilo.delete()
+		EliminarTodoAlumno(idasignatura,idalumno)
+		
 	return render(request,'planetablogs/presentacionalum.html')
 
 

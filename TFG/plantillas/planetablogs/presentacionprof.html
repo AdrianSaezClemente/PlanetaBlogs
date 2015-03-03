@@ -41,8 +41,25 @@
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
 											<div style="word-wrap:break-word;" class="row" id="clase_lista_asignaturas">
-												<div class="col-sm-11"><a id="eliminar{{ asig.id }}" href="/planetablogs/alumnos/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span></a></div><div class="col-sm-1"><button style="margin-top:30%;margin-right:30%" href="/planetablogs/alumnos/" onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></div>
+												<div class="col-sm-11"><a id="eliminar{{ asig.id }}" href="/planetablogs/alumnos/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span></a></div><div class="col-sm-1"><button data-toggle="modal" data-target="#myModal" style="margin-top:30%;margin-right:30%" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></div>
 											</div>
+											<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+														<h4 class="modal-title">Eliminar {{ asig.titulo }}</h4>
+													</div>
+													<div class="modal-body">
+														<p>¿Estás seguro que quieres eliminar {{ asig.titulo }}?</p>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+														<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');">Eliminar</button>
+													</div>
+													</div><!-- /.modal-content -->
+												</div><!-- /.modal-dialog -->
+											</div><!-- /.modal -->
 										{% endfor %}
 									{% else %}
 										<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No tiene hilos</br></br> ¡Anímate a crear un hilo! </p>
