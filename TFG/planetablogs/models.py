@@ -50,6 +50,7 @@ class Valoracion(models.Model):
 	alumno = models.ForeignKey(Alumno)
 	asignatura = models.ForeignKey(Asignatura)
 	puntos = models.IntegerField()
+	nivel = models.IntegerField()
 	def __unicode__(self):
 		return unicode(self.alumno)
 	

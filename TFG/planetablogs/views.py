@@ -85,6 +85,38 @@ def nuevo_profesor(request):
 
 
 
+#Método que actualiza el nivel según la puntuación del alumno en este momento.
+def ActualizarNivel(puntos):
+	if puntos <= 9:
+		nivel = 0
+	elif puntos > 9 and puntos <= 24:
+		nivel = 1
+	elif puntos > 24 and puntos <= 44:
+		nivel = 2
+	elif puntos > 44 and puntos <= 69:
+		nivel = 3
+	elif puntos > 69 and puntos <= 99:
+		nivel = 4
+	elif puntos > 99 and puntos <= 134:
+		nivel = 5
+	elif puntos > 134 and puntos <= 174:
+		nivel = 6
+	elif puntos > 174 and puntos <= 219:
+		nivel = 7
+	elif puntos > 219 and puntos <= 269:
+		nivel = 8
+	elif puntos > 269 and puntos <= 324:
+		nivel = 9
+	elif puntos > 324 and puntos <= 384:
+		nivel = 10
+	elif puntos > 384 and puntos <= 450:
+		nivel = 11	
+	else:
+		nivel = 12
+	return nivel
+
+
+
 #Comprobar si un usuario es alumno o profesor
 def ComprobarUsuario(idusuario):
 	alumnos = Alumno.objects.all()
@@ -181,7 +213,7 @@ def presentacionalumno(request):
 				#Creo valoración para este usuario en este hilo
 				alumno = Alumno.objects.get(id=idalumno)
 				asig = Asignatura.objects.get(id=idasignatura)
-				valoracion = Valoracion(alumno=alumno,asignatura=asig,puntos=0)
+				valoracion = Valoracion(alumno=alumno,asignatura=asig,puntos=0,nivel=0)
 				valoracion.save()
 		else:
 			info = True
@@ -299,11 +331,14 @@ def ConseguirIdAlumno(iduser):
 	
 	
 	
-#Se resta 5 puntos al alumno que elimina su propio comentario
+#Se resta 5 puntos al alumno que elimina su propio comentario y actualiza su nivel
 def RestarValoracionComentario(idasignatura,idalumno):
 	entrada = Entrada.objects.filter(alumno_id=idalumno)
 	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
 	val.update(puntos=F('puntos')-5)
+	nivel = ActualizarNivel(val.puntos)
+	val.nivel = nivel
+	val.save()
 	
 	
 	
@@ -321,11 +356,14 @@ def eliminarcomentario(request):
 	
 	
 
-#Se suma 5 puntos al alumno que hace un comentario
+#Se suma 5 puntos al alumno que hace un comentario y actualiza su nivel
 def SumarValoracionComentario(idasignatura,idalumno):
 	entrada = Entrada.objects.filter(alumno_id=idalumno)
 	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
 	val.update(puntos=F('puntos')+5)
+	nivel = ActualizarNivel(val.puntos)
+	val.nivel = nivel
+	val.save()
 	
 	
 	
@@ -379,9 +417,8 @@ def salir(request):
 @login_required()
 def puntuaciones(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
-	lista_usuarios = User.objects.order_by('username')
-	print lista_usuarios
-	return render(request, 'planetablogs/puntuaciones.html', {'lista_usuarios':lista_usuarios, 'user': request.user, 'asignatura': asignatura})
+	lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos')
+	return render(request, 'planetablogs/puntuaciones.html', {'lista_valoracion':lista_valoracion, 'user': request.user, 'asignatura': asignatura})
 
 
 
@@ -403,11 +440,14 @@ def GuardarUp(identrada):
 	
 
 
-#A un alumno de una asignatura, se le suma al total de puntos, 3 puntos por darle al botón UP
+#A un alumno de una asignatura, se le suma al total de puntos, 3 puntos por darle al botón UP y actualiza su nivel
 def SumarValoracionUp(idasignatura,idalumno):
 	entrada = Entrada.objects.filter(alumno_id=idalumno)
 	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
 	val.update(puntos=F('puntos')+3)
+	nivel = ActualizarNivel(val.puntos)
+	val.nivel = nivel
+	val.save()
 	
 	
 	
@@ -436,11 +476,14 @@ def GuardarDown(identrada):
 	
 	
 
-#A un alumno de una asignatura, se le resta al total de puntos, 1 puntos por darle al botón DOWN
+#A un alumno de una asignatura, se le resta al total de puntos, 1 puntos por darle al botón DOWN y actualiza su nivel
 def RestarValoracionDown(idasignatura,idalumno):
 	entrada = Entrada.objects.filter(alumno_id=idalumno)
 	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
 	val.update(puntos=F('puntos')-1)
+	nivel = ActualizarNivel(val.puntos)
+	val.nivel = nivel
+	val.save()
 	
 	
 	

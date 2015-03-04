@@ -55,11 +55,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% for usu in lista_usuarios %}
+								{% for val in lista_valoracion %}
 								<tr>
 								
-									<td>{{ usu }}</td>
-									<td><em style="color:#8F6B00">{{ usu.puntuaciontotal }} </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+									<td>{{ val.alumno.alumno.username }}</td>
+									<td><em style="color:#8F6B00">{{ val.puntos }} </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
 									<td>{{ usu.nivel }}</td>
 								
 								</tr>
