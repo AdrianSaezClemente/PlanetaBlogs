@@ -184,6 +184,43 @@ body {
     z-index:0;
 }
 
+.nivel0 {
+	background-color:#CC0000;
+}
+.nivel1 {
+	background-color:#FF0000;
+}
+.nivel2 {
+	background-color:#FF3333;
+}
+.nivel3 {
+	background-color:#FF6666;
+}
+.nivel4 {
+	background-color:#FF9999;
+}
+.nivel5 {
+	background-color:#FFCCCC;
+}
+.nivel6 {
+	background-color:#CCEBCC;
+}
+.nivel7 {
+	background-color:#99D699;
+}
+.nivel8 {
+	background-color:#66C266;
+}
+.nivel9 {
+	background-color:#33AD33;
+}
+.nivel10 {
+	background-color:#009900;
+}
+.nivel11 {
+	background-color:#007A00;
+}
+
 .pequeña{width: 40px; height: 25px;}
 
 .muypequeña{width: 30px; height: 20px;}
