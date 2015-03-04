@@ -186,6 +186,8 @@ body {
 
 .pequeña{width: 40px; height: 25px;}
 
+.muypequeña{width: 30px; height: 20px;}
+
 #cabecerarelativa {
 	width:102%;
 	position:fixed;

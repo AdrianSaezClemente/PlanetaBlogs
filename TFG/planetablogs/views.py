@@ -333,9 +333,8 @@ def ConseguirIdAlumno(iduser):
 	
 #Se resta 5 puntos al alumno que elimina su propio comentario y actualiza su nivel
 def RestarValoracionComentario(idasignatura,idalumno):
-	entrada = Entrada.objects.filter(alumno_id=idalumno)
-	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
-	val.update(puntos=F('puntos')-5)
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+	val.puntos = val.puntos - 5
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
@@ -358,9 +357,8 @@ def eliminarcomentario(request):
 
 #Se suma 5 puntos al alumno que hace un comentario y actualiza su nivel
 def SumarValoracionComentario(idasignatura,idalumno):
-	entrada = Entrada.objects.filter(alumno_id=idalumno)
-	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
-	val.update(puntos=F('puntos')+5)
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+	val.puntos = val.puntos + 5
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
@@ -442,9 +440,8 @@ def GuardarUp(identrada):
 
 #A un alumno de una asignatura, se le suma al total de puntos, 3 puntos por darle al botón UP y actualiza su nivel
 def SumarValoracionUp(idasignatura,idalumno):
-	entrada = Entrada.objects.filter(alumno_id=idalumno)
-	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
-	val.update(puntos=F('puntos')+3)
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+	val.puntos = val.puntos + 3
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
@@ -478,9 +475,8 @@ def GuardarDown(identrada):
 
 #A un alumno de una asignatura, se le resta al total de puntos, 1 puntos por darle al botón DOWN y actualiza su nivel
 def RestarValoracionDown(idasignatura,idalumno):
-	entrada = Entrada.objects.filter(alumno_id=idalumno)
-	val = Valoracion.objects.filter(asignatura_id=idasignatura).filter(alumno_id=idalumno)
-	val.update(puntos=F('puntos')-1)
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+	val.puntos = val.puntos - 1
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
