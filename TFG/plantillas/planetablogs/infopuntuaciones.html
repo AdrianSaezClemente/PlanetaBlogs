@@ -20,29 +20,32 @@
 	</head>
 	
 	<body>
-		<!-- CABECERA -->
-		<div id="cabecerarelativa" class="row">
-			<div id="cabecera" class="col-xs-12 blog-masthead">
-				<nav class="blog-nav">
-					<a class="blog-nav-item" href="/planetablogs/alumnos/">Mis hilos</a>
-					<a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}">{{ asignatura }}</a>
-					<a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a>
-					<div class="btn-group active">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-stats"></span>  Ránking</a></li>
-							<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign active"></span> Información</a></li>
-						</ul>
-					</div>
-				</nav>
-			</div>
-		</div>
-		<!-- FIN CABECERA -->
 		<!-- CONTENEDOR -->
 		<div class="container">
+			<!-- CABECERA -->
+			<div class="row">
+				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-10 col-sm-offset-1">
+					<ul class="nav nav-tabs">
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-book"></span> {{ asignatura }}</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
+						<li class="active">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-stats"></span> Ránking</a></li>
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/infopuntuaciones/"><span style="color:#7A7A7A" class="glyphicon glyphicon-chevron-right"></span>  <span class="glyphicon glyphicon-info-sign"></span> Información</a></li>
+								</ul>
+							</div>
+						</li>
+						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}">Desconectar</a></div>
+					</ul>
+				</div>
+			</div>
+			<!-- FIN CABECERA -->
 			<div class="row">
 				<div id="titulo" class="col-xs-12 col-sm-8 col-sm-offset-2 well">
 					<h3 class="centrar"><strong>Bases de las puntuaciones</strong></h3></br>
@@ -53,7 +56,7 @@
 					<li>Cada comentario realizado se premiará con una bonificación de 5 planets para el usuario que escribió dicho comentario. Si el comentario es eliminado por el mismo usuario que lo escribió se penalizará con 5 planets.</li></br>
 					<li>Para la consecución de niveles:</li></br></br>
 					</ol>
-					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+					<div class="col-xs-12 col-sm-10 col-sm-offset-2">
 						<table id="tablainfo" class="table table-bordered centrar">
 							<thead>
 								<tr>

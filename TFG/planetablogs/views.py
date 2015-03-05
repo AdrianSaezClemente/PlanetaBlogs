@@ -303,17 +303,17 @@ def ComprobarEntradaPuntuadaDown(i,down,lista_entradas_puntuadas):
 #Obtiene las entradas de un alumno en ese hilo, y si la ha puntuado o no.
 def ConseguirListaEntradas(idasignatura,idalumno):
 	downencontrado = False
-	lista_entradas_puntuadas = []
+	tupla_entradas = []
 	entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
 	up = Up.objects.filter(alumno_id=idalumno)
 	down = Down.objects.filter(alumno_id=idalumno)
 	for i in entradas:
-		upencontrado = ComprobarEntradaPuntuadaUp(i,up,lista_entradas_puntuadas)
-		downencontrado = ComprobarEntradaPuntuadaDown(i,down,lista_entradas_puntuadas)
+		upencontrado = ComprobarEntradaPuntuadaUp(i,up,tupla_entradas)
+		downencontrado = ComprobarEntradaPuntuadaDown(i,down,tupla_entradas)
 		if (downencontrado == False and upencontrado == False):
 			entrada = [i,False]
-			lista_entradas_puntuadas.append(entrada)
-	return lista_entradas_puntuadas
+			tupla_entradas.append(entrada)
+	return tupla_entradas
 
 
 
@@ -374,10 +374,9 @@ def mostrarhilo(request,idasignatura):
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
-	entradas = ConseguirListaEntradas(idasignatura,idalumno)
-	paginator_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
+	tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
 	
-	paginator = Paginator(entradas, 5) #Muestra 5 entradas por página
+	paginator = Paginator(tupla_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
 	try:
 		entradas = paginator.page(page)

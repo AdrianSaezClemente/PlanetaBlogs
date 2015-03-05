@@ -18,7 +18,7 @@ class Alumno(models.Model):
 class Asignatura(models.Model):
 	alumnos = models.ManyToManyField(Alumno, through='Rss')
 	profesores = models.ManyToManyField(Profesor)
-	titulo = models.CharField(max_length=50)
+	titulo = models.CharField(max_length=35)
 	descripcion = models.TextField(max_length=150)
 	def __unicode__(self):
 		return self.titulo

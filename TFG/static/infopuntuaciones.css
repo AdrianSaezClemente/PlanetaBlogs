@@ -183,6 +183,9 @@ body {
     z-index:0;
 }
 
+
+.muypequeña{width: 20px; height: 10px;}
+
 .nivel0 {
 	background-color:#CC0000;
 }
