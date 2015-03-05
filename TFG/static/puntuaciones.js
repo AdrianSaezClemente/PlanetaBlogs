@@ -2,8 +2,7 @@ $.noConflict();
 $(document).ready(function() {
 	
 	$("#nivel").mouseover(function() {
-		var nivel = $("#nivel").text()
-		console.log(nivel)
+		var nivel = $(this).val()
 		if nivel == 0 {$(this).addClass("nivel0");}
 		if nivel == 1 {$(this).addClass("nivel1");}
 		if nivel == 2 {$(this).addClass("nivel2");}
@@ -16,6 +15,20 @@ $(document).ready(function() {
 		if nivel == 9 {$(this).addClass("nivel9");}
 		if nivel == 10 {$(this).addClass("nivel10");}
 		if nivel == 11 {$(this).addClass("nivel11");}
-	})
+	}).mouseout(function() {
+		var nivel = $(this).val()
+		if nivel == 0 {$(this).removeClass("nivel0");}
+		if nivel == 1 {$(this).removeClass("nivel1");}
+		if nivel == 2 {$(this).removeClass("nivel2");}
+		if nivel == 3 {$(this).removeClass("nivel3");}
+		if nivel == 4 {$(this).removeClass("nivel4");}
+		if nivel == 5 {$(this).removeClass("nivel5");}
+		if nivel == 6 {$(this).removeClass("nivel6");}
+		if nivel == 7 {$(this).removeClass("nivel7");}
+		if nivel == 8 {$(this).removeClass("nivel8");}
+		if nivel == 9 {$(this).removeClass("nivel9");}
+		if nivel == 10 {$(this).removeClass("nivel10");}
+		if nivel == 11 {$(this).removeClass("nivel11");}
+	});
 
 });

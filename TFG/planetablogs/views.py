@@ -416,7 +416,7 @@ def salir(request):
 def puntuaciones(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos')
-	return render(request, 'planetablogs/puntuaciones.html', {'lista_valoracion':lista_valoracion, 'user': request.user, 'asignatura': asignatura})
+	return render(request, 'planetablogs/puntuaciones.html', {'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
 
 
 
@@ -439,8 +439,9 @@ def GuardarUp(identrada):
 
 
 #A un alumno de una asignatura, se le suma al total de puntos, 3 puntos por darle al botón UP y actualiza su nivel
-def SumarValoracionUp(idasignatura,idalumno):
-	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+def SumarValoracionUp(idasignatura,idalumno,identrada):
+	entrada = Entrada.objects.get(id=identrada)
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=entrada.alumno_id)
 	val.puntos = val.puntos + 3
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
@@ -460,7 +461,7 @@ def up(request):
 		up = Up(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada)
 		up.save()
 		GuardarUp(identrada)
-		SumarValoracionUp(idasignatura,idalumno)
+		SumarValoracionUp(idasignatura,idalumno,identrada)
 	return render(request,'planetablogs/index.html',{'user': request.user})
 	
 	
@@ -474,8 +475,9 @@ def GuardarDown(identrada):
 	
 
 #A un alumno de una asignatura, se le resta al total de puntos, 1 puntos por darle al botón DOWN y actualiza su nivel
-def RestarValoracionDown(idasignatura,idalumno):
-	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+def RestarValoracionDown(idasignatura,idalumno,identrada):
+	entrada = Entrada.objects.get(id=identrada)
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=entrada.alumno_id)
 	val.puntos = val.puntos - 1
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
@@ -495,7 +497,7 @@ def down(request):
 		down = Down(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada)
 		down.save()
 		GuardarDown(identrada)
-		RestarValoracionDown(idasignatura,idalumno)
+		RestarValoracionDown(idasignatura,idalumno,identrada)
 	return render(request,'planetablogs/index.html',{'user': request.user})
 
 

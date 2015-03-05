@@ -49,6 +49,7 @@
 						<table id="tablaranking" class="table table-bordered centrar">
 							<thead>
 								<tr>
+								<th class="centrar">Posición</th>
 								<th class="centrar">Usuario</th>
 								<th class="centrar">Planets</th>
 								<th class="centrar">Nivel</th>
@@ -57,11 +58,10 @@
 							<tbody>
 								{% for val in lista_valoracion %}
 								<tr>
-								
+									<td>{{ forloop.counter }}</td>
 									<td>{{ val.alumno.alumno.username }}</td>
 									<td><em style="color:#8F6B00">{{ val.puntos }} </em><img style="margin-left:6px;" class="muypequeña" src="../../../../../static/imagenes/planets41.png"></td>
 									<td id="nivel">{{ val.nivel }}</td>
-								
 								</tr>
 								{% endfor %}
 							</tbody>
