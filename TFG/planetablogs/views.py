@@ -374,18 +374,18 @@ def mostrarhilo(request,idasignatura):
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
-	lista_entradas = ConseguirListaEntradas(idasignatura,idalumno)
-	print lista_entradas
-	'''
-	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
+	entradas = ConseguirListaEntradas(idasignatura,idalumno)
+	paginator_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
+	
+	paginator = Paginator(paginator_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
 	try:
 		entradas = paginator.page(page)
 	except PageNotAnInteger:	
-		entradas = paginator.page(2)
+		entradas = paginator.page(1)
 	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
-	'''
+	
 	if request.method == 'POST':
 		formComentario = FormularioAgregarComentario(request.POST)
 		print formComentario
@@ -401,7 +401,7 @@ def mostrarhilo(request,idasignatura):
 			SumarValoracionComentario(idasignatura,idalumno)
 		else:
 			print "FORM COMENTARIO NO VALIDO"
-	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':lista_entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
+	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
 
 
 

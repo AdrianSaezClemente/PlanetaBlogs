@@ -61,7 +61,7 @@
 									{% for ent in lista_entradas_valoradas %}
 										<a href="#" class="list-group-item">
 											<p style="font-weight:bold;font-style:oblique;" class="list-group-item-heading">{{ ent.alumno.alumno.username }} // {{ ent.titulo }}<span class="pull-right">{{ ent.fecha }}</span></p>
-											<p class="list-group-item-text">Valoración: <span style="color:green;">{{ ent.totalup }} Up </span><strong>//</strong> <span style="color:red;">{{ ent.totaldown }} Down</span><span class="pull-right"><strong>Planets: </strong></span><span id="total{{ ent.id }}" src="javascript:CalcularPlanetsEntrada('{{ ent.totalup }}','{{ ent.totaldown }}')"></span></p>
+											<p class="list-group-item-text">Valoración: <span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span><strong></strong> <span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span><span style="color:black;" class="pull-right"><strong>Planets: </strong></span><span id="total{{ ent.id }}" src="javascript:CalcularPlanetsEntrada('{{ ent.totalup }}','{{ ent.totaldown }}')"></span></p>
 										</a>
 									{% endfor %}
 								{% else %}
@@ -81,7 +81,7 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ forloop.revcounter }} </label><a target="_blank" href={{ entrada.0.usuario.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a href={{ entrada.0.usuario.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
+										<h2 class="blog-post-title"><label> #{{ entrada.0.id }} </label><a target="_blank" href={{ entrada.0.usuario.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a href={{ entrada.0.usuario.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
 										<h3><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
 										<p>{{ entrada.0.descripcion }}</p>
 										{% if entrada.1 == False %}
