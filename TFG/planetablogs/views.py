@@ -377,7 +377,7 @@ def mostrarhilo(request,idasignatura):
 	entradas = ConseguirListaEntradas(idasignatura,idalumno)
 	paginator_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
 	
-	paginator = Paginator(paginator_entradas, 5) #Muestra 5 entradas por página
+	paginator = Paginator(entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
 	try:
 		entradas = paginator.page(page)
