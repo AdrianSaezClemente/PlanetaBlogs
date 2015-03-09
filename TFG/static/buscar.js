@@ -17,6 +17,7 @@ $(document).ready(function() {
 					url: '/planetablogs/buscarNombreUsuario/',
 					type: 'GET',
 					success: function(datos){
+						console.log("exitoso")
 						$("#resultado").html("");
 						if (texto==""){
 							$("#resultado").append("<h5 style='color:red;text-align:center;font-style:oblique;'>Elige una opción y escribe un texto antes de buscar, por favor.</h5>"); 
@@ -26,7 +27,8 @@ $(document).ready(function() {
 						}
 						else{
 							for (var i=0; i<datos.entradas.length; i++){
-								var html = "<div class='blog-post'><div id='entrada'><h2 class='blog-post-title'><label>#"+datos.entradas[i].pk+"</label><a target='_blank' href='"+datos.usuario[0].fields.url_blog+"'> "+datos.usuario[0].fields.nombre_apellidos+"</a><span class='blog-post-meta'>"+datos.entradas[i].fields.fecha+" por <a target='_blank' href='"+datos.usuario[0].fields.url_blog+"'>"+datos.usuario[0].fields.nick+"</a></span></h2>";
+								console.log()
+								var html = "<div class='blog-post'><div id='entrada'><h2 class='blog-post-title'><label>#"+datos.entradas[i].pk+"</label><a target='_blank' href='"+datos.usuario[0].fields.url_blog+"'> "+datos.entradas[i].alumno+"</a><span class='blog-post-meta'>"+datos.entradas[i].fields.fecha+" por <a target='_blank' href='"+datos.usuario[0].fields.url_blog+"'>"+datos.usuario[0].fields.nick+"</a></span></h2>";
 								html += "<h3><a target='_blank' href='"+datos.entradas[i].fields.link+"'>"+datos.entradas[i].fields.titulo+"</a></h3>";
 								html += "<p>"+datos.entradas[i].fields.descripcion+"</p></div></div>";
 								$("#resultado").append(html); 
@@ -50,7 +52,7 @@ $(document).ready(function() {
 						}
 						else{
 							for (var i=0; i<datos.entradas.length; i++){
-								var html = "<div class='blog-post'><div id='entrada'><h2 class='blog-post-title'><label>#"+datos.entradas[i].pk+"</label><a target='_blank' href='"+datos.usuario[0].fields.url_blog+"'> "+datos.usuario[0].fields.nombre_apellidos+"</a><span class='blog-post-meta'>"+datos.entradas[i].fields.fecha+" por <a target='_blank' href='"+datos.usuario[0].fields.url_blog+"'>"+datos.usuario[0].fields.nick+"</a></span></h2>";
+								var html = "<div class='blog-post'><div id='entrada'><h2 class='blog-post-title'><label>#"+datos.entradas[i].pk+"</label><a target='_blank' href='"+datos.entradas[0].fields.url_blog+"'> "+datos.usuario[0].fields.first_name+" "+datos.usuario[0].fields.last_name+"</a><span class='blog-post-meta'>"+datos.entradas[i].fields.fecha+" por <a target='_blank' href='"+datos.entradas[0].fields.url_blog+"'>"+datos.usuario[0].fields.username+"</a></span></h2>";
 								html += "<h3><a target='_blank' href='"+datos.entradas[i].fields.link+"'>"+datos.entradas[i].fields.titulo+"</a></h3>";
 								html += "<p>"+datos.entradas[i].fields.descripcion+"</p></div></div>";
 								$("#resultado").append(html); 

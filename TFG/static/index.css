@@ -303,6 +303,7 @@ h6, .h6 {
 	height:auto;
 }
 
+
 #nohaysuscrip {
 	text-align:center;
 	padding:15px;
@@ -313,11 +314,20 @@ h6, .h6 {
 #titulo_columna {
 	text-align:center;
 	font-weight:bold;
+	font-size:15px;
 }
 
 #tablasuscriptores {
 	background-color: #B9C5CD;
 	box-shadow: 0 0 2px black;
+}
+
+#tablasuscriptores * {
+	font-size:15px;
+}
+
+#tablasuscriptores * th,tr{
+	text-align:center;
 }
 
 #entrada {

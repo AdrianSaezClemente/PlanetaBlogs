@@ -346,9 +346,7 @@ def eliminarcomentario(request):
 	if request.method=='GET':
 		comentario = Comentario.objects.get(id=request.GET['idcomentario'])
 		idasignatura = comentario.asignatura_id
-		print idasignatura
 		idalumno = comentario.alumno_id
-		print idalumno
 		comentario.delete()
 		RestarValoracionComentario(idasignatura,idalumno)
 	return render(request,'planetablogs/index.html',{'user': request.user})
@@ -513,13 +511,20 @@ def buscar(request,idasignatura):
 @login_required()
 def buscarNickUsuario(request):
 	if request.method=='GET':
-		usu = Alumno.objects.filter(nick=request.GET['texto'])
-		entradas = Entrada.objects.filter(usuario=usu)
-		json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
-		list_usuario = simplejson.loads(json_usuario)
-		json_entradas = serializers.serialize('json', entradas, ensure_ascii=False)
-		list_entradas = simplejson.loads(json_entradas)
-		json_data = simplejson.dumps( {'usuario':list_usuario, 'entradas':list_entradas} )
+		if request.GET['texto'] != "":
+			usu = User.objects.filter(username=request.GET['texto'])
+			if len(usu) != 0:
+				idalumno = ConseguirIdAlumno(usu)
+				entradas = Entrada.objects.filter(alumno_id=idalumno)
+				json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
+				list_usuario = simplejson.loads(json_usuario)
+				json_entradas = serializers.serialize('json', entradas, ensure_ascii=False)
+				list_entradas = simplejson.loads(json_entradas)
+				json_data = simplejson.dumps( {'usuario':list_usuario, 'entradas':list_entradas} )
+			else:
+				json_data = simplejson.dumps( {'usuario':"", 'entradas':[]} )
+		else:
+			json_data = simplejson.dumps( {'usuario':"", 'entradas':""} )
 	return HttpResponse(json_data, mimetype='application/json')
 
 
@@ -528,13 +533,20 @@ def buscarNickUsuario(request):
 @login_required()
 def buscarNombreUsuario(request):
 	if request.method=='GET':
-		usu = Alumno.objects.filter(nombre_apellidos=request.GET['texto'])
-		entradas = Entrada.objects.filter(usuario=usu)
-		json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
-		list_usuario = simplejson.loads(json_usuario)
-		json_entradas = serializers.serialize('json', entradas, ensure_ascii=False)
-		list_entradas = simplejson.loads(json_entradas)
-		json_data = simplejson.dumps( {'usuario':list_usuario, 'entradas':list_entradas} )
+		if request.GET['texto'] != "":
+			usu = User.objects.filter(first_name=request.GET['texto'])
+			if len(usu) != 0:
+				idalumno = ConseguirIdAlumno(usu)
+				entradas = Entrada.objects.filter(alumno_id=idalumno)
+				json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
+				list_usuario = simplejson.loads(json_usuario)
+				json_entradas = serializers.serialize('json', entradas, ensure_ascii=False)
+				list_entradas = simplejson.loads(json_entradas)
+				json_data = simplejson.dumps( {'usuario':list_usuario, 'entradas':list_entradas} )
+			else:
+				json_data = simplejson.dumps( {'usuario':"", 'entradas':[]} )
+		else:
+			json_data = simplejson.dumps( {'usuario':"", 'entradas':""} )
 	return HttpResponse(json_data, mimetype='application/json')
 
 

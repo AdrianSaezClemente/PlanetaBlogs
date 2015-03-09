@@ -30,6 +30,8 @@ class Entrada(models.Model):
 	titulo = models.CharField(max_length=80)
 	fecha = models.DateTimeField()
 	descripcion = models.TextField()
+	link = models.URLField()
+	url_blog = models.URLField()
 	totalup = models.IntegerField()
 	totaldown = models.IntegerField()
 	def __unicode__(self):
