@@ -21,6 +21,7 @@ from django.utils import simplejson
 from django.contrib import auth
 from django.db.models import F
 import time
+from django.core.serializers.json import DjangoJSONEncoder
 
 
 #Introducir datos de registro de alumno
@@ -341,6 +342,30 @@ def RestarValoracionComentario(idasignatura,idalumno):
 	
 	
 	
+#Agrega comentario
+def agregarcomentario(request):
+	if request.method=='GET':
+		descripcion = request.GET['descripcion']
+		identrada = request.GET['identrada']
+		idalumno = ConseguirIdAlumno(request.GET['iduser'])
+		idasignatura = request.GET['idasignatura']
+		fecha = datetime.now()
+		if descripcion != "":
+			comentario = Comentario(asignatura_id=idasignatura,alumno_id=idalumno,entrada_id=identrada,fecha=fecha,descripcion=descripcion)
+			comentario.save()
+			comenta = Comentario.objects.filter(id=comentario.id)
+			json_comentario = serializers.serialize('json', comenta, ensure_ascii=False)
+			comentario = simplejson.loads(json_comentario)
+			usuario = User.objects.filter(id=request.GET['iduser'])
+			json_usuario = serializers.serialize('json', usuario, ensure_ascii=False)
+			usuario = simplejson.loads(json_usuario)
+			json_data = simplejson.dumps( {'comentario':comentario, 'usuario':usuario} )
+		else:
+			json_data = simplejson.dumps( {'comentario':"", 'usuario':""} )
+	return HttpResponse(json_data, mimetype="application/json") 
+	
+
+
 #Elimina comentario
 def eliminarcomentario(request):
 	if request.method=='GET':
@@ -362,7 +387,7 @@ def SumarValoracionComentario(idasignatura,idalumno):
 	val.save()
 	
 	
-	
+
 #Página principal de cada hilo
 @login_required()
 def mostrarhilo(request,idasignatura):
@@ -382,22 +407,7 @@ def mostrarhilo(request,idasignatura):
 		entradas = paginator.page(1)
 	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
-	
-	if request.method == 'POST':
-		formComentario = FormularioAgregarComentario(request.POST)
-		print formComentario
-		descripcion = request.POST.get('descripcion', '')
-		entrada = request.POST.get('entrada', '')
-		if formComentario.is_valid():
-			comentario = formComentario.save(commit=False)
-			comentario.entrada_id = entrada
-			comentario.alumno_id = idalumno
-			comentario.asignatura_id = idasignatura
-			comentario.fecha = datetime.now()
-			comentario.save()
-			SumarValoracionComentario(idasignatura,idalumno)
-		else:
-			print "FORM COMENTARIO NO VALIDO"
+
 	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
 
 
@@ -559,16 +569,13 @@ def buscarIdEntrada(request):
 			entrada = Entrada.objects.filter(id=request.GET['texto'])
 			alumno = Alumno.objects.filter(id=entrada[0].alumno_id)
 			user = User.objects.filter(id=alumno[0].alumno.id)
-			print user
 			json_usuario = serializers.serialize('json', user, ensure_ascii=False)
 			list_usuario = simplejson.loads(json_usuario)
-			print list_usuario
 			json_entrada = serializers.serialize('json', entrada, ensure_ascii=False)
 			list_entrada = simplejson.loads(json_entrada)
 			json_data = simplejson.dumps({'usuario':list_usuario, 'entrada':list_entrada} )
 		else:
 			json_data = simplejson.dumps( {'alumno':"", 'entrada':""} )
-	print "adios"
 	return HttpResponse(json_data, mimetype='application/json')
 
 

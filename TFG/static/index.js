@@ -39,6 +39,30 @@ function Down(identrada,idusuario,idasignatura,up,down){
 	$("#updown"+identrada).html(html);
 }
 
+function AgregarComentario(identrada,idasignatura,iduser){
+	var descripcion = $("#descripcion_comentario").val();
+	$.ajax({
+		data: {'identrada':identrada,'idasignatura':idasignatura,'iduser':iduser,'descripcion':descripcion},
+		url: '/planetablogs/agregarcomentario/',
+		type: 'GET',
+		success: function(datos){
+			console.log("exitoso")
+			if (descripcion==""){
+				console.log("nada")
+				$("#entrada").append("<h5 style='color:red;text-align:center;font-style:oblique;font-size:10px;'>Escribe tu comentario antes de enviar.</h5>"); 
+			}
+			else{
+				console.log("algo")
+				var html = "<div id='comentario"+datos.comentario[0].fields.id+"' class='panel panel-warning'>";
+				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+datos.comentario[0].fields.fecha+"</span></div></div>";
+				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].fields.id+"' onclick='EliminarComentario('"+datos.comentario[0].fields.id+"','"+idasignatura+"')' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button>";
+				html += "<div id='infocomentario"+datos.comentario[0].fields.id+"' class='oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.</div></div>";
+				$("#entrada").append(html);
+			}
+		},
+	});
+}
+
 function EliminarComentario(idcomentario,idasignatura){
 	$('#comentario'+idcomentario).hide("slow");
 	$('#infocomentario'+idcomentario).show("slow");

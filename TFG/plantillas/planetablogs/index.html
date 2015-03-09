@@ -109,18 +109,16 @@
 											</div>
 										</div>
 										{% endif %}
-										<form role="form" method="POST">{% csrf_token %}
-											<div id="escribircomentario">
-												<div class="input-group">
-													<span class="input-group-addon">#{{ forloop.revcounter }}</span>
-													<textarea class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
-													<input class="oculto" name="entrada" value="{{ entrada.0.id }}"></input>
-													<span class="input-group-btn">
-														<button class="btn btn-success" type="submit">Enviar <span class="glyphicon glyphicon-send"></span></button>
-													</span>
-												</div>
+										<div id="escribircomentario">
+											<div class="input-group">
+												<span class="input-group-addon">#{{ forloop.revcounter }}</span>
+												<textarea id="descripcion_comentario" class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
+												<input class="oculto" name="entrada" value="{{ entrada.0.id }}"></input>
+												<span class="input-group-btn">
+													<button class="btn btn-success" onclick="AgregarComentario('{{ entrada.0.id }}','{{ asignatura.id }}','{{ user.id }}')">Enviar <span class="glyphicon glyphicon-send"></span></button>
+												</span>
 											</div>
-										</form>
+										</div>
 										
 										{% for comentario in lista_comentarios %}
 											{% if entrada.0.id == comentario.entrada_id %}
