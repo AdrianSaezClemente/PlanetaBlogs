@@ -555,13 +555,20 @@ def buscarNombreUsuario(request):
 @login_required()
 def buscarIdEntrada(request):
 	if request.method=='GET':
-		entrada = Entrada.objects.filter(id=request.GET['texto'])
-		usuarios = Alumno.objects.all()
-		json_usuarios = serializers.serialize('json', usuarios, ensure_ascii=False)
-		list_usuarios = simplejson.loads(json_usuarios)
-		json_entrada = serializers.serialize('json', entrada, ensure_ascii=False)
-		list_entrada = simplejson.loads(json_entrada)
-		json_data = simplejson.dumps({'usuarios':list_usuarios, 'entrada':list_entrada} )
+		if request.GET['texto'] != "":
+			entrada = Entrada.objects.filter(id=request.GET['texto'])
+			alumno = Alumno.objects.filter(id=entrada[0].alumno_id)
+			user = User.objects.filter(id=alumno[0].alumno.id)
+			print user
+			json_usuario = serializers.serialize('json', user, ensure_ascii=False)
+			list_usuario = simplejson.loads(json_usuario)
+			print list_usuario
+			json_entrada = serializers.serialize('json', entrada, ensure_ascii=False)
+			list_entrada = simplejson.loads(json_entrada)
+			json_data = simplejson.dumps({'usuario':list_usuario, 'entrada':list_entrada} )
+		else:
+			json_data = simplejson.dumps( {'alumno':"", 'entrada':""} )
+	print "adios"
 	return HttpResponse(json_data, mimetype='application/json')
 
 
