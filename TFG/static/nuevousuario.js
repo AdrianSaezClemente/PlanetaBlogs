@@ -23,7 +23,7 @@ function ComprobarInfo(){
 	}
 }
 
-
+/*
 function ComprobarNick(){
 	var entrada = document.getElementById("nick").value;
 	var salida = document.getElementById("salida");
@@ -61,7 +61,7 @@ function nickPress(evento){
 	if(evento.which == 0){
 		$("#anima").removeClass("animacion");
 	}
-}
+}*/
 /*
 function contraseñaDown(evento){
 	$("#contraseñaSalida").removeClass("animacion");
