@@ -68,7 +68,7 @@ def nuevo_profesor(request):
 			email = form.cleaned_data["email"]
 			first_name = form.cleaned_data["first_name"]
 			last_name = form.cleaned_data["last_name"]
-
+			
 			user = User.objects.create_user(username, email, password)
 			user.first_name = first_name
 			user.last_name = last_name
@@ -177,7 +177,7 @@ def eliminarasignaturaalumno(request):
 
 
 
-#método que válida un rss de tal forma que si el enlace rss ya existe en base de datos, el formulario es erróneo.
+#Método que valida un rss de tal forma que si el enlace rss ya existe en base de datos, el formulario es erróneo.
 def ValidarRss(rss):
 	lista_rss = Rss.objects.all()
 	valido = True
@@ -189,7 +189,8 @@ def ValidarRss(rss):
 
 	
 	
-#Se usa el formulario FormularioAgregarRSS para establecer una relación entre asignatura, alumno y RSS
+#Muestra la presentación del profesor. Se usa el formulario FormularioAgregarRSS 
+#para establecer una relación entre asignatura, alumno y RSS
 @login_required()
 def presentacionalumno(request):
 	info = None
@@ -244,6 +245,7 @@ def eliminarasignaturaprofesor(request):
 
 
 
+#Muestra la presentación del profesor
 @login_required()
 def presentacionprofesor(request):
 	asignaturas = Asignatura.objects.all()
@@ -389,9 +391,9 @@ def SumarValoracionComentario(idasignatura,idalumno):
 	
 	
 
-#Página principal de cada hilo
+#Página principal de cada hilo en alumnos
 @login_required()
-def mostrarhilo(request,idasignatura):
+def mostrarhiloalumno(request,idasignatura):
 	idalumno = ConseguirIdAlumno(request.user.id)
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	rss = Rss.objects.filter(asignatura_id=idasignatura)
@@ -413,6 +415,32 @@ def mostrarhilo(request,idasignatura):
 
 
 
+#Página principal de cada hilo en profesores
+@login_required()
+def mostrarhiloprofesor(request,idasignatura):
+	'''
+	idalumno = ConseguirIdAlumno(request.user.id)
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	rss = Rss.objects.filter(asignatura_id=idasignatura)
+	lista_usuarios = ConseguirListaAlumnos(idasignatura)
+	lista_comentarios = ConseguirListaComentarios(idasignatura)
+	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
+	tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
+	
+	paginator = Paginator(tupla_entradas, 5) #Muestra 5 entradas por página
+	page = request.GET.get('page')
+	try:
+		entradas = paginator.page(page)
+	except PageNotAnInteger:	
+		entradas = paginator.page(1)
+	except EmptyPage:	
+		entradas = paginator.page(paginator.num_pages)
+	'''
+	return render(request,'planetablogs/index_tutor.html')
+
+
+
+#Desconectarse de la aplicación
 def salir(request):
 	logout(request)
 	return HttpResponseRedirect(reverse('login'))
