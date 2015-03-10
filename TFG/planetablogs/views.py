@@ -360,6 +360,7 @@ def agregarcomentario(request):
 			json_usuario = serializers.serialize('json', usuario, ensure_ascii=False)
 			usuario = simplejson.loads(json_usuario)
 			json_data = simplejson.dumps( {'comentario':comentario, 'usuario':usuario} )
+			SumarValoracionComentario(idasignatura,idalumno)
 		else:
 			json_data = simplejson.dumps( {'comentario':"", 'usuario':""} )
 	return HttpResponse(json_data, mimetype="application/json") 
@@ -567,13 +568,16 @@ def buscarIdEntrada(request):
 	if request.method=='GET':
 		if request.GET['texto'] != "":
 			entrada = Entrada.objects.filter(id=request.GET['texto'])
-			alumno = Alumno.objects.filter(id=entrada[0].alumno_id)
-			user = User.objects.filter(id=alumno[0].alumno.id)
-			json_usuario = serializers.serialize('json', user, ensure_ascii=False)
-			list_usuario = simplejson.loads(json_usuario)
-			json_entrada = serializers.serialize('json', entrada, ensure_ascii=False)
-			list_entrada = simplejson.loads(json_entrada)
-			json_data = simplejson.dumps({'usuario':list_usuario, 'entrada':list_entrada} )
+			if len(entrada) != 0:
+				alumno = Alumno.objects.filter(id=entrada[0].alumno_id)
+				user = User.objects.filter(id=alumno[0].alumno.id)
+				json_usuario = serializers.serialize('json', user, ensure_ascii=False)
+				list_usuario = simplejson.loads(json_usuario)
+				json_entrada = serializers.serialize('json', entrada, ensure_ascii=False)
+				list_entrada = simplejson.loads(json_entrada)
+				json_data = simplejson.dumps({'usuario':list_usuario, 'entrada':list_entrada} )
+			else:
+				json_data = simplejson.dumps( {'usuario':"", 'entrada':""} )
 		else:
 			json_data = simplejson.dumps( {'alumno':"", 'entrada':""} )
 	return HttpResponse(json_data, mimetype='application/json')

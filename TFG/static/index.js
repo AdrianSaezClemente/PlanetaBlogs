@@ -52,12 +52,14 @@ function AgregarComentario(identrada,idasignatura,iduser){
 				$("#entrada").append("<h5 style='color:red;text-align:center;font-style:oblique;font-size:10px;'>Escribe tu comentario antes de enviar.</h5>"); 
 			}
 			else{
-				console.log("algo")
-				var html = "<div id='comentario"+datos.comentario[0].fields.id+"' class='panel panel-warning'>";
+				$("#descripcion_comentario").val("")
+				BorrarInfo();
+				var html = "<div id='comentario"+datos.comentario[0].pk+"' class='panel panel-warning'>";
 				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+datos.comentario[0].fields.fecha+"</span></div></div>";
-				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].fields.id+"' onclick='EliminarComentario('"+datos.comentario[0].fields.id+"','"+idasignatura+"')' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button>";
-				html += "<div id='infocomentario"+datos.comentario[0].fields.id+"' class='oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.</div></div>";
+				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
+				html += "<div id='infocomentario"+datos.comentario[0].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.</div></div>";
 				$("#entrada").append(html);
+				$("#infocomentario"+datos.comentario[0].pk).hide();
 			}
 		},
 	});
@@ -71,14 +73,22 @@ function EliminarComentario(idcomentario,idasignatura){
 		url: '/planetablogs/eliminarcomentario/',
 		type: 'GET',
 		success: function(datos){
-			
+			setTimeout(BorrarComentario(idcomentario),2000)
 		},
 	});
+}
+
+function BorrarComentario(idcomentario){
+	$('#comentario'+idcomentario).remove();
 }
 
 function CalcularPlanetsEntrada(id,up,down){
 	var total = up*3-down*1
 	$("#total"+id).append(total)
+}
+
+function BorrarInfo(){
+	$(".info").remove();
 }
 
 $.noConflict();
