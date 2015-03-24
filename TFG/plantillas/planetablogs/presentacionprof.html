@@ -66,7 +66,7 @@
 												<li id="{{ asig.id }}" class="list-group-item">
 													<div style="word-wrap:break-word;">
 														
-														<h6 class="list-group-item-heading">{{ asig.titulo }} - {{ asig.descripcion }} <a style="text-decoration:none;" type="button" href="/planetablogs/tutores/hilo/{{ asig.id }}" class="btn-xs btn-warning pull-right">Visitar</a><button data-toggle="modal" data-target="#myModal" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span> Eliminar</button></h6>
+														<h6 class="list-group-item-heading">{{ asig.titulo }} - {{ asig.descripcion }} <button type="button" class="btn-xs btn-warning pull-right boton" onclick="window.open('/planetablogs/tutores/hilo/{{ asig.id }}','_self')"><span class="glyphicon glyphicon-camera"></span> Visitar</button><button data-toggle="modal" data-target="#myModal" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right boton"><span class="glyphicon glyphicon-minus"></span> Eliminar</button></h6>
 													</div>
 												</li>
 											</div>
@@ -103,7 +103,7 @@
 											<div class="list-group">
 												<li id="{{ asig.id }}" class="list-group-item">
 													<div style="word-wrap:break-word;">
-														<h6 class="list-group-item-heading">{{ asig.titulo }} - {{ asig.descripcion }} <button onclick="Agregar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="agregar{{ asig.id }}" title="Añadir hilo" type="button" class="btn-xs btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span>Añadir</button></h6>
+														<h6 class="list-group-item-heading">{{ asig.titulo }} - {{ asig.descripcion }} <button onclick="Agregar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="agregar{{ asig.id }}" title="Añadir hilo" type="button" class="btn-xs btn-primary pull-right boton"><span class="glyphicon glyphicon-plus"></span>Añadir</button></h6>
 													</div>
 												</li>
 											</div>

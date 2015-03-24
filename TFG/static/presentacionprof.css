@@ -190,6 +190,10 @@ body {
 	background-color:#428bca;
 }
 
+.boton {
+	margin-bottom:10px;
+}
+
 #contenidonuevohilo {
 	padding-top:10px;
 	padding-bottom:10px;
