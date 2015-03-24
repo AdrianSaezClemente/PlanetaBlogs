@@ -45,7 +45,7 @@
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
 											<div style="word-wrap:break-word;" class="row" id="clase_lista_asignaturas">
-												<div class="col-sm-11"><a id="eliminar{{ asig.id }}" href="/planetablogs/alumnos/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span></a></div><div class="col-sm-1"><button  id="botoneliminar{{ asig.id }}" data-toggle="modal" data-target="#myModal" style="margin-top:30%;margin-right:30%" title="Eliminar hilo" type="button" class="btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></div>
+												<div class="col-sm-11"><a id="eliminar{{ asig.id }}" href="/planetablogs/alumnos/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span></a></div><div class="col-sm-1"><button id="botoneliminar{{ asig.id }}" data-toggle="modal" data-target="#myModal" style="margin-top:30%;margin-right:30%" title="Eliminar hilo" type="button" class="btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></div>
 											</div>
 											<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 												<div class="modal-dialog">

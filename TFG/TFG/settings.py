@@ -26,7 +26,7 @@ TEMPLATE_DEBUG = True
 
 USE_TZ = True
 
-TIME_ZONE = 'Etc/GMT+2'
+TIME_ZONE = 'Europe/Madrid'
 
 ALLOWED_HOSTS = []
 

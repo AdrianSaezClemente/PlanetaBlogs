@@ -1,4 +1,9 @@
 $(document).ready(function(){
+	$("#nuevohilo").hide()
+	$("#butagregarhilo").click(function() {
+		$("#nuevohilo").toggle("Bounce");
+	});
+	
 	$( "#tags" ).autocomplete({
 		source: asignaturas
 	});

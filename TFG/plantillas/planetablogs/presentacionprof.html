@@ -5,10 +5,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}presentacionprof.css" title="style" />
 		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<script src="http://code.jquery.com/jquery.js"></script>
 		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-		<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script src="http://code.jquery.com/jquery.js"></script>
 		<script src="{{STATIC_URL}}presentacionprof.js"></script>
 		<script>
 			var asignaturas = '{{ asignaturas|escapejs }}';
@@ -36,14 +36,33 @@
 						<div class="espacio"> Espacio de {{ user.first_name }} {{ user.last_name }} </div>
 					</div>
 					<div class="row">
+						<button id="butagregarhilo" title="Anímate a agregar un nuevo hilo" class="col-sm-10 col-sm-offset-1 btn btn-success"><span style="color:green;" class="glyphicon glyphicon-plus"></span>Agregar hilo</button>
+						<div id="nuevohilo" class="col-sm-10 col-sm-offset-1">
+							<form role="form" method="POST">{% csrf_token %}
+								<h4 id="agregarhilo">Añade un nuevo hilo</h4>
+								<div id="contenidonuevohilo">
+									<div class="form-group">
+										<label for="ejemplo_email_1">Título</label>
+										<input name="titulo" type="text" class="form-control" placeholder="Introduce nuevo hilo">
+									</div>
+									<div class="form-group">
+										<label for="ejemplo_email_1">Descripción</label>
+										<input name="descripcion" type="text" class="form-control" placeholder="Introduce descripción">
+									</div>
+									<button type="submit" class="btn btn-default">Enviar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div id="hilos" class="row">
 						<div class="col-sm-6">
 							<ul class="nav nav-sidebar">
-								<li class="list-group-item active"><p class="titulohilos">Mis hilos </p></li>
+								<li style="background-color:#428BCA;" class="list-group-item"><p class="titulohilos">Mis hilos </p></li>
 								<div id="lista_asignaturas" class="list-group">
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
 											<div style="word-wrap:break-word;" class="row" id="clase_lista_asignaturas">
-												<div class="col-sm-11"><a id="eliminar{{ asig.id }}" href="/planetablogs/tutores/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span></a></div><div class="col-sm-1"><button data-toggle="modal" data-target="#myModal" style="margin-top:30%;margin-right:30%" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></div>
+												<div class="col-sm-11"><a href="/planetablogs/tutores/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span></a></div><div class="col-sm-1"><button data-toggle="modal" data-target="#myModal" style="margin-top:30%;margin-right:30%" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></div>
 											</div>
 											<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 												<div class="modal-dialog">
@@ -70,24 +89,8 @@
 							</ul>
 						</div>
 						<div class="col-sm-6">
-							<form role="form" method="POST">{% csrf_token %}
-								<div class="form-group">
-									<label for="ejemplo_email_1">Nuevo hilo</label>
-									<input name="titulo" type="text" class="form-control" placeholder="Introduce nuevo hilo">
-								</div>
-								<div class="form-group">
-									<label for="ejemplo_email_1">Descripción</label>
-									<input name="descripcion" type="text" class="form-control" placeholder="Introduce descripción">
-								</div>
-								<button type="submit" class="btn btn-default">Enviar</button>
-							</form>
-						</div>
-					</div>
-					</br>
-					<div class="row">
-						<div class="col-sm-8 col-sm-offset-2">
 							<div class="panel panel-primary">
-								<div class="panel-heading">Hilos disponibles</div>
+								<div style="background-color:#555;" class="panel-heading">Hilos disponibles</div>
 								<div class="panel-body">
 									{% if lista_no_asignaturas %}
 										{% for asig in lista_no_asignaturas %}
@@ -100,11 +103,10 @@
 											</div>
 										{% endfor %}
 									{% else %}
-										<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No hay hilos que puedas agregar</br></p>
+										<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No hay hilos que puedas agregar a Mis hilos</br></p>
 									{% endif %}
 								</div>
 							</div>
-							
 						</div>
 					</div>
 				</div>
