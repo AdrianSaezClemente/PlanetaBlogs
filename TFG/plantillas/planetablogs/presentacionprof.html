@@ -5,10 +5,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}presentacionprof.css" title="style" />
 		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+		
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 		<script src="{{STATIC_URL}}presentacionprof.js"></script>
 		<script>
 			var asignaturas = '{{ asignaturas|escapejs }}';
@@ -56,23 +57,28 @@
 					</div>
 					<div id="hilos" class="row">
 						<div class="col-sm-6">
-							<ul class="nav nav-sidebar">
-								<li style="background-color:#428BCA;" class="list-group-item"><p class="titulohilos">Mis hilos </p></li>
-								<div id="lista_asignaturas" class="list-group">
+							<div class="panel panel-primary">
+								<div class="panel-heading">Mis hilos</div>
+								<div class="panel-body">
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
-											<div style="word-wrap:break-word;" class="row" id="clase_lista_asignaturas">
-												<div class="col-sm-11"><a href="/planetablogs/tutores/hilo/{{ asig.id }}" class="list-group-item"><span style="word-wrap:break-word;">{{ asig.titulo }} - {{ asig.descripcion }}</span></a></div><div class="col-sm-1"><button data-toggle="modal" data-target="#myModal" style="margin-top:30%;margin-right:30%" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span></button></div>
+											<div class="list-group">
+												<li id="{{ asig.id }}" class="list-group-item">
+													<div style="word-wrap:break-word;">
+														
+														<h6 class="list-group-item-heading">{{ asig.titulo }} - {{ asig.descripcion }} <a style="text-decoration:none;" type="button" href="/planetablogs/tutores/hilo/{{ asig.id }}" class="btn-xs btn-warning pull-right">Visitar</a><button data-toggle="modal" data-target="#myModal" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-minus"></span> Eliminar</button></h6>
+													</div>
+												</li>
 											</div>
 											<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 													<div class="modal-header">
 														<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-														<h4 class="modal-title">Eliminar {{ asig.titulo }}</h4>
+														<h4 class="modal-title">Eliminar hilo</h4>
 													</div>
 													<div class="modal-body">
-														<p>¿Estás seguro que quieres eliminar {{ asig.titulo }}?</p>
+														<p>¿Estás seguro que quieres eliminar este hilo?</p>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -86,7 +92,7 @@
 										<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No tiene hilos</br></br> ¡Anímate a crear un hilo! </p>
 									{% endif %}
 								</div>
-							</ul>
+							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="panel panel-primary">
