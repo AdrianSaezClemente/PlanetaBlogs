@@ -31,6 +31,13 @@ h6, .h6 {
 .container {
 	max-width: none !important;
     width: 970px;
+	background-color:#EFEFEF;
+	border-left-style:dotted;
+	border-right-style:dotted;
+	border-bottom-style:dotted;
+	border-width:2px;
+	border-color:#898989;
+	margin-bottom:7em;
 }
 
 
@@ -170,10 +177,11 @@ h6, .h6 {
   font-size:1em;
   background-color: black;
   border-top: 1px solid #e5e5e5;
+  box-shadow: inset 0 120px 25px -120px #EFEFEF;
   height:60px;
   margin-top:1em;
   padding-top:10px;
-  border-top:10px solid #B9C5CD;
+  border-top:10px solid #DCDCDC;
   bottom: 0 !important;
   position: fixed;
   margin-top:4em;
@@ -227,7 +235,7 @@ body {
 
 #hilos {
 	margin-top:70px;
-	margin-bottom:7em;
+	margin-bottom:2em;
 }
 
 #cabecerarelativa {
