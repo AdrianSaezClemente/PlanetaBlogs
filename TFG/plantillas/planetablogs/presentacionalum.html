@@ -38,7 +38,7 @@
 						<div class="espacio"> Espacio de {{ user.first_name }} {{ user.last_name }} </div>
 					</div>
 					<div class="row">
-						<div class="col-sm-6 col-sm-offset-3">
+						<div class="col-sm-10 col-sm-offset-1">
 							<div class="panel panel-primary">
 								<div class="panel-heading">Mis hilos</div>
 								<div class="panel-body">
@@ -47,7 +47,17 @@
 											<div class="list-group">
 												<li id="{{ asig.id }}" class="list-group-item">
 													<div style="word-wrap:break-word;">
-														<h6 class="list-group-item-heading">{{ asig.titulo }} - {{ asig.descripcion }} <button type="button" class="btn-xs btn-warning pull-right boton" onclick="window.open('/planetablogs/alumnos/hilo/{{ asig.id }}','_self')"><span class="glyphicon glyphicon-camera"></span> Visitar</button><button data-toggle="modal" data-target="#myModal" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right boton"><span class="glyphicon glyphicon-minus"></span> Eliminar</button></h6>
+														<h6 class="list-group-item-heading">
+															<div class="row">
+																<div class="col-sm-9">
+																	<span><strong>Título: </strong>{{ asig.titulo }}</span></br>
+																	<span><strong>Descripción: </strong>{{ asig.descripcion }}</span>
+																</div>
+																<div class="col-sm-3">
+																	<button type="button" class="btn-xs btn-warning pull-right boton" onclick="window.open('/planetablogs/alumnos/hilo/{{ asig.id }}','_self')"><span class="glyphicon glyphicon-camera"></span> Visitar</button><button data-toggle="modal" data-target="#myModal" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right boton"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+																</div>
+															</div>
+														</h6>
 													</div>
 												</li>
 											</div>
@@ -95,7 +105,10 @@
 											<div class="list-group">
 												<li id="{{ asig.id }}" class="list-group-item">
 													<div style="word-wrap:break-word;">
-														<h6  class="list-group-item-heading">{{ asig.titulo }} - {{ asig.descripcion }}</h6>
+														<h6  class="list-group-item-heading">
+															<span><strong>Título: </strong>{{ asig.titulo }}</span></br>
+															<span><strong>Descripción: </strong>{{ asig.descripcion }}</span>
+														</h6>
 													</div>
 													<div class="list-group-item-text">
 														<form role="form" method="POST">{% csrf_token %}
