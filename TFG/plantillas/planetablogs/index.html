@@ -49,15 +49,15 @@
 			</div>
 			<!-- FIN CABECERA -->
 			<div class="row">
-				<div id="titulolista" class="col-xs-12 col-sm-12">
-					<div id="titulo" class="col-xs-12 col-sm-6 blog-header">
+				<div id="titulolista" class="col-xs-12 col-sm-10 col-sm-offset-1">
+					<div id="titulo" class="col-xs-12 col-sm-4 blog-header">
 						<img class="pequeñologo" src="../../../../static/imagenes/planet.png">
 						<h2>Educational Planet</h2>
 						<p class="lead blog-description">El planeta educativo</p>
 					</div>
-					<div id="conjuntolista" class="col-xs-12 col-sm-5 col-sm-offset-1 blog-header">
+					<div id="conjuntolista" class="col-xs-12 col-sm-7 col-sm-offset-1 blog-header">
 						<div id="grupolista1" class="list-group">
-							<li id="lista1" class="list-group-item"><h4 class="list-group-item-heading">Entradas más valoradas</h4>
+							<li id="lista1" class="list-group-item"><h4 style="font-size:14px;font-style:oblique;" class="list-group-item-heading">Entradas más valoradas</h4>
 								<div id="grupolista2" class="list-group">
 								{% if lista_entradas_valoradas %}
 									{% for ent in lista_entradas_valoradas %}
@@ -83,7 +83,7 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.0.id }} </label><a target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
+										<h2 class="blog-post-title"><label> #{{ entrada.0.id }} </label><a target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
 										<h3><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
 										<p>{{ entrada.0.descripcion }}</p>
 										{% if entrada.1 == False %}
@@ -111,7 +111,7 @@
 										{% endif %}
 										<div id="escribircomentario">
 											<div class="input-group">
-												<span class="input-group-addon">#{{ forloop.revcounter }}</span>
+												<span class="input-group-addon">#{{ entrada.0.id }}</span>
 												<textarea id="descripcion_comentario" class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
 												<input class="oculto" name="entrada" value="{{ entrada.0.id }}"></input>
 												<span class="input-group-btn">

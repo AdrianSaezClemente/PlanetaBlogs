@@ -319,7 +319,7 @@ def ConseguirListaEntradas(idasignatura,idalumno):
 	return tupla_entradas
 
 
-
+	
 #A través del id de la asignatura te devuelve la lista de los ids de los alumnos que están inscritos en esa asignatura
 def ConseguirListaComentarios(idasignatura):
 	lista_comentarios = Comentario.objects.filter(asignatura_id=idasignatura)
@@ -396,7 +396,6 @@ def SumarValoracionComentario(idasignatura,idalumno):
 def mostrarhiloalumno(request,idasignatura):
 	idalumno = ConseguirIdAlumno(request.user.id)
 	asignatura = Asignatura.objects.get(id=idasignatura)
-	rss = Rss.objects.filter(asignatura_id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
@@ -418,16 +417,13 @@ def mostrarhiloalumno(request,idasignatura):
 #Página principal de cada hilo en profesores
 @login_required()
 def mostrarhiloprofesor(request,idasignatura):
-	'''
-	idalumno = ConseguirIdAlumno(request.user.id)
 	asignatura = Asignatura.objects.get(id=idasignatura)
-	rss = Rss.objects.filter(asignatura_id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
-	tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
+	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
 	
-	paginator = Paginator(tupla_entradas, 5) #Muestra 5 entradas por página
+	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
 	try:
 		entradas = paginator.page(page)
@@ -435,8 +431,8 @@ def mostrarhiloprofesor(request,idasignatura):
 		entradas = paginator.page(1)
 	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
-	'''
-	return render(request,'planetablogs/index_tutor.html')
+		
+	return render(request,'planetablogs/index_tutor.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
 
 
 
