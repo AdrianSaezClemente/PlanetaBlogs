@@ -388,8 +388,58 @@ def SumarValoracionComentario(idasignatura,idalumno):
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
+
+
+
+#Resta la valoración de la entrada al alumno que escribió la entrada eliminada
+def RestarValoracionEntrada(idasignatura,idalumno):
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+	val.puntos = val.puntos - 10
+	nivel = ActualizarNivel(val.puntos)
+	val.nivel = nivel
+	val.save()
 	
 	
+
+#Resta la valoración de ups y downs al alumno que escribió la entrada eliminada
+def RecalcularValoracionUpDown(idasignatura,idalumno,contadorUp,contadorDown):
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+	val.puntos = val.puntos + contadorDown - (3*contadorUp)
+	nivel = ActualizarNivel(val.puntos)
+	val.nivel = nivel
+	val.save()
+	
+	
+	
+#Elimina los Ups, los Downs que hay en la entrada eliminada
+def EliminarUpDown(idasignatura,identrada,idalumno):
+	contadorUp = 0
+	contadorDown = 0
+	ups = Up.objects.filter(asignatura_id=idasignatura,entrada_id=identrada)
+	downs = Down.objects.filter(asignatura_id=idasignatura,entrada_id=identrada)
+	for up in ups:
+		contadorUp = contadorUp + 1
+		up.delete()
+	for down in downs:
+		contadorDown = contadorDown + 1
+		down.delete()
+	RecalcularValoracionUpDown(idasignatura,idalumno,contadorUp,contadorDown)
+	
+		
+#Elimina entrada
+def eliminarentrada(request):
+	if request.method=='GET':
+		idasignatura = request.GET['idasignatura']
+		identrada = request.GET['identrada']
+		entrada = Entrada.objects.get(id=identrada)
+		idalumno = entrada.alumno.id
+		EliminarUpDown(idasignatura,identrada,idalumno)#Elimino Ups y Downs, y recalculo valoración de alumno
+		entrada.delete()#Elimino Entrada, y recalculo valoración de alumno
+		RestarValoracionEntrada(idasignatura,idalumno)
+		#FALTA ELIMINAR COMENTARIOS DE LA ENTRADA ELIMINADA--------------------------------------------------------------------
+	return render(request,'planetablogs/index.html',{'user': request.user})
+
+
 
 #Página principal de cada hilo en alumnos
 @login_required()
