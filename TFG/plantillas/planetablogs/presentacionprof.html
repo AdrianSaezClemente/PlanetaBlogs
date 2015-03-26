@@ -112,15 +112,17 @@
 											<div class="list-group">
 												<li id="{{ asig.id }}" class="list-group-item">
 													<div style="word-wrap:break-word;">
-														<div class="row">
-															<div class="col-sm-9">
-																<span><strong>Título: </strong>{{ asig.titulo }}</span></br>
-																<span><strong>Descripción: </strong>{{ asig.descripcion }}</span>
+														<h6  class="list-group-item-heading">
+															<div class="row">
+																<div class="col-sm-9">
+																	<span><strong>Título: </strong>{{ asig.titulo }}</span></br>
+																	<span><strong>Descripción: </strong>{{ asig.descripcion }}</span>
+																</div>
+																<div id="botonagregar{{ asig.id }}" class="col-sm-3">
+																	<button onclick="Agregar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="agregar{{ asig.id }}" title="Añadir hilo" type="button" class="btn-xs btn-primary pull-right boton"><span class="glyphicon glyphicon-plus"></span>Añadir</button>
+																</div>
 															</div>
-															<div class="col-sm-3">
-																<button onclick="Agregar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="agregar{{ asig.id }}" title="Añadir hilo" type="button" class="btn-xs btn-primary pull-right boton"><span class="glyphicon glyphicon-plus"></span>Añadir</button>
-															</div>
-														</div>
+														</h6>
 													</div>
 												</li>
 											</div>
