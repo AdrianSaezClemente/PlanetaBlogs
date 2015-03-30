@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$("#nuevohilo").hide()
 	$("#butagregarhilo").click(function() {
-		$("#nuevohilo").toggle("Bounce");
+		$("#nuevohilo").toggle("Blind");
 	});
 	
 	$( "#tags" ).autocomplete({
@@ -11,8 +11,11 @@ $(document).ready(function(){
 });
 
 
-
 function Agregar(idasignatura,titulo,descripcion){
+	BootstrapDialog.show({
+            title: 'Say-hello dialog',
+            message: 'Hi Apple!'
+        });
 	$('#agregar'+idasignatura).hide();
 	var html = '<button title="Hilo añadido" type="button" class="btn-xs btn-success pull-right">Añadido<span class="glyphicon glyphicon-ok"></span></button>'
 	$('#botonagregar'+idasignatura).html(html);
