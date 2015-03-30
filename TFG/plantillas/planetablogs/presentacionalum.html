@@ -7,6 +7,8 @@
 		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<script src="http://code.jquery.com/jquery.js"></script>
 		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap-dialog.js"></script>
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap-dialog.css" rel="stylesheet" media="screen">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 		<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 		<script src="{{STATIC_URL}}presentacionalum.js"></script>
@@ -45,7 +47,7 @@
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
 											<div class="list-group">
-												<li id="{{ asig.id }}" class="list-group-item">
+												<li id="eliminar{{ asig.id }}" class="list-group-item">
 													<div style="word-wrap:break-word;">
 														<h6 class="list-group-item-heading">
 															<div class="row">
@@ -54,37 +56,13 @@
 																	<span><strong>Descripción: </strong>{{ asig.descripcion }}</span>
 																</div>
 																<div class="col-sm-3">
-																	<button type="button" class="btn-xs btn-warning pull-right boton" onclick="window.open('/planetablogs/alumnos/hilo/{{ asig.id }}','_self')"><span class="glyphicon glyphicon-camera"></span> Visitar</button><button data-toggle="modal" data-target="#myModal" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right boton"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+																	<button type="button" class="btn-xs btn-warning pull-right boton" onclick="window.open('/planetablogs/alumnos/hilo/{{ asig.id }}','_self')"><span class="glyphicon glyphicon-camera"></span> Visitar</button><button onclick="EliminarHilo('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="botoneliminar{{ asig.id }}" title="Eliminar hilo" type="button" class="btn-xs btn-danger pull-right boton"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
 																</div>
 															</div>
 														</h6>
 													</div>
 												</li>
 											</div>
-											<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-												<div class="modal-dialog">
-													<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-														<h4 class="modal-title" style="text-align:center;color:red;font-weight:bold">¡CUIDADO! ¡Se borrará todo!</h4>
-													</div>
-													<div class="modal-body">
-														<p>¿Estás seguro que quieres eliminar {{ asig.titulo }}?</p>
-														<span>Se perderá toda tu información dentro de este hilo:</span>
-														<ul>
-															<li>Tus entradas imprimidas.</li>
-															<li>Los comentarios que hayas realizado en tus entradas.</li>
-															<li>Valoraciones positivas y negativas.</li>
-															<li>Tu puntuación obtenida hasta este momento.</li>
-														</ul>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-														<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="Eliminar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');">Eliminar</button>
-													</div>
-													</div><!-- /.modal-content -->
-												</div><!-- /.modal-dialog -->
-											</div><!-- /.modal -->
 										{% endfor %}
 									{% else %}
 										<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No tiene hilos</br></p>

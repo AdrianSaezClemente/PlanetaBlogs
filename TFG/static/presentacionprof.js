@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$("#nuevohilo").hide()
 	$("#butagregarhilo").click(function() {
-		$("#nuevohilo").toggle("Blind");
+		$("#nuevohilo").toggle("Bounce");
 	});
 	
 	$( "#tags" ).autocomplete({
@@ -12,10 +12,6 @@ $(document).ready(function(){
 
 
 function Agregar(idasignatura,titulo,descripcion){
-	BootstrapDialog.show({
-            title: 'Say-hello dialog',
-            message: 'Hi Apple!'
-        });
 	$('#agregar'+idasignatura).hide();
 	var html = '<button title="Hilo añadido" type="button" class="btn-xs btn-success pull-right">Añadido<span class="glyphicon glyphicon-ok"></span></button>'
 	$('#botonagregar'+idasignatura).html(html);
@@ -26,19 +22,39 @@ function Agregar(idasignatura,titulo,descripcion){
 		type: 'GET',
 		success: function(datos){
 			//console.log("añadido: "+datos)
-			//$("#clase_lista_asignaturas").append("<a id='idasignatura' href='javascript:void(0)' class='list-group-item'>"+titulo+" - <span>"+descripcion+" </span><button onclick='Eliminar("+idasignatura+","+titulo+","+descripcion+");' id='eliminar"+idasignatura+"' title='Eliminar hilo' type='button' class='btn-xs btn-danger pull-right'><span class='glyphicon glyphicon-minus'></span></button></a>");
 		},
 	});
+	$("#clase_lista_asignaturas").prepend("<li id='eliminar"+idasignatura+"' class='list-group-item'><div style='word-wrap:break-word;'><h6 class='list-group-item-heading'><div class='row'><div class='col-sm-9'><span><strong>Título: </strong>"+titulo+"</span></br><span><strong>Descripción: </strong>"+descripcion+"</span></div><div class='col-sm-3'><button type='button' class='btn-xs btn-warning pull-right boton' onclick='window.open(/planetablogs/tutores/hilo/"+idasignatura+",_self)'><span class='glyphicon glyphicon-camera'></span> Visitar</button><button onclick=EliminarHilo('"+idasignatura+"','"+titulo+"','"+descripcion+"'); id='botoneliminar"+idasignatura+"' title='Eliminar hilo' type='button' class='btn-xs btn-danger pull-right boton'><span class='glyphicon glyphicon-minus'></span> Eliminar</button></div></div></h6></div></li></br>");
 }
 
 
+function EliminarHilo(idasignatura,titulo,descripcion){
+	console.log(titulo)
+	var title = "Eliminar "+titulo;
+	var mensaje = "¿Estás seguro de que quieres eliminar "+titulo+"?";
+	BootstrapDialog.show({
+		type: BootstrapDialog.TYPE_DANGER,
+		title: title,
+		message: mensaje,
+		buttons: [{
+			label: 'Cancelar',
+			action: function(dialog) {
+				dialog.close();
+			}
+		}, {
+			label: 'Eliminar',
+			action: function(dialog) {
+				Eliminar(idasignatura,titulo,descripcion);
+				dialog.close();
+			}
+		}]
+	});
+}
 
 function Eliminar(idasignatura,titulo,descripcion){
 	console.log(idasignatura)
 	$('#eliminar'+idasignatura).hide(1500);
 	$('#botoneliminar'+idasignatura).hide();
-	var html = '<button title="Hilo eliminado" type="button" class="btn-xs btn-danger pull-right">Eliminado<span class="glyphicon glyphicon-ok"></span></button>'
-	$('a#eliminar'+idasignatura).append(html);
 	$.ajax({
 		data: {'id':idasignatura},
 		url: '/planetablogs/eliminarasignaturaprofesor/',
