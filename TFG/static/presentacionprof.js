@@ -42,6 +42,8 @@ function EliminarHilo(idasignatura,titulo,descripcion){
 				dialog.close();
 			}
 		}, {
+			icon: 'glyphicon glyphicon-remove',
+			cssClass: 'btn-danger',
 			label: 'Eliminar',
 			action: function(dialog) {
 				Eliminar(idasignatura,titulo,descripcion);
