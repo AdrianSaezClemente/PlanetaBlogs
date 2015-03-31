@@ -203,7 +203,6 @@ body {
 
 .nuevo {
 	-moz-animation: 1s sombra 1;
-	border: 2px solid black !important;
 	box-shadow:0 0 0.2em #2E2E2E;
 }
 

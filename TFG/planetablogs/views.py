@@ -172,7 +172,6 @@ def eliminarasignaturaalumno(request):
 		hilo = Rss.objects.get(asignatura=idasignatura,alumno=idalumno)
 		hilo.delete()
 		EliminarTodoAlumno(idasignatura,idalumno)
-		
 	return render(request,'planetablogs/presentacionalum.html')
 
 
@@ -425,8 +424,9 @@ def EliminarUpDown(idasignatura,identrada,idalumno):
 		down.delete()
 	RecalcularValoracionUpDown(idasignatura,idalumno,contadorUp,contadorDown)
 	
-		
-#Elimina entrada
+	
+	
+#Elimina entrada de un hilo
 def eliminarentrada(request):
 	if request.method=='GET':
 		idasignatura = request.GET['idasignatura']
@@ -437,6 +437,19 @@ def eliminarentrada(request):
 		entrada.delete()#Elimino Entrada, y recalculo valoración de alumno
 		RestarValoracionEntrada(idasignatura,idalumno)
 		#FALTA ELIMINAR COMENTARIOS DE LA ENTRADA ELIMINADA--------------------------------------------------------------------
+	return render(request,'planetablogs/index.html',{'user': request.user})
+
+
+
+#Elimina alumno de un hilo
+def eliminaralumno(request):
+	if request.method=='GET':
+		idasignatura = request.GET['idasignatura']
+		iduser = request.GET['idalumno']
+		idalumno = ConseguirIdAlumno(iduser)
+		rss = Rss.objects.filter(asignatura_id=idasignatura,alumno_id=idalumno)
+		rss.delete()
+		EliminarTodoAlumno(idasignatura,idalumno)
 	return render(request,'planetablogs/index.html',{'user': request.user})
 
 
