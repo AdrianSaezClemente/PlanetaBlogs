@@ -1,13 +1,12 @@
 $(document).ready(function(){
 	$("#nuevohilo").hide()
 	$("#butagregarhilo").click(function() {
-		$("#nuevohilo").toggle("Bounce");
+		$("#nuevohilo").toggle("slide", 1000 );
 	});
 	
 	$( "#tags" ).autocomplete({
 		source: asignaturas
 	});
-	
 });
 
 
@@ -24,7 +23,9 @@ function Agregar(idasignatura,titulo,descripcion){
 			//console.log("añadido: "+datos)
 		},
 	});
-	$("#clase_lista_asignaturas").prepend("<li id='eliminar"+idasignatura+"' class='list-group-item'><div style='word-wrap:break-word;'><h6 class='list-group-item-heading'><div class='row'><div class='col-sm-9'><span><strong>Título: </strong>"+titulo+"</span></br><span><strong>Descripción: </strong>"+descripcion+"</span></div><div class='col-sm-3'><button type='button' class='btn-xs btn-warning pull-right boton' onclick='window.open(/planetablogs/tutores/hilo/"+idasignatura+",_self)'><span class='glyphicon glyphicon-camera'></span> Visitar</button><button onclick=EliminarHilo('"+idasignatura+"','"+titulo+"','"+descripcion+"'); id='botoneliminar"+idasignatura+"' title='Eliminar hilo' type='button' class='btn-xs btn-danger pull-right boton'><span class='glyphicon glyphicon-minus'></span> Eliminar</button></div></div></h6></div></li></br>");
+	$("#nohayent").hide()
+	$("#clase_lista_asignaturas").prepend("<li id='eliminar"+idasignatura+"' class='list-group-item nuevo'><div style='word-wrap:break-word;'><h6 class='list-group-item-heading'><div class='row'><div class='col-sm-9'><span><strong>Título: </strong>"+titulo+"</span></br><span><strong>Descripción: </strong>"+descripcion+"</span></div><div class='col-sm-3'><button type='button' class='btn-xs btn-warning pull-right boton' onclick=window.open('/planetablogs/tutores/hilo/"+idasignatura+"','_self')><span class='glyphicon glyphicon-camera'></span> Visitar</button><button onclick=EliminarHilo('"+idasignatura+"','"+titulo+"','"+descripcion+"'); id='botoneliminar"+idasignatura+"' title='Eliminar hilo' type='button' class='btn-xs btn-danger pull-right boton'><span class='glyphicon glyphicon-remove'></span> Eliminar</button></div></div></h6></div></li></br>");
+	$("li#"+idasignatura).hide("highlight", 2000 );
 }
 
 

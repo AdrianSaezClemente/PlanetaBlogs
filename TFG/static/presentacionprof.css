@@ -201,6 +201,42 @@ body {
 	background-color:#428bca;
 }
 
+.nuevo {
+	-moz-animation: 1s sombra 1;
+	border: 2px solid black !important;
+	box-shadow:0 0 0.2em #2E2E2E;
+}
+
+@-moz-keyframes sombra {
+	10% {
+		box-shadow:0 0 1.3em #5C5C5C;
+	}
+
+	25% {
+		box-shadow:0 0 1.3em #2E2E2E;
+	}
+	
+	40% {
+		box-shadow:0 0 1.3em #171717;
+	}
+
+	55% {
+		box-shadow:0 0 1.3em black;
+	}
+	
+	70% {
+		box-shadow:0 0 1.3em #171717;
+	}
+	
+	85% {
+		box-shadow:0 0 1.3em #2E2E2E;
+	}
+	
+	100% {
+		box-shadow:0 0 1.3em #5C5C5C;
+	}
+}
+
 .boton {
 	margin-bottom:10px;
 }

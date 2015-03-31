@@ -62,10 +62,10 @@
 							<div class="panel panel-primary">
 								<div class="panel-heading">Mis hilos</div>
 								<div class="panel-body">
+									<div id="clase_lista_asignaturas">
+									</div>
 									{% if lista_asignaturas %}
 										{% for asig in lista_asignaturas %}
-											<div id="clase_lista_asignaturas">
-											</div>
 											<div class="list-group">
 												<li id="eliminar{{ asig.id }}" class="list-group-item">
 													<div style="word-wrap:break-word;">
@@ -83,7 +83,6 @@
 													</div>
 												</li>
 											</div>
-											
 										{% endfor %}
 									{% else %}
 										<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No tiene hilos</br></br> ¡Anímate a crear un hilo! </p>
