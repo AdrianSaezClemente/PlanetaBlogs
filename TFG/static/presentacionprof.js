@@ -66,4 +66,9 @@ function Eliminar(idasignatura,titulo,descripcion){
 			
 		},
 	});
+	var html = "<div class='list-group'><li id="+idasignatura+" class='list-group-item'><div style='word-wrap:break-word;'>";
+	html += "<h6  class='list-group-item-heading'><div class='row'><div class='col-sm-9'><span><strong>Título: </strong>"+titulo+"</span></br><span><strong>Descripción: </strong>"+descripcion+"</span>";
+	html += "</div><div id='botonagregar"+idasignatura+"' class='col-sm-3'><button onclick=Agregar('"+idasignatura+"','"+titulo+"','"+descripcion+"'); id='agregar"+idasignatura+"' title='Añadir hilo' type='button' class='btn-xs btn-primary pull-right boton'><span class='glyphicon glyphicon-plus'></span>Añadir</button>";
+	html += "</div></div></h6></div></li></div>";
+	$("#clase_no_lista_asignaturas").prepend(html);
 }
