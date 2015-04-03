@@ -216,6 +216,8 @@ def presentacionalumno(request):
 				asig = Asignatura.objects.get(id=idasignatura)
 				valoracion = Valoracion(alumno=alumno,asignatura=asig,puntos=0,nivel=0)
 				valoracion.save()
+			else:
+				info = True
 		else:
 			info = True
 	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas, 'info': info, 'idasignatura':idasignatura})
