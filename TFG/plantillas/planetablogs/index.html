@@ -14,10 +14,10 @@
 		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 		<script src="{{STATIC_URL}}index.js"></script>
 		<script>
-	   	//var tmpusuario = '{{ json_usuarios|escapejs }}';
-	   	//var usuario = JSON.parse(tmpusuario);
-	   	//var tmpentrada = '{{ json_entradas|escapejs }}';
-	   	//var entrada = JSON.parse(tmpentrada);
+	   	tmpusuarios = '{{ json_usuarios|escapejs }}';
+	   	usuarios = JSON.parse(tmpusuarios);
+	   	tmpvaloraciones = '{{ json_valoracion|escapejs }}';
+	   	valoraciones = JSON.parse(tmpvaloraciones);
 	   	</script>
 	   	<link rel="shortcut icon" href="../../../../static/imagenes/planet.png" type="image/png" />
 		<title>Educational Planet</title>
@@ -48,6 +48,8 @@
 						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}">Desconectar</a></div>
 					</ul>
 				</div>
+			</div>
+			<div id="popup" class="oculto panel panel-success">
 			</div>
 			<!-- FIN CABECERA -->
 			<div class="row">
@@ -85,7 +87,7 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.0.id }} </label><a target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
+										<h2 class="blog-post-title"><label> #{{ entrada.0.id }} </label><a id="{{ entrada.0.alumno.alumno.id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
 										<h3><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
 										<p>{{ entrada.0.descripcion }}</p>
 										{% if entrada.1 == False %}

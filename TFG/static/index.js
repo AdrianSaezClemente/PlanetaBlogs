@@ -1,3 +1,73 @@
+$.noConflict();
+$(document).ready(function() {
+	$(".oculto").hide();
+	$("#subir").hide();
+	
+	//Darle el alto y ancho
+	$("#popup").css('width', 300 + 'px');
+	$("#popup").css('height', 150 + 'px');
+	
+   
+	$(".usuario").mouseover(function() {
+		SacarPosicion(this);
+		var id = $(this).attr("id");
+		InformacionUsuario(id);
+	});
+	$(".usuario").mouseout(function() {
+		var id = $(this).attr("id");
+		$("#popup").fadeOut(200);
+		$("#popup").html("");
+	});
+	
+	$(function () {
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 200) {
+				$('#subir').fadeIn();
+			} else {
+				$('#subir').fadeOut();
+			}
+		});
+		$('#subir a').click(function () {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 800);
+			return false;
+		});
+	});
+});
+
+function SacarPosicion(elemento){
+	var posicion = $(elemento).position();
+	var x = posicion.left + 250;
+	var y = posicion.top + 250;
+	$("#popup").css("left",x + "px");
+	$("#popup").css("top",y + "px");
+}
+
+function InformacionUsuario(id){
+	for (i=0;i<usuarios.length;i++){
+		if (usuarios[i].pk == id){ //MIRAR SI ES USUARIO Ó ALUMNO!!!
+			for (j=0;j<valoraciones.length;j++){
+				console.log(valoraciones[j].fields.alumno);
+				console.log(usuarios[i].pk);
+				if (valoraciones[j].fields.alumno == usuarios[i].pk){
+					var html = "<div class='panel-heading'><div class='panel-title'>Información de usuario</div></div>";
+					html += "<div class='panel-body'><span class='pull-left'>Nombre: "+usuarios[i].fields.first_name+"</span></br>";
+					html += "<span class='pull-left'>Apellidos: "+usuarios[i].fields.last_name+"</span></br>";
+					html += "<span class='pull-left'>Puntos: "+valoraciones[j].fields.puntos+"</span></br>";
+					html += "<span class='pull-left'>Nivel: "+valoraciones[j].fields.nivel+"</span></div>";
+					$("#popup").append(html);
+					$("#popup").fadeIn();
+				}
+			}
+		}
+	}
+}
+
+function BorrarInformacionUsuario(){
+	$("#popup").html("");
+}
+
 function CompararNick(nick,contra){
 	alert(nick+contra)
 	for (var i=0;i<usuario.length;i++){
@@ -9,7 +79,6 @@ function CompararNick(nick,contra){
 	}
 }
 
-
 function Up(identrada,idusuario,idasignatura,up,down){
 	var up1 = parseInt(up) + parseInt(1)
 	$.ajax({
@@ -17,11 +86,10 @@ function Up(identrada,idusuario,idasignatura,up,down){
 		url: '/planetablogs/up/',
 		type: 'GET',
 		success: function(datos){
-
+			var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down+"</span></button></div>"
+			$("#updown"+identrada).html(html);
 		},
 	});
-	var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down+"</span></button></div>"
-	$("#updown"+identrada).html(html);
 }
 
 function Down(identrada,idusuario,idasignatura,up,down){
@@ -31,12 +99,10 @@ function Down(identrada,idusuario,idasignatura,up,down){
 		url: '/planetablogs/down/',
 		type: 'GET',
 		success: function(datos){
-			//datos.entrada[0].fields.down += 1
-			//console.log(datos.entrada[0].fields.down)
+			var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down1+"</span></button></div>"
+			$("#updown"+identrada).html(html);
 		},
 	});
-	var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down1+"</span></button></div>"
-	$("#updown"+identrada).html(html);
 }
 
 function AgregarComentario(identrada,idasignatura,iduser){
@@ -91,25 +157,3 @@ function CalcularPlanetsEntrada(id,up,down){
 function BorrarInfo(){
 	$(".info").remove();
 }
-
-$.noConflict();
-$(document).ready(function() {
-	//CalcularPlanetsEntrada(up,down)
-	$(".oculto").hide();
-	$("#subir").hide();
-	$(function () {
-		$(window).scroll(function () {
-			if ($(this).scrollTop() > 200) {
-				$('#subir').fadeIn();
-			} else {
-				$('#subir').fadeOut();
-			}
-		});
-		$('#subir a').click(function () {
-			$('body,html').animate({
-				scrollTop: 0
-			}, 800);
-			return false;
-		});
-	});
-});

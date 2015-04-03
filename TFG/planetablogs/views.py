@@ -466,6 +466,10 @@ def mostrarhiloalumno(request,idasignatura):
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
 	tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
 	
+	json_serializer = serializers.get_serializer("json")()
+	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
+	json_valoracion = json_serializer.serialize(Valoracion.objects.filter(asignatura_id=idasignatura), ensure_ascii=False)
+	
 	paginator = Paginator(tupla_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
 	try:
@@ -475,7 +479,7 @@ def mostrarhiloalumno(request,idasignatura):
 	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
 
-	return render(request,'planetablogs/index.html',{'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
+	return render(request,'planetablogs/index.html',{'json_valoracion':json_valoracion,'json_usuarios':json_usuarios, 'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
 
 
 

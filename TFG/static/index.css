@@ -183,6 +183,16 @@ h6, .h6 {
 
 /**************************MI CSS**********************************/
 
+
+#popup {
+   z-index:2;
+   position:absolute;
+   border: 1px solid #333333;
+   text-align:center;
+   background:white;
+   box-shadow:0 0 5em black;
+}
+
 .pequeña{width: 40px; height: 25px;}
 
 .muypequeña{width: 30px; height: 20px;}
@@ -375,6 +385,7 @@ h6, .h6 {
 }
 
 #entrada h2 a {
+	text-decoration:none;
 	color: black;
 }
 
