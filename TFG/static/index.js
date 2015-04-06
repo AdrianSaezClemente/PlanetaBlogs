@@ -69,10 +69,6 @@ function InformacionUsuario(id){
 	}
 }
 
-function BorrarInformacionUsuario(){
-	$("#popup").html("");
-}
-
 function CompararNick(nick,contra){
 	alert(nick+contra)
 	for (var i=0;i<usuario.length;i++){
