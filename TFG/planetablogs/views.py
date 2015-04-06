@@ -499,7 +499,7 @@ def mostrarhiloprofesor(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
+	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:4]
 	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
 	
 	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
