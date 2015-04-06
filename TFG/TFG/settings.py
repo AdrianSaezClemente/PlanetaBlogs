@@ -98,3 +98,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/', "static"),
 )
+
+MEDIA_ROOT = os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/static/imagenes')

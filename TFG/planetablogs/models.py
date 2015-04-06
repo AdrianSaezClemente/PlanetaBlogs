@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 import sys
 	
 	
+User.add_to_class('imagen', models.ImageField(upload_to='perfiles', verbose_name='Perfil'))
+
+'''
+class Usuario(User):
+	docfile = forms.FileField(label='Selecciona un archivo')
+	imagen = models.ImageField(upload_to='perfiles', verbose_name='Perfil')
+'''
+
 class Profesor(models.Model):
 	profesor = models.ForeignKey(User)
 	def __unicode__(self):

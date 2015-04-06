@@ -6,12 +6,7 @@ from django.core.exceptions import ValidationError
 from datetime import datetime
 from django.contrib.auth.models import User
 
-'''
-class FormularioRegistro(ModelForm):
-	class Meta:
-		model = Usuario
-		exclude = ('entradas','url_blog','puntuaciontotal','nivel')
-'''
+
 class FormularioIdentidad(ModelForm):
 	class Meta:
 		model = Alumno
@@ -21,8 +16,7 @@ class FormularioIdentidad(ModelForm):
 class FormularioRegistro(ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'password', 'email', 'first_name', 'last_name']
-        #exclude = ('rss',)
+        fields = ['username', 'password', 'email', 'first_name', 'last_name', 'imagen']
         widgets = {
             'password': forms.PasswordInput(),
         }

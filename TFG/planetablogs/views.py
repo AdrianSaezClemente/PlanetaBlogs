@@ -23,12 +23,13 @@ from django.db.models import F
 import time
 from django.core.serializers.json import DjangoJSONEncoder
 
-
+	
+	
 #Introducir datos de registro de alumno
 def nuevo_alumno(request):
 	info = False
 	if request.method == 'POST':
-		form = FormularioRegistro(request.POST)
+		form = FormularioRegistro(request.POST, request.FILES)
 		if form.is_valid():
 			info = True
 			username = form.cleaned_data["username"]
@@ -36,10 +37,12 @@ def nuevo_alumno(request):
 			email = form.cleaned_data["email"]
 			first_name = form.cleaned_data["first_name"]
 			last_name = form.cleaned_data["last_name"]
-
+			imagen = form.cleaned_data["imagen"]
+			
 			user = User.objects.create_user(username, email, password)
 			user.first_name = first_name
 			user.last_name = last_name
+			user.imagen = imagen
 			user.save()
 			
 			alum = Alumno(alumno=user)
@@ -59,7 +62,7 @@ def nuevo_alumno(request):
 def nuevo_profesor(request):
 	info = False
 	if request.method == 'POST':
-		form = FormularioRegistro(request.POST)
+		form = FormularioRegistro(request.POST, request.FILES)
 		print info
 		if form.is_valid():
 			info = True
@@ -68,10 +71,12 @@ def nuevo_profesor(request):
 			email = form.cleaned_data["email"]
 			first_name = form.cleaned_data["first_name"]
 			last_name = form.cleaned_data["last_name"]
+			imagen = form.cleaned_data["imagen"]
 			
 			user = User.objects.create_user(username, email, password)
 			user.first_name = first_name
 			user.last_name = last_name
+			user.imagen = imagen
 			user.save()
 			
 			profe = Profesor(profesor=user)
@@ -472,7 +477,7 @@ def mostrarhiloalumno(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:4]
+	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
 	tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
 	
 	json_serializer = serializers.get_serializer("json")()
@@ -499,7 +504,7 @@ def mostrarhiloprofesor(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:4]
+	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
 	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
 	
 	json_serializer = serializers.get_serializer("json")()

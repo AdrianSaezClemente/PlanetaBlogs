@@ -231,6 +231,18 @@ h6, .h6 {
 	width: 40px; height: 25px;
 }
 
+.fotopequeña{
+	width: 40px; height: 40px;
+}
+
+.fotomediana{
+	width: 50px; height: 50px;
+}
+
+.fotogrande{
+	width: 70px; height: 70px;
+}
+
 .pequeñologo{
 	width: 100px; height: 80px;
 }

@@ -278,7 +278,7 @@ body {
 
 #cabecerarelativa {
 	margin-bottom:2em;
-	height:50px;
+	height:90px;
 	/*background-color:#428bca;*/
 	/*border-radius:10px;*/
 }
@@ -294,14 +294,13 @@ body {
 }
 
 .espacio {	
-	margin-top:7px;
+	margin-top:15px;
 	text-shadow: -1px 0px 5px black;
 	font-size:1.25em;
 	text-align:center;
 	position:relative;
 	font-family: Arial;
 	color:#C0C0C0;
-	height:100px;
 }
 
 .efecto {  
@@ -311,6 +310,11 @@ body {
 
 .pequeña{
 	width: 40px; height: 25px;
+}
+
+.fotogrande{
+	width: 70px; height: 70px;
+	box-shadow:0 0 1em white;
 }
 
 .pequeñologo{
