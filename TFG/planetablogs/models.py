@@ -34,6 +34,7 @@ class Entrada(models.Model):
 	url_blog = models.URLField()
 	totalup = models.IntegerField()
 	totaldown = models.IntegerField()
+	total = models.IntegerField()
 	def __unicode__(self):
 		return self.titulo
 

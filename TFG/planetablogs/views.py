@@ -401,14 +401,23 @@ def RestarValoracionEntrada(idasignatura,idalumno):
 	val.save()
 	
 	
-
-#Resta la valoración de ups y downs al alumno que escribió la entrada eliminada
-def RecalcularValoracionUpDown(idasignatura,idalumno,contadorUp,contadorDown):
+	
+#Recalcula el total de puntos obtenidos en cada entrada
+def RecalcularTotalEntrada(identrada,contadorUp,contadorDown):
+	entrada = Entrada.objects.get(id=identrada)
+	entrada.total = entrada.total + contadorDown - (3*contadorUp)
+	entrada.save()
+	
+	
+	
+#Suma y resta la valoración de ups y downs al alumno que escribió la entrada eliminada
+def RecalcularValoracionUpDown(identrada,idasignatura,idalumno,contadorUp,contadorDown):
 	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
 	val.puntos = val.puntos + contadorDown - (3*contadorUp)
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
+	RecalcularTotalEntrada(identrada,contadorUp,contadorDown)
 	
 	
 	
@@ -424,7 +433,7 @@ def EliminarUpDown(idasignatura,identrada,idalumno):
 	for down in downs:
 		contadorDown = contadorDown + 1
 		down.delete()
-	RecalcularValoracionUpDown(idasignatura,idalumno,contadorUp,contadorDown)
+	RecalcularValoracionUpDown(identrada,idasignatura,idalumno,contadorUp,contadorDown)
 	
 	
 	
@@ -463,7 +472,7 @@ def mostrarhiloalumno(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-totalup')[:4]
+	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:4]
 	tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
 	
 	json_serializer = serializers.get_serializer("json")()
@@ -536,6 +545,7 @@ def infopuntuaciones(request,idasignatura):
 def GuardarUp(identrada):
 	entrada = Entrada.objects.get(id=identrada)
 	entrada.totalup = entrada.totalup + 1
+	entrada.total = entrada.total + 3
 	entrada.save()
 	
 
@@ -572,6 +582,7 @@ def up(request):
 def GuardarDown(identrada):
 	entrada = Entrada.objects.get(id=identrada)
 	entrada.totaldown = entrada.totaldown + 1
+	entrada.total = entrada.total - 1
 	entrada.save()
 	
 	
