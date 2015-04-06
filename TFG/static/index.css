@@ -187,7 +187,6 @@ h6, .h6 {
 #popup {
    z-index:2;
    position:absolute;
-   border: 1px solid #333333;
    text-align:center;
    background:white;
    box-shadow:0 0 5em black;
@@ -199,6 +198,10 @@ h6, .h6 {
 
 #comentarios {
 	margin-top:10px;
+}
+
+#descripcion_comentario{
+	position:static !important;
 }
 
 #titulopanel *{

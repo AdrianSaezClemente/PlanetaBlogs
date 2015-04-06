@@ -18,6 +18,8 @@
 	   	usuarios = JSON.parse(tmpusuarios);
 	   	tmpvaloraciones = '{{ json_valoracion|escapejs }}';
 	   	valoraciones = JSON.parse(tmpvaloraciones);
+	   	tmpalumnos = '{{ json_alumnos|escapejs }}';
+	   	alumnos = JSON.parse(tmpalumnos);
 	   	</script>
 	   	<link rel="shortcut icon" href="../../../../static/imagenes/planet.png" type="image/png" />
 		<title>Educational Planet</title>
@@ -87,7 +89,7 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.0.id }} </label><a id="{{ entrada.0.alumno.alumno.id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
+										<h2 class="blog-post-title"><label> #{{ entrada.0.id }} </label><a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
 										<h3><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
 										<p>{{ entrada.0.descripcion }}</p>
 										{% if entrada.1 == False %}

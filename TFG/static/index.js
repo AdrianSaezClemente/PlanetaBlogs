@@ -46,11 +46,15 @@ function SacarPosicion(elemento){
 
 function InformacionUsuario(id){
 	for (i=0;i<usuarios.length;i++){
-		if (usuarios[i].pk == id){ //MIRAR SI ES USUARIO Ó ALUMNO!!!
+		if (usuarios[i].pk == id){
+			for (k=0;k<alumnos.length;k++){
+				if (id == alumnos[k].fields.alumno){
+					idalumno = alumnos[k].pk
+					break;
+				}
+			}
 			for (j=0;j<valoraciones.length;j++){
-				console.log(valoraciones[j].fields.alumno);
-				console.log(usuarios[i].pk);
-				if (valoraciones[j].fields.alumno == usuarios[i].pk){
+				if (valoraciones[j].fields.alumno == idalumno){
 					var html = "<div class='panel-heading'><div class='panel-title'>Información de usuario</div></div>";
 					html += "<div class='panel-body'><span class='pull-left'>Nombre: "+usuarios[i].fields.first_name+"</span></br>";
 					html += "<span class='pull-left'>Apellidos: "+usuarios[i].fields.last_name+"</span></br>";
@@ -58,6 +62,7 @@ function InformacionUsuario(id){
 					html += "<span class='pull-left'>Nivel: "+valoraciones[j].fields.nivel+"</span></div>";
 					$("#popup").append(html);
 					$("#popup").fadeIn();
+					break;
 				}
 			}
 		}
