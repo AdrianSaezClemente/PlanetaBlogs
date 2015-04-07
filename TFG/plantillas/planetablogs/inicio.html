@@ -14,11 +14,13 @@
 	</head>
 	
 	<body>
-		<div class="row">
-		</div>
 		<div class="container">
-			<div class="row">
-				<!-- <span>Identifícate para entrar en Educational Planet. ¡Entra y consigue muchos planets! ¡Bienvenido!</span> -->
+			<div class="row cabecera">
+				<div class="col-sm-12 page-header">
+					<h3>Identifícate para entrar en Educational Planet. <small>¡Entra y consigue muchos planets! ¡Bienvenido!</small></h3>
+				</div>
+			</div>
+			<div class="row contenedor">
 				<div class="col-sm-6 col-md-4 col-md-offset-1">
 					<h1 class="text-center login-title">Identifícate</h1>
 					<div class="account-wall">
@@ -41,18 +43,14 @@
 					{% endif %}
 					</br>
 				</div>
-				<div class="col-sm-6 col-md-4 col-md-offset-2 registro">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Regístrate como:</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr style="background-color:#6B6E75"><td><a style="color:black;font-weight:bold;" href="/planetablogs/nuevoalumno/" class="text-center new-account">Alumno </a></td></tr>
-							<tr style="background-color:#6B6E75"><td><a style="color:black;font-weight:bold;" href="/planetablogs/nuevoprofesor/" class="text-center new-account">Tutor </a></td></tr>
-						</tbody>
-					</table>
+				<div class="col-sm-6 col-md-4 col-md-offset-1">
+					<div class="col-sm-12">Regístrate como:</div>
+					<div class="col-sm-6">
+						<a style="color:black;font-weight:bold;" href="/planetablogs/nuevoalumno/" class="text-center new-account"><button id="butagregarhilo" title="Anímate a agregar un nuevo hilo" class="col-sm-10 col-sm-offset-1 btn btn-success"><span style="color:green;" class="glyphicon glyphicon-plus"></span>Alumno </button></a>
+					</div>
+					<div class="col-sm-6">
+						<a style="color:black;font-weight:bold;" href="/planetablogs/nuevoprofesor/" class="text-center new-account"><button id="butagregarhilo" title="Anímate a agregar un nuevo hilo" class="col-sm-10 col-sm-offset-1 btn btn-success"><span style="color:green;" class="glyphicon glyphicon-plus"></span>Tutor </button></a>
+					</div>
 				</div>
 			</div>
 		</div> 

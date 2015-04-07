@@ -319,7 +319,7 @@ body {
 .fotogrande{
 	width: 70px; 
 	height: 70px;
-	box-shadow:0 0 1em white;
+	box-shadow:0 0 0.5em white;
 	margin-top:10px;
 	border:1px solid white; 
 	padding:5px;

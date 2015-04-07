@@ -122,6 +122,12 @@ def ActualizarNivel(puntos):
 	return nivel
 
 
+'''
+#Actualiza la posición de un alumno en una asignatura determinada
+def ActualizarPosicion(idasignatura,idalumno):
+	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
+	val.posicion = val.posicion
+'''
 
 #Comprobar si un usuario es alumno o profesor
 def ComprobarUsuario(idusuario):

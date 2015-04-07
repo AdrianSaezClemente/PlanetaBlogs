@@ -1,25 +1,15 @@
-/*
-body {
-	border-right:2em solid #5478E4;
-	border-left:2em solid #5478E4;
-	padding:1.5em;
-	border-radius:30px;
-}*/
+.contenedor {
+	background-color:#B0B0B0;
+}
 
-.container {
-	margin-top:5em;
-	background-color:#0C0C0C;
-	/*border-right:2em solid #5478E4;
-	border-left:2em solid #5478E4;*/
-	border-radius:30px;
+.cabecera {
+	text-align:center;
+	background-color:#606060;
+	color:black;
 }
 
 .registro {
 	margin-top:10em;
-}
-
-.row {
-	border-radius:30px;
 }
 
 .form-signin {
