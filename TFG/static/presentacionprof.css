@@ -294,13 +294,17 @@ body {
 }
 
 .espacio {	
-	margin-top:15px;
+	margin-top:10px;
+	padding-top:20px;
 	text-shadow: -1px 0px 5px black;
-	font-size:1.25em;
+	font-size:1.4em;
+	font-style:oblique;
 	text-align:center;
 	position:relative;
 	font-family: Arial;
 	color:#C0C0C0;
+	height: 70px;
+	border:1px solid white; 
 }
 
 .efecto {  
@@ -313,8 +317,12 @@ body {
 }
 
 .fotogrande{
-	width: 70px; height: 70px;
+	width: 70px; 
+	height: 70px;
 	box-shadow:0 0 1em white;
+	margin-top:10px;
+	border:1px solid white; 
+	padding:5px;
 }
 
 .pequeñologo{
