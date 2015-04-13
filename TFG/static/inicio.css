@@ -1,5 +1,9 @@
-.contenedor {
-	background-color:#B0B0B0;
+body {
+	background-color:#B0B0B0 !important;
+}
+
+.page-header {
+	margin-top:2px !important;
 }
 
 .cabecera {
@@ -8,8 +12,24 @@
 	color:black;
 }
 
+.identificar {
+	font-family:"Times New Roman", fantasy;
+}
+
 .registro {
+	font-family:"Times New Roman", fantasy;
+}
+
+.botonregistro {
 	margin-top:10em;
+}
+
+#botonalumno {
+	height:70px;
+}
+
+#botontutor {
+	height:70px;
 }
 
 .form-signin {
