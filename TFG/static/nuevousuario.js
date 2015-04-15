@@ -23,13 +23,13 @@ function ComprobarInfo(){
 	}
 }
 
-/*
+
 function ComprobarNick(){
 	var entrada = document.getElementById("nick").value;
 	var salida = document.getElementById("salida");
 	var nick = false;
-	for (var i=0;i<usuario.length;i++){
-		if (usuario[i].fields.nick == entrada){
+	for (var i=0;i<usuarios.length;i++){
+		if (usuarios[i].fields.username == entrada){
 			var nick = true;
 		}
 	}	
@@ -61,7 +61,7 @@ function nickPress(evento){
 	if(evento.which == 0){
 		$("#anima").removeClass("animacion");
 	}
-}*/
+}
 /*
 function contraseñaDown(evento){
 	$("#contraseñaSalida").removeClass("animacion");

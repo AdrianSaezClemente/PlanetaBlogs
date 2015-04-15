@@ -79,7 +79,7 @@ h6, .h6 {
   padding-bottom: 20px;
 }
 .blog-title {
-  margin-top: 30px;
+  padding: 15px;
   margin-bottom: 0;
   font-size: 60px;
   font-weight: normal;
@@ -158,12 +158,14 @@ h6, .h6 {
   font-size:1em;
   background-color: black;
   border-top: 1px solid #e5e5e5;
+  box-shadow: inset 0 120px 15px -120px #EFEFEF;
   height:60px;
   margin-top:1em;
-  padding-top:10px; 
-  border-top:10px solid #B9C5CD;
+  padding-top:10px;
+  border-top:10px solid #DCDCDC;
   bottom: 0 !important;
-  position: absolute;
+  position: fixed;
+  margin-top:4em;
   width:100%;
 }
 
@@ -183,55 +185,22 @@ body {
     z-index:0;
 }
 
-
-.pequeña{width: 40px; height: 25px;}
-
-#cabecerarelativa {
-	width:102%;
-	position:fixed;
-}
-
-#cabecera {
-	
-}
-
 #formulario {
-	padding:30px;
-	margin-left:22%;
-	margin-top:8%;
-	width:670px;
+	padding-top:30px;
+	padding-left:20px;
+	padding-right:20px;
+	padding-bottom:10px;
+	margin-top:3em;
+	margin-bottom:8em;
 	height:auto;
 	overflow:hidden;
 	box-shadow:0 0 0.4em black;
 	border-radius:10px;
+	border:10px solid #B9C5CD;
 }
 
-#guardar,#result,#img {
+#solucion {
 	float:left;
-}
-
-#volver {
-	float:right;
-}
-
-#img {
-	margin-left:7px;
-	margin-top:4px;
-}
-
-
-
-#result {
-	margin-left:7px;
-	margin-top:20px;
-	color:red;
-	font-size:0.8em;
-	width:590px;
-	padding:1em;
-}
-
-#cnick *,#ccontraseña * {
-	float:left
 }
 
 @-moz-keyframes girando {
@@ -252,6 +221,11 @@ body {
 	transform-style: preserve-3d;
 }
 
+#salida {
+	margin-top:4px;
+	margin-left:7px;
+}
+
 .red {
 	color:red;
 }
@@ -265,7 +239,13 @@ body {
 	font-size:0.8em;
 	font-style:oblique;
 	box-shadow:0 0 0.4em black;
-	margin-top:100px;
+}
+
+h4 {
+	text-shadow: 1px 1px black;
+	text-align:center;
+	font-style:oblique;
+	font-weight:bold !important;
 }
 
 #buttondialog {
@@ -273,17 +253,8 @@ body {
 	color:black;
 }
 
-#solucion {
-	float:left;
+.informacion {
+	padding-left:20px;
+	padding-bottom:10px;
 }
-
-#salida {
-	margin-top:4px;
-	margin-left:7px;
-}
-
-#boton {
-	margin-top:30px;
-}
-
 /********************************FIN DE MI CSS*********************************/

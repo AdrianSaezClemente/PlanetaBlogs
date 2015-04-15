@@ -27,7 +27,9 @@ from django.core.serializers.json import DjangoJSONEncoder
 	
 #Introducir datos de registro de alumno
 def nuevo_alumno(request):
-	info = False
+	json_serializer = serializers.get_serializer("json")()
+	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
+	info = True
 	if request.method == 'POST':
 		form = FormularioRegistro(request.POST, request.FILES)
 		if form.is_valid():
@@ -50,20 +52,21 @@ def nuevo_alumno(request):
 			
 			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
 		else:
-			return render(request, 'planetablogs/nuevoalumno.html', {'info': info})
+			info = False
+			return render(request, 'planetablogs/nuevoalumno.html', {'info': info, 'json_usuarios': json_usuarios})
 	else:
 		form = FormularioRegistro()
-	print info
-	return render(request, 'planetablogs/nuevoalumno.html', {'info': info})
+	return render(request, 'planetablogs/nuevoalumno.html', {'info': info, 'json_usuarios': json_usuarios})
 
 
 
 #Introducir datos de registro de profesor
 def nuevo_profesor(request):
-	info = False
+	json_serializer = serializers.get_serializer("json")()
+	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
+	info = True
 	if request.method == 'POST':
 		form = FormularioRegistro(request.POST, request.FILES)
-		print info
 		if form.is_valid():
 			info = True
 			username = form.cleaned_data["username"]
@@ -84,10 +87,11 @@ def nuevo_profesor(request):
 			
 			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
 		else:
-			return render(request, 'planetablogs/nuevoprofesor.html', {'info': info})
+			info = False
+			return render(request, 'planetablogs/nuevoprofesor.html', {'info': info, 'json_usuarios': json_usuarios})
 	else:
 		form = FormularioRegistro()
-	return render(request, 'planetablogs/nuevoprofesor.html', {'info': info})
+	return render(request, 'planetablogs/nuevoprofesor.html', {'info': info, 'json_usuarios': json_usuarios})
 
 
 

@@ -10,8 +10,8 @@
 		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
 	   	<script src="{{ STATIC_URL }}nuevousuario.js"></script>
 	   	<script>
-	   	var tmp = '{{ lista_usuarios|escapejs }}';
-	   	var usuario = JSON.parse(tmp);
+	   	var tmp = '{{ json_usuarios|escapejs }}';
+	   	var usuarios = JSON.parse(tmp);
 	   	info = '{{ info }}';
 	   	</script>
 	   	<link rel="shortcut icon" href="../../static/imagenes/planet.png" type="image/png" />
@@ -21,79 +21,92 @@
 	<body>
 		<!-- CONTENEDOR -->
 		<div class="container">
+			<!-- CABECERA -->
 			<div class="row">
-				<div id="cabecera" class="col-xs-12 blog-masthead">
+				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-10 col-sm-offset-1">
 					<nav class="blog-nav">
-						<p class="blog-title" style="font-size:30px;text-align:center;">Regístrate como profesor</p>
+						<p class="blog-title" style="color:white;font-family:'Times New Roman',fantasy;font-size:1.6em;text-align:center;">Regístrate como <span style="font-style:oblique;font-size:0.8em;text-shadow: 1px 1px white;">TUTOR</span></p>
 					</nav>
 				</div>
-				<div id="formulario" class="col-xs-12 col-sm-12 blog-main">
-					{% block contenido %}
-					<form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Elige una foto de perfil</label>
-							<div class="col-lg-10">
-								 <input name="imagen" type="file" />
+			</div>
+			<!-- FIN CABECERA -->
+			<div class="row">
+				<div id="formulario" class="col-xs-12 col-sm-8 col-sm-offset-2">
+					<div class="row">
+						<form class="col-sm-12 form-horizontal" role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+							<div class="form-group">
+								<label class="col-lg-2 col-lg-offset-1 control-label">Foto de perfil</label>
+								<div class="col-lg-7">
+									<input name="imagen" type="file" />
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Nick</label>
-							<div class="col-lg-10">
-								<input id="nick" style="font-style:oblique;font-size:0.7em;" type="text" class="form-control" placeholder="Pon tu nick" autocomplete="off" name="username">
-								<div id="solucion"><div id="anima"></div><div id="salida" style="font-size:0.8em"></div></div>
+							<div class="form-group">
+								<label class="col-lg-2 col-lg-offset-1 control-label">Nick</label>
+								<div class="col-lg-7">
+									<input id="nick" style="font-style:oblique;font-size:0.7em;" type="text" class="form-control" placeholder="Pon tu nick" autocomplete="off" name="username">
+									<div id="solucion"><div id="anima"></div><div id="salida" style="font-size:0.8em"></div></div>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Nombre</label>
-							<div class="col-lg-10">
-								<input id="nombre" type="text" style="font-style:oblique;font-size:0.7em;" class="form-control" name="first_name" placeholder="Escribe tu nombre" autocomplete="off">
-								<div id="salida"></div>
+							<div class="form-group">
+								<label class="col-lg-2 col-lg-offset-1 control-label">Nombre</label>
+								<div class="col-lg-7">
+									<input id="nombre" type="text" style="font-style:oblique;font-size:0.7em;" class="form-control" name="first_name" placeholder="Escribe tu nombre" autocomplete="off">
+									<div id="salida"></div>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Apellidos</label>
-							<div class="col-lg-10">
-								<input id="nombre" type="text" style="font-style:oblique;font-size:0.7em;" class="form-control" name="last_name" placeholder="Escribe tus apellidos" autocomplete="off">
-								<div id="salida"></div>
+							<div class="form-group">
+								<label class="col-lg-2 col-lg-offset-1 control-label">Apellidos</label>
+								<div class="col-lg-7">
+									<input id="nombre" type="text" style="font-style:oblique;font-size:0.7em;" class="form-control" name="last_name" placeholder="Escribe tus apellidos" autocomplete="off">
+									<div id="salida"></div>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Email</label>
-							<div class="col-lg-10">
-								<input id="email" type="email" style="font-style:oblique;font-size:0.7em;" class="form-control" name="email" placeholder="Introduce su correo" autocomplete="off">
-								<div id="email"></div>
+							<div class="form-group">
+								<label class="col-lg-2 col-lg-offset-1 control-label">Email</label>
+								<div class="col-lg-7">
+									<input id="email" type="email" style="font-style:oblique;font-size:0.7em;" class="form-control" name="email" placeholder="Introduce su correo" autocomplete="off">
+									<div id="email"></div>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Contraseña</label>
-							<div class="col-lg-10">
-								<input id="contraseña" type="password" style="font-style:oblique;font-size:0.7em;" class="form-control" name="password" placeholder="Introduce al menos 6 caracteres" autocomplete="off">
-								<div id="contraseñaSalida"></div>
+							<div class="form-group">
+								<label class="col-lg-2 col-lg-offset-1 control-label">Contraseña</label>
+								<div class="col-lg-7">
+									<input id="contraseña" type="password" style="font-style:oblique;font-size:0.7em;" class="form-control" name="password" placeholder="Introduce al menos 6 caracteres" autocomplete="off">
+									<div id="contraseñaSalida"></div>
+								</div>
 							</div>
-						</div>
-						<div id="boton"><button id="guardar" type="submit" class="btn btn-success"><span style="color:black" class="glyphicon glyphicon-floppy-disk"> Guardar</button>
-							<span id="img"><span id="imagen" class="glyphicon glyphicon-info-sign" style="font-size:0.5em"></span><span style="font-size:0.5em"> Información</span></span>
-							<a href="/planetablogs/login"><button id="volver" type="button" class="btn btn-primary">Cancelar <span  class="glyphicon glyphicon-share-alt"></button></a>
-						</div></br>
-					</form>
-					<div>
-						<span id="result" class="alert alert-danger">
-							<button id="buttondialog" type="button" class="close" data-dismiss="alert">&times;</button>
-							<span>
-								¡Información errónea! Introdúcela otra vez.
+							<div class="col-sm-10 col-sm-offset-1" id="boton">
+								<span id="img"><span id="imagen" class="glyphicon glyphicon-info-sign" style="font-size:0.8em"></span></span>
+								<button id="guardar" type="submit" class="btn btn-success"><span style="color:white" class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+								<a href="/planetablogs/login"><button id="volver" type="button" class="btn btn-primary pull-right">Cancelar <span class="glyphicon glyphicon-share-alt"></span></button></a>
+							</div></br></br></br>
+						</form>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<span id="dialog" title="Información" class="alert-info help-block col-sm-10 col-sm-offset-1">
+								<button id="buttondialog" type="button" class="close" data-dismiss="alert">&times;</button>
+								<h4>Recuerda</h4>
+								<div class="informacion">
+									<ol>
+										<li>Todos los campos deben estar rellenos.</li>
+										<li>Introduce una imagen de perfil (Tamaño óptimo: <12Kb).</li>
+										<li>El nick debe ser único.</li>
+										<li>El correo debe existir.</li>
+										<li>Y la contraseña debe tener al menos 6 caracteres.</li>
+									</ul>
+								</div>
+								
 							</span>
-						</span>
+						</div>
+						<div class="col-sm-12">
+							<span style="text-align:center;" id="result" class="alert alert-danger col-sm-10 col-sm-offset-1">
+								<button id="buttondialog" type="button" class="close" data-dismiss="alert">&times;</button>
+								<span>¡Información errónea! Introdúcela otra vez.</span></br>
+								<span style="font-size:0.6em;">Para más información pasar el ratón por encima de </span><span id="imagen" class="glyphicon glyphicon-info-sign" style="font-size:0.8em">
+							</span>
+						</div>
 					</div>
-					<div>
-						<span id="dialog" title="Información" class="alert-info help-block">
-							<button id="buttondialog" type="button" class="close" data-dismiss="alert">&times;</button>
-							<span>Recuerda que todos los campos deben estar rellenos.</span></br>
-							<span>El nick debe ser único.</span></br>
-							<span>El RSS debe existir.</span></br>
-							<span>Y la contraseña debe tener al menos 6 caracteres.</span></br>
-						</span>
-					</div>
-					{% endblock contenido %}
 				</div>
 			</div>
 		</div>
