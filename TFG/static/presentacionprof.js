@@ -55,7 +55,7 @@ function EliminarHilo(idasignatura,titulo,descripcion){
 }
 
 function Eliminar(idasignatura,titulo,descripcion){
-	console.log(idasignatura)
+	$('#nohayent').hide();
 	$('#eliminar'+idasignatura).hide(1500);
 	$('#botoneliminar'+idasignatura).hide();
 	$.ajax({
