@@ -272,6 +272,7 @@ def presentacionprofesor(request):
 		formHilo = FormularioHilo(request.POST)
 		if formHilo.is_valid():
 			hilo = formHilo.save(commit=False)
+			hilo.entradas = 0
 			hilo.save()
 			return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 		else:
@@ -321,7 +322,6 @@ def ComprobarEntradaPuntuadaDown(i,down,lista_entradas_puntuadas):
 
 #Obtiene las entradas de un alumno en ese hilo, y si la ha puntuado o no.
 def ConseguirListaEntradas(idasignatura,idalumno):
-	downencontrado = False
 	tupla_entradas = []
 	entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
 	up = Up.objects.filter(alumno_id=idalumno)
@@ -489,7 +489,7 @@ def mostrarhiloalumno(request,idasignatura):
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
 	tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
-	
+	print tupla_entradas
 	json_serializer = serializers.get_serializer("json")()
 	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 	json_valoracion = json_serializer.serialize(Valoracion.objects.filter(asignatura_id=idasignatura), ensure_ascii=False)
@@ -516,7 +516,7 @@ def mostrarhiloprofesor(request,idasignatura):
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
 	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
-	
+
 	json_serializer = serializers.get_serializer("json")()
 	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 	json_valoracion = json_serializer.serialize(Valoracion.objects.filter(asignatura_id=idasignatura), ensure_ascii=False)

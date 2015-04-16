@@ -68,7 +68,8 @@
 								{% if lista_entradas_valoradas %}
 									{% for ent in lista_entradas_valoradas %}
 										<a style="cursor:e-resize;" title="Pulsa para ver el total de planets para esta entrada" onclick="CalcularPlanetsEntrada('{{ ent.id }}','{{ ent.totalup }}','{{ ent.totaldown }}')" class="list-group-item">
-											<p style="font-weight:bold;font-style:oblique;" class="list-group-item-heading"><strong>#{{ ent.id }}</strong> {{ ent.alumno.alumno.first_name }} {{ ent.alumno.alumno.last_name }}<span class="pull-right">{{ ent.fecha }}</span></p>
+											<p style="font-weight:bold;font-style:oblique;" class="list-group-item-heading"><strong>#{{ ent.entrada }}</strong> {{ ent.alumno.alumno.first_name }} {{ ent.alumno.alumno.last_name }}<span class="pull-right">{{ ent.fecha }}</span></p>
+											<p style="word-wrap:break-word;">Título: {{ ent.titulo }}</p>
 											<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span><strong></strong><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span><span style="color:black;" class="pull-right"><strong>Planets: </strong><span id="total{{ ent.id }}"></span></span></p>
 										</a>
 									{% endfor %}
@@ -89,9 +90,9 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.0.id }}&nbsp;</label><img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img><a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
-										<h3><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
-										<p>{{ entrada.0.descripcion }}</p>
+										<h2 class="blog-post-title"><label> #{{ entrada.0.entrada }}&nbsp;</label><img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img><a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
+										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
+										<p style="word-wrap:break-word;">{{ entrada.0.descripcion }}</p>
 										{% if entrada.1 == False %}
 										<div id="valoracion">
 											<div id="updown{{ entrada.0.id }}" class="btn-toolbar" role="toolbar">
@@ -117,7 +118,7 @@
 										{% endif %}
 										<div id="escribircomentario">
 											<div class="input-group">
-												<span class="input-group-addon">#{{ entrada.0.id }}</span>
+												<span class="input-group-addon">#{{ entrada.0.entrada }}</span>
 												<textarea id="descripcion_comentario" class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
 												<input class="oculto" name="entrada" value="{{ entrada.0.id }}"></input>
 												<span class="input-group-btn">

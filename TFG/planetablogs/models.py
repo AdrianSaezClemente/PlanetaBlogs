@@ -28,6 +28,7 @@ class Asignatura(models.Model):
 	profesores = models.ManyToManyField(Profesor)
 	titulo = models.CharField(max_length=35)
 	descripcion = models.TextField(max_length=150)
+	entradas = models.IntegerField()
 	def __unicode__(self):
 		return self.titulo
 	
@@ -35,6 +36,7 @@ class Asignatura(models.Model):
 class Entrada(models.Model):
 	asignatura = models.ForeignKey(Asignatura)
 	alumno = models.ForeignKey(Alumno)
+	entrada = models.IntegerField()
 	titulo = models.CharField(max_length=80)
 	fecha = models.DateTimeField()
 	descripcion = models.TextField()
