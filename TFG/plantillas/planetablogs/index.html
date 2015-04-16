@@ -68,8 +68,9 @@
 								{% if lista_entradas_valoradas %}
 									{% for ent in lista_entradas_valoradas %}
 										<a style="cursor:e-resize;" title="Pulsa para ver el total de planets para esta entrada" onclick="CalcularPlanetsEntrada('{{ ent.id }}','{{ ent.totalup }}','{{ ent.totaldown }}')" class="list-group-item">
-											<p style="font-weight:bold;font-style:oblique;" class="list-group-item-heading"><strong>#{{ ent.entrada }}</strong> {{ ent.alumno.alumno.first_name }} {{ ent.alumno.alumno.last_name }}<span class="pull-right">{{ ent.fecha }}</span></p>
-											<p style="word-wrap:break-word;">Título: {{ ent.titulo }}</p>
+											<p>Posición: {{ forloop.counter }}</p>
+											<p style="font-weight:bold;font-style:oblique;" class="list-group-item-heading"><strong>#{{ ent.entrada }}</strong> {{ ent.titulo }}<span class="pull-right">{{ ent.fecha }}</span></p>
+											<h6 style="font-size:0.9em;word-wrap:break-word;">Escrito por {{ ent.alumno.alumno.username }}</h6>
 											<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span><strong></strong><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span><span style="color:black;" class="pull-right"><strong>Planets: </strong><span id="total{{ ent.id }}"></span></span></p>
 										</a>
 									{% endfor %}

@@ -37,7 +37,7 @@ class Entrada(models.Model):
 	asignatura = models.ForeignKey(Asignatura)
 	alumno = models.ForeignKey(Alumno)
 	entrada = models.IntegerField()
-	titulo = models.CharField(max_length=80)
+	titulo = models.CharField(max_length=10)
 	fecha = models.DateTimeField()
 	descripcion = models.TextField()
 	link = models.URLField()
