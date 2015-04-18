@@ -151,7 +151,7 @@ function BorrarComentario(idcomentario){
 
 function CalcularPlanetsEntrada(id,up,down){
 	$("#total"+id).html("")
-	var total = up*3-down*1
+	var total = up*2-down*1
 	$("#total"+id).html(total)
 }
 

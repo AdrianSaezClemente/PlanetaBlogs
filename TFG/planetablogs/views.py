@@ -126,13 +126,6 @@ def ActualizarNivel(puntos):
 	return nivel
 
 
-'''
-#Actualiza la posición de un alumno en una asignatura determinada
-def ActualizarPosicion(idasignatura,idalumno):
-	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
-	val.posicion = val.posicion
-'''
-
 #Comprobar si un usuario es alumno o profesor
 def ComprobarUsuario(idusuario):
 	alumnos = Alumno.objects.all()
@@ -350,10 +343,10 @@ def ConseguirIdAlumno(iduser):
 	
 	
 	
-#Se resta 5 puntos al alumno que elimina su propio comentario y actualiza su nivel
+#Se resta 3 puntos al alumno que elimina su propio comentario y actualiza su nivel
 def RestarValoracionComentario(idasignatura,idalumno):
 	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
-	val.puntos = val.puntos - 5
+	val.puntos = val.puntos - 3
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
@@ -397,10 +390,10 @@ def eliminarcomentario(request):
 	
 	
 
-#Se suma 5 puntos al alumno que hace un comentario y actualiza su nivel
+#Se suma 3 puntos al alumno que hace un comentario y actualiza su nivel
 def SumarValoracionComentario(idasignatura,idalumno):
 	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
-	val.puntos = val.puntos + 5
+	val.puntos = val.puntos + 3
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
@@ -420,7 +413,7 @@ def RestarValoracionEntrada(idasignatura,idalumno):
 #Recalcula el total de puntos obtenidos en cada entrada
 def RecalcularTotalEntrada(identrada,contadorUp,contadorDown):
 	entrada = Entrada.objects.get(id=identrada)
-	entrada.total = entrada.total + contadorDown - (3*contadorUp)
+	entrada.total = entrada.total + contadorDown - (2*contadorUp)
 	entrada.save()
 	
 	
@@ -428,7 +421,7 @@ def RecalcularTotalEntrada(identrada,contadorUp,contadorDown):
 #Suma y resta la valoración de ups y downs al alumno que escribió la entrada eliminada
 def RecalcularValoracionUpDown(identrada,idasignatura,idalumno,contadorUp,contadorDown):
 	val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
-	val.puntos = val.puntos + contadorDown - (3*contadorUp)
+	val.puntos = val.puntos + contadorDown - (2*contadorUp)
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
@@ -489,7 +482,7 @@ def mostrarhiloalumno(request,idasignatura):
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
 	tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
-	print tupla_entradas
+
 	json_serializer = serializers.get_serializer("json")()
 	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 	json_valoracion = json_serializer.serialize(Valoracion.objects.filter(asignatura_id=idasignatura), ensure_ascii=False)
@@ -565,16 +558,16 @@ def infopuntuaciones(request,idasignatura):
 def GuardarUp(identrada):
 	entrada = Entrada.objects.get(id=identrada)
 	entrada.totalup = entrada.totalup + 1
-	entrada.total = entrada.total + 3
+	entrada.total = entrada.total + 2
 	entrada.save()
 	
 
 
-#A un alumno de una asignatura, se le suma al total de puntos, 3 puntos por darle al botón UP y actualiza su nivel
+#A un alumno de una asignatura, se le suma al total de puntos, 2 puntos por darle al botón UP y actualiza su nivel
 def SumarValoracionUp(idasignatura,idalumno,identrada):
 	entrada = Entrada.objects.get(id=identrada)
 	val = Valoracion.objects.get(asignatura=idasignatura,alumno=entrada.alumno_id)
-	val.puntos = val.puntos + 3
+	val.puntos = val.puntos + 2
 	nivel = ActualizarNivel(val.puntos)
 	val.nivel = nivel
 	val.save()
@@ -585,7 +578,6 @@ def SumarValoracionUp(idasignatura,idalumno,identrada):
 @login_required()
 def up(request):
 	if request.method=='GET':
-		print "he dado al up"
 		idasignatura = request.GET['idasignatura']
 		idalumno = ConseguirIdAlumno(request.GET['idusuario'])
 		identrada = request.GET['identrada']
@@ -622,7 +614,6 @@ def RestarValoracionDown(idasignatura,idalumno,identrada):
 @login_required()
 def down(request):
 	if request.method=='GET':
-		print "he dado al down"
 		idasignatura = request.GET['idasignatura']
 		idalumno = ConseguirIdAlumno(request.GET['idusuario'])
 		identrada = request.GET['identrada']

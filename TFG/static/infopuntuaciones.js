@@ -52,5 +52,8 @@ $(document).ready(function() {
 	
 	$("#nivel11").mouseover(function() {$( this ).addClass("nivel11");})
 	$("#nivel11").mouseout(function() {$( this ).removeClass("nivel11");});
+	
+	$("#nivel12").mouseover(function() {$( this ).addClass("nivel12");})
+	$("#nivel12").mouseout(function() {$( this ).removeClass("nivel12");});
 
 });
