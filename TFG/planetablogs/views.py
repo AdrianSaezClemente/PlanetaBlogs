@@ -634,6 +634,33 @@ def buscar(request,idasignatura):
 
 
 
+#Pestaña de búsqueda en tutores
+@login_required()
+def buscar_tutor(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	return render(request,'planetablogs/buscar_tutor.html',{'user': request.user, 'asignatura': asignatura})
+
+
+
+#Pestaña de puntuaciones de usuarios en tutores
+@login_required()
+def puntuaciones_tutor(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos')
+	return render(request, 'planetablogs/puntuaciones_tutor.html', {'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
+
+
+
+#Pestaña de información de puntuaciones de usuarios en tutores
+@login_required()
+def infopuntuaciones_tutor(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	json_serializer = serializers.get_serializer("json")()
+	lista_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
+	return render(request, 'planetablogs/infopuntuaciones_tutor.html', {'lista_usuarios':lista_usuarios, 'user': request.user, 'asignatura': asignatura})
+	
+	
+	
 #Buscar por nick de usuario
 @login_required()
 def buscarNickUsuario(request):
@@ -683,7 +710,8 @@ def buscarNombreUsuario(request):
 def buscarIdEntrada(request):
 	if request.method=='GET':
 		if request.GET['texto'] != "":
-			entrada = Entrada.objects.filter(id=request.GET['texto'])
+			entrada = Entrada.objects.filter(entrada=request.GET['texto'])
+			print entrada
 			if len(entrada) != 0:
 				alumno = Alumno.objects.filter(id=entrada[0].alumno_id)
 				user = User.objects.filter(id=alumno[0].alumno.id)

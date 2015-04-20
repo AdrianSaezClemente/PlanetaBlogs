@@ -183,6 +183,10 @@ body {
     z-index:0;
 }
 
+.fotopequeña{
+	width: 40px; height: 40px;
+}
+
 .pequeña{width: 40px; height: 25px;}
 
 #cabecerarelativa {
