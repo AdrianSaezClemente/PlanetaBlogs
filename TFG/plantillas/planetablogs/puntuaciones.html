@@ -64,9 +64,9 @@
 								{% for val in lista_valoracion %}
 								<tr>
 									<td>{{ forloop.counter }}</td>
-									<td><img id="{{ val.alumno.alumno.id }}" src="../../../../../static/imagenes/{{ val.alumno.alumno.imagen }}" class="fotomuypequeña pull-left foto"> </img>&nbsp;&nbsp;{{ val.alumno.alumno.username }}</td>
+									<td><img style="cursor:zoom-in;" id="{{ val.alumno.alumno.id }}" src="../../../../../static/imagenes/{{ val.alumno.alumno.imagen }}" class="fotomuypequeña pull-left foto"> </img>&nbsp;&nbsp;{{ val.alumno.alumno.username }}</td>
 									<td><em style="color:#8F6B00">{{ val.puntos }} </em><img style="margin-left:6px;" class="muypequeña" src="../../../../../static/imagenes/planets41.png"></td>
-									<td class="nivel">{{ val.nivel }}</td>
+									<td class="nivel" style="cursor:none;">{{ val.nivel }}</td>
 								</tr>
 								{% endfor %}
 							</tbody>
