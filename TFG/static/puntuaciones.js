@@ -18,7 +18,8 @@ $(document).ready(function() {
 	});
 	
 	$(".nivel").mouseover(function() {
-		var nivel = $(this).val()
+		var nivel = $(this).html()
+		console.log(nivel)
 		if (nivel == 0) {$(this).addClass("nivel0");}
 		if (nivel == 1) {$(this).addClass("nivel1");}
 		if (nivel == 2) {$(this).addClass("nivel2");}
@@ -33,7 +34,7 @@ $(document).ready(function() {
 		if (nivel == 11) {$(this).addClass("nivel11");}
 	});
 	$(".nivel").mouseout(function() {
-		var nivel = $(this).val()
+		var nivel = $(this).html()
 		if (nivel == 0) {$(this).removeClass("nivel0");}
 		if (nivel == 1) {$(this).removeClass("nivel1");}
 		if (nivel == 2) {$(this).removeClass("nivel2");}

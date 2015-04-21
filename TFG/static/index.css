@@ -183,6 +183,13 @@ h6, .h6 {
 
 /**************************MI CSS**********************************/
 
+#entradavalorada {
+	padding:6px !important;
+	border-bottom:1px solid #DCDCDC;
+	border-left:1px solid #DCDCDC;
+	border-right:1px solid #DCDCDC;
+}
+
 .popupcabecera {
 	background-color: #70DB70 !important;
 	border:1px solid black !important;
