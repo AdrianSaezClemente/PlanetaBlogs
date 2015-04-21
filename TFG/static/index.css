@@ -183,13 +183,21 @@ h6, .h6 {
 
 /**************************MI CSS**********************************/
 
+.popupcabecera {
+	background-color: #70DB70 !important;
+	border:1px solid black !important;
+}
+
+.panel-heading {
+	padding:2px !important;
+}
 
 #popup {
-   z-index:2;
-   position:absolute;
-   text-align:center;
-   background:white;
-   box-shadow:0 0 5em black;
+	z-index:2;
+	position:absolute;
+	background:white;
+	box-shadow:0 0 5em black;
+	border:8px solid #B9C5CD;
 }
 
 .pequeña{width: 40px; height: 25px;}
@@ -240,7 +248,7 @@ h6, .h6 {
 }
 
 .fotogrande{
-	width: 70px; height: 70px;
+	width: 70px; height: 60px;
 }
 
 .pequeñologo{

@@ -184,6 +184,32 @@ body {
     z-index:0;
 }
 
+#popup {
+	z-index:2;
+	position:absolute;
+	background:white;
+	box-shadow:0 0 5em black;
+	border:8px solid #B9C5CD;
+}
+
+
+
+.fotomuypequeña{
+	width: 40px; height: 30px;
+}
+
+.fotopequeña{
+	width: 40px; height: 40px;
+}
+
+.fotomediana{
+	width: 50px; height: 50px;
+}
+
+.fotogrande{
+	width: 104px; height: 104px;
+}
+
 .nivel0 {
 	background-color:#CC0000;
 }

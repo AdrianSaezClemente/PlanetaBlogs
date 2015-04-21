@@ -540,7 +540,9 @@ def salir(request):
 def puntuaciones(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos')
-	return render(request, 'planetablogs/puntuaciones.html', {'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
+	json_serializer = serializers.get_serializer("json")()
+	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
+	return render(request, 'planetablogs/puntuaciones.html', {'json_usuarios':json_usuarios, 'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
 
 
 
@@ -647,7 +649,9 @@ def buscar_tutor(request,idasignatura):
 def puntuaciones_tutor(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos')
-	return render(request, 'planetablogs/puntuaciones_tutor.html', {'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
+	json_serializer = serializers.get_serializer("json")()
+	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
+	return render(request, 'planetablogs/puntuaciones_tutor.html', {'json_usuarios':json_usuarios, 'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
 
 
 

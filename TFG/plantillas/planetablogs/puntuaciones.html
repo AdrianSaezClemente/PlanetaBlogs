@@ -3,16 +3,16 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}puntuaciones.css" title="style" />
-		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
 	   	<script src="{{ STATIC_URL }}puntuaciones.js"></script>
 	   	<script>
-	   	var tmp = '{{ lista_usuarios|escapejs }}';
-	   	var usuarios = JSON.parse(tmp);
-	   	var info = '{{ info }}';
+			tmpusuarios = '{{ json_usuarios|escapejs }}';
+			usuarios = JSON.parse(tmpusuarios);
 	   	</script>
 	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
 		<title>Ránking</title>
@@ -45,6 +45,8 @@
 				</div>
 			</div>
 			<!-- FIN CABECERA -->
+			<div id="popup" class="oculto panel panel-success">
+			</div>
 			<div class="row">
 				<div id="titulo" class="col-xs-12 col-sm-8 col-sm-offset-2 well">
 					<h3 class="centrar"><strong>Ránking de {{ asignatura.titulo }}</strong></h3></br>
@@ -62,9 +64,9 @@
 								{% for val in lista_valoracion %}
 								<tr>
 									<td>{{ forloop.counter }}</td>
-									<td>{{ val.alumno.alumno.username }}</td>
+									<td><img id="{{ val.alumno.alumno.id }}" src="../../../../../static/imagenes/{{ val.alumno.alumno.imagen }}" class="fotomuypequeña pull-left foto"> </img>&nbsp;&nbsp;{{ val.alumno.alumno.username }}</td>
 									<td><em style="color:#8F6B00">{{ val.puntos }} </em><img style="margin-left:6px;" class="muypequeña" src="../../../../../static/imagenes/planets41.png"></td>
-									<td id="nivel">{{ val.nivel }}</td>
+									<td class="nivel">{{ val.nivel }}</td>
 								</tr>
 								{% endfor %}
 							</tbody>
