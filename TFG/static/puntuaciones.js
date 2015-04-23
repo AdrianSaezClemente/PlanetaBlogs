@@ -48,7 +48,6 @@ $(document).ready(function() {
 		if (nivel == 10) {$(this).removeClass("nivel10");}
 		if (nivel == 11) {$(this).removeClass("nivel11");}
 	});
-
 });
 
 function SacarPosicion(elemento){

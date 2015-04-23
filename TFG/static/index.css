@@ -184,10 +184,15 @@ h6, .h6 {
 /**************************MI CSS**********************************/
 
 #entradavalorada {
+	margin-left:6px !important;
 	padding:6px !important;
-	border-bottom:1px solid #DCDCDC;
-	border-left:1px solid #DCDCDC;
-	border-right:1px solid #DCDCDC;
+	border-bottom:2px solid #DCDCDC;
+	border-left:2px solid #DCDCDC;
+	border-right:2px solid #DCDCDC;
+}
+
+#fechavalorada {
+	padding-top:25px;
 }
 
 .popupcabecera {

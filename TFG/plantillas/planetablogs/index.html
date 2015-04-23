@@ -68,10 +68,16 @@
 								{% if lista_entradas_valoradas %}
 									{% for ent in lista_entradas_valoradas %}
 										<a style="cursor:e-resize;" title="Pulsa para ver el total de planets para esta entrada" onclick="CalcularPlanetsEntrada('{{ ent.id }}','{{ ent.totalup }}','{{ ent.totaldown }}')" class="list-group-item">
-											<h6 style="font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
-											<div id="entradavalorada">
-												<p style="font-style:oblique;" class="list-group-item-heading"><strong>#{{ ent.entrada }}</strong> {{ ent.titulo }}<span class="pull-right">{{ ent.fecha }}</span></p>
-												<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span></span><span style="font-size:0.9em;word-wrap:break-word;">Escrito por {{ ent.alumno.alumno.username }}</span><span style="color:black;" class="pull-right"><strong>Planets: </strong><span id="total{{ ent.id }}"></span></span></p>
+											<div class="row">
+												<h6 style="font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
+												<div style="word-wrap:break-word;" id="entradavalorada" class="col-xs-7 col-sm-7">
+													<p style="font-style:oblique;" class="list-group-item-heading"><strong>#{{ ent.entrada }}</strong> <h6>{{ ent.titulo }}</h6></p>
+													<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span></span><span class="pull-right" style="padding-right:8px;font-style:oblique;font-size:0.9em;word-wrap:break-word;">Escrito por {{ ent.alumno.alumno.username }}</span></p>
+												</div>
+												<div id="fechavalorada" class="col-xs-4 col-sm-4">
+													<span class="pull-right">{{ ent.fecha }}</span></br></br></br>
+													<span style="color:black;" class="pull-right"><strong>Planets: </strong><span id="total{{ ent.id }}"></span></span>
+												</div>
 											</div>
 										</a>
 									{% endfor %}
