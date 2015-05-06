@@ -56,10 +56,10 @@ function InformacionUsuario(id){
 			for (j=0;j<valoraciones.length;j++){
 				if (valoraciones[j].fields.alumno == idalumno){
 					var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><img src='../../../../../static/imagenes/"+usuarios[i].fields.imagen+"' class='fotogrande'> </img><span style='margin-left:45px;'>Información de usuario</span></div></div>";
-					html += "<div class='panel-body'><span class='pull-left'>Nombre: "+usuarios[i].fields.first_name+"</span></br>";
-					html += "<span class='pull-left'>Apellidos: "+usuarios[i].fields.last_name+"</span></br>";
-					html += "<span class='pull-left'>Puntos: "+valoraciones[j].fields.puntos+"</span></br>";
-					html += "<span class='pull-left'>Nivel: "+valoraciones[j].fields.nivel+"</span></div>";
+					html += "<div class='panel-body'><span style='font-weight:bold;' class='pull-left'>Nombre:</span><span>&nbsp; "+usuarios[i].fields.first_name+"</span></br>";
+					html += "<span style='font-weight:bold;' class='pull-left'>Apellidos:</span><span>&nbsp; "+usuarios[i].fields.last_name+"</span></br>";
+					html += "<span style='font-weight:bold;' class='pull-left'>Puntos:</span><span>&nbsp; "+valoraciones[j].fields.puntos+"</span></br>";
+					html += "<span style='font-weight:bold;' class='pull-left'>Nivel:</span><span>&nbsp; "+valoraciones[j].fields.nivel+"</span></div>";
 					$("#popup").append(html);
 					$("#popup").fadeIn();
 					break;

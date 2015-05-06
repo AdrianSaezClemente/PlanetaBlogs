@@ -47,7 +47,7 @@
 								</ul>
 							</div>
 						</li>
-						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}">Desconectar</a></div>
+						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
 					</ul>
 				</div>
 			</div>
@@ -67,7 +67,7 @@
 								<div id="grupolista2" class="list-group">
 								{% if lista_entradas_valoradas %}
 									{% for ent in lista_entradas_valoradas %}
-										<a style="cursor:e-resize;" title="Pulsa para ver el total de planets para esta entrada" onclick="CalcularPlanetsEntrada('{{ ent.id }}','{{ ent.totalup }}','{{ ent.totaldown }}')" class="list-group-item">
+										<a style="cursor:e-resize;" title="Pulsa para ver el total de planets de esta entrada" onclick="CalcularPlanetsEntrada('{{ ent.id }}','{{ ent.totalup }}','{{ ent.totaldown }}')" class="list-group-item">
 											<div class="row">
 												<h6 style="font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
 												<div style="word-wrap:break-word;" id="entradavalorada" class="col-xs-7 col-sm-7">
