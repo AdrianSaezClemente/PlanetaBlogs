@@ -246,7 +246,7 @@ body {
 	border-radius:15px;*/
 	background: #B9C5CD;
 	margin-top: 0;
-	padding:0.7em;
+	padding:0.3em;
 	font-style: oblique;
 	font-size:17px;
 	color: black;
@@ -286,3 +286,9 @@ body {
 	margin-right:1.5em;
 }
 
+#label {
+	border-radius:8px 0 0 8px;
+	background-color:white;
+	border:1px solid black;
+	padding-left:5px;
+}

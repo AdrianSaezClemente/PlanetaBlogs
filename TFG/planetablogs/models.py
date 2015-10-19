@@ -54,7 +54,6 @@ class Rss(models.Model):
 	asignatura = models.ForeignKey(Asignatura)
 	rss = models.URLField()
 	ultima_fecha = models.DateTimeField(auto_now_add=True)
-	url_blog = models.URLField()
 	def __unicode__(self):
 		return self.rss
 	
@@ -64,7 +63,6 @@ class Valoracion(models.Model):
 	asignatura = models.ForeignKey(Asignatura)
 	puntos = models.IntegerField()
 	nivel = models.IntegerField()
-	#posicion = models.IntegerField()
 	def __unicode__(self):
 		return unicode(self.alumno)
 	

@@ -26,7 +26,7 @@
 				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-10 col-sm-offset-1">
 					<ul class="nav nav-tabs">
 						<li><a class="blog-nav-item" href="/planetablogs/alumnos/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
-						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-book"></span> {{ asignatura }}</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
 						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
 						<li>
 							<div class="btn-group">
@@ -40,6 +40,7 @@
 								</ul>
 							</div>
 						</li>
+						<li><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
 						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
 					</ul>
 				</div>

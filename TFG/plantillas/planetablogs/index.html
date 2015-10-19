@@ -33,7 +33,7 @@
 				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-10 col-sm-offset-1">
 					<ul class="nav nav-tabs">
 						<li><a class="blog-nav-item" href="/planetablogs/alumnos/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
-						<li class="active"><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-book"></span> {{ asignatura }}</a></li>
+						<li class="active"><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
 						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
 						<li>
 							<div class="btn-group active">
@@ -47,6 +47,7 @@
 								</ul>
 							</div>
 						</li>
+						<li><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
 						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
 					</ul>
 				</div>
@@ -71,8 +72,8 @@
 											<div class="row">
 												<h6 style="font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
 												<div style="word-wrap:break-word;" id="entradavalorada" class="col-xs-7 col-sm-7">
-													<p style="font-style:oblique;" class="list-group-item-heading"><strong>#{{ ent.entrada }}</strong> <h6>{{ ent.titulo }}</h6></p>
-													<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span></span><span class="pull-right" style="padding-right:8px;font-style:oblique;font-size:0.9em;word-wrap:break-word;">Escrito por {{ ent.alumno.alumno.username }}</span></p>
+													<p style="font-style:oblique;" class="list-group-item-heading"><strong class="pull-left">#{{ ent.entrada }}</strong><span class="pull-left" style="padding-right:8px;font-style:oblique;font-size:0.9em;word-wrap:break-word;">&nbsp;&nbsp;Escrito por {{ ent.alumno.alumno.username }}</span><h6>{{ ent.titulo }}</h6></p>
+													<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span></span></p>
 												</div>
 												<div id="fechavalorada" class="col-xs-4 col-sm-4">
 													<span class="pull-right">{{ ent.fecha }}</span></br></br></br>
@@ -98,7 +99,7 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.0.entrada }}&nbsp;</label><img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img><a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
+										<h2 class="blog-post-title"><label> #{{ entrada.0.entrada }}&nbsp;<img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img></label><a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
 										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
 										<p style="word-wrap:break-word;">{{ entrada.0.descripcion }}</p>
 										{% if entrada.1 == False %}

@@ -39,6 +39,12 @@ LOGIN_REDIRECT_URL = "/planetablogs"
 # Redirect when login is not correct.
 LOGIN_URL = '/planetablogs/login'
 
+
+GRAPH_MODELS = {
+	'all_applications':True,
+	'group_models':True,
+}
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'planetablogs',
 )
 

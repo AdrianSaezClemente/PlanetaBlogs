@@ -636,11 +636,25 @@ def buscar(request,idasignatura):
 
 
 
+#Pestaña de ayuda
+def ayuda(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	return render(request,'planetablogs/ayuda.html',{'user': request.user, 'asignatura': asignatura})
+
+
+
 #Pestaña de búsqueda en tutores
 @login_required()
 def buscar_tutor(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	return render(request,'planetablogs/buscar_tutor.html',{'user': request.user, 'asignatura': asignatura})
+
+
+
+#Pestaña de ayuda en tutores
+def ayuda_tutor(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	return render(request,'planetablogs/ayuda_tutor.html',{'user': request.user, 'asignatura': asignatura})
 
 
 

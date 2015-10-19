@@ -186,8 +186,8 @@ h6, .h6 {
 #entradavalorada {
 	margin-left:6px !important;
 	padding:6px !important;
-	border-bottom:2px solid #DCDCDC;
-	border-left:2px solid #DCDCDC;
+	/*border-bottom:2px solid #DCDCDC;
+	border-left:2px solid #DCDCDC;*/
 	border-right:2px solid #DCDCDC;
 }
 
@@ -215,6 +215,14 @@ h6, .h6 {
 .pequeña{width: 40px; height: 25px;}
 
 .muypequeña{width: 30px; height: 20px;}
+
+label {
+	border-radius:8px 0 0 8px;
+	background-color:white;
+	border:1px solid black;
+	padding-left:5px;
+}
+
 
 #comentarios {
 	margin-top:10px;
@@ -391,7 +399,7 @@ h6, .h6 {
 	border-radius:15px;*/
 	background: #B9C5CD;
 	margin-top: 0;
-	padding:0.7em;
+	padding:0.3em;
 	font-style: oblique;
 	font-size:17px;
 	color: black;
