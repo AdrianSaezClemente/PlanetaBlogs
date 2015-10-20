@@ -514,6 +514,8 @@ def mostrarhiloprofesor(request,idasignatura):
 	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 	json_valoracion = json_serializer.serialize(Valoracion.objects.filter(asignatura_id=idasignatura), ensure_ascii=False)
 	json_alumnos = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
+	json_asignaturas = json_serializer.serialize(Asignatura.objects.all(), ensure_ascii=False)
+	json_profesores = json_serializer.serialize(Profesor.objects.all(), ensure_ascii=False)
 	
 	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
@@ -524,7 +526,7 @@ def mostrarhiloprofesor(request,idasignatura):
 	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
 		
-	return render(request,'planetablogs/index_tutor.html',{'json_alumnos':json_alumnos, 'json_valoracion':json_valoracion, 'json_usuarios':json_usuarios, 'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
+	return render(request,'planetablogs/index_tutor.html',{'json_profesores':json_profesores, 'json_asignaturas':json_asignaturas, 'json_alumnos':json_alumnos, 'json_valoracion':json_valoracion, 'json_usuarios':json_usuarios, 'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
 
 
 
