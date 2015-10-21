@@ -237,8 +237,14 @@ def agregarasignaturaprofesor(request):
 	if request.method=='GET':
 		hilo = Asignatura.objects.get(id=request.GET['id'])
 		hilo.profesores.add(request.user.id)
+		'''profesor = Profesor.objects.filter(profesor_id=request.user.id)
+		print profesor
+		hilo.profesores.add(profesor)
+		hilo.save()'''
 		lista_asignaturas = Asignatura.objects.filter(profesores=request.user.id)
 		lista_no_asignaturas = Asignatura.objects.all().exclude(profesores=request.user.id)
+		print lista_asignaturas
+		print lista_no_asignaturas
 	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 
 
@@ -266,6 +272,7 @@ def presentacionprofesor(request):
 		if formHilo.is_valid():
 			hilo = formHilo.save(commit=False)
 			hilo.entradas = 0
+			hilo.creador = request.user.id
 			hilo.save()
 			return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 		else:

@@ -29,6 +29,7 @@ class Asignatura(models.Model):
 	titulo = models.CharField(max_length=35)
 	descripcion = models.TextField(max_length=150)
 	entradas = models.IntegerField()
+	creador = models.IntegerField()
 	def __unicode__(self):
 		return self.titulo
 	
