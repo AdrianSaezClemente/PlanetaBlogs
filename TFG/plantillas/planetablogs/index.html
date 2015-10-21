@@ -103,7 +103,7 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.0.entrada }}&nbsp;<img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img></label><a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
+										<h2 class="blog-post-title"><label> #{{ entrada.0.entrada }}&nbsp;<img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img></label><a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha|date:"d" }} de {{ entrada.0.fecha|date:"F" }} de {{ entrada.0.fecha|date:"Y" }}, {{ entrada.0.fecha|date:"l" }} a las {{ entrada.0.fecha|date:"H:i" }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
 										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
 										<p style="word-wrap:break-word;">{{ entrada.0.descripcion }}</p>
 										{% if entrada.1 == False %}
@@ -144,7 +144,7 @@
 											{% if entrada.0.id == comentario.entrada_id %}
 											<div id="comentarios">
 												<div id="comentario{{ comentario.id }}" class="panel panel-warning">
-													<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha }}</span></div></div>
+													<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha|date:"d" }} de {{ comentario.fecha|date:"F" }} de {{ comentario.fecha|date:"Y" }}, {{ comentario.fecha|date:"l" }} a las {{ comentario.fecha|date:"H:i" }}</span></div></div>
 													<div style="word-wrap:break-word;" class="panel-body">
 														{{ comentario.descripcion }}
 													{% if comentario.alumno.alumno.id == user.id %}
