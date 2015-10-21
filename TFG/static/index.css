@@ -212,6 +212,14 @@ h6, .h6 {
 	border:8px solid #B9C5CD;
 }
 
+#popupinfotutor {
+	z-index:2;
+	position:absolute;
+	background:white;
+	box-shadow:0 0 5em black;
+	border:8px solid #B9C5CD;
+}
+
 .pequeña{width: 40px; height: 25px;}
 
 .muypequeña{width: 30px; height: 20px;}

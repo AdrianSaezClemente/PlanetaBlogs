@@ -20,6 +20,10 @@
 	   	valoraciones = JSON.parse(tmpvaloraciones);
 	   	tmpalumnos = '{{ json_alumnos|escapejs }}';
 	   	alumnos = JSON.parse(tmpalumnos);
+	   	tmpasignaturas = '{{ json_asignaturas|escapejs }}';
+	   	asignaturas = JSON.parse(tmpasignaturas);
+	   	tmpprofesores = '{{ json_profesores|escapejs }}';
+	   	profesores = JSON.parse(tmpprofesores);
 	   	</script>
 	   	<link rel="shortcut icon" href="../../../../static/imagenes/planet.png" type="image/png" />
 		<title>Educational Planet</title>
@@ -48,12 +52,12 @@
 							</div>
 						</li>
 						<li><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
-						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
+						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a>&nbsp;&nbsp;<a class="infotutor" id="{{ asignatura.id }}" href='javascript:void(0)'><span class="glyphicon glyphicon-info-sign" style="cursor:pointer; cursor:hand;" class=""></span></a>
 					</ul>
 				</div>
 			</div>
-			<div id="popup" class="oculto panel panel-success">
-			</div>
+			<div id="popup" class="oculto panel panel-success"></div>
+			<div id="popupinfotutor" class="oculto panel panel-success"></div>
 			<!-- FIN CABECERA -->
 			<div class="row">
 				<div id="titulolista" class="col-xs-12 col-sm-10 col-sm-offset-1">

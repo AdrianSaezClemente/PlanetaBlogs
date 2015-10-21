@@ -4,10 +4,24 @@ $(document).ready(function() {
 	$("#subir").hide();
 	
 	//Darle el alto y ancho
+	$("#popupinfotutor").css('width', 'auto');
+	$("#popupinfotutor").css('height', 'auto');
+	
+	$(".infotutor").mouseover(function() {
+		SacarPosicionInfoTutor(this);
+		var idasignatura = $(this).attr("id");
+		InformacionTutores(idasignatura);
+	});
+	$(".infotutor").mouseout(function() {
+		var id = $(this).attr("id");
+		$("#popupinfotutor").fadeOut(200);
+		$("#popupinfotutor").html("");
+	});
+	
+	//Darle el alto y ancho
 	$("#popup").css('width', 350 + 'px');
 	$("#popup").css('height', 200 + 'px');
 	
-   
 	$(".usuario").mouseover(function() {
 		SacarPosicion(this);
 		var id = $(this).attr("id");
@@ -42,6 +56,33 @@ function SacarPosicion(elemento){
 	var y = posicion.top + 250;
 	$("#popup").css("left",x + "px");
 	$("#popup").css("top",y + "px");
+}
+
+function SacarPosicionInfoTutor(elemento){
+	var posicion = $(elemento).position();
+	var x = posicion.left;
+	var y = posicion.top + 25;
+	$("#popupinfotutor").css("left",x + "px");
+	$("#popupinfotutor").css("top",y + "px");
+}
+
+function InformacionTutores(idasignatura){
+	for (i=0;i<asignaturas.length;i++){
+		if (asignaturas[i].pk == parseInt(idasignatura)){
+			titulo = asignaturas[i].fields.titulo
+			var creador = asignaturas[i].fields.creador
+			break;
+		}
+	}
+	for (k=0;k<usuarios.length;k++) {
+		if (usuarios[k].pk == creador){
+			var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><div style='font-style:oblique;font-size:1em;text-align:center;'>Creador del hilo "+titulo+"</div></div></div>";
+			html += "<div class='panel-body'><span style='font-size:11px;' class='pull-left'>"+usuarios[k].fields.first_name+" "+usuarios[k].fields.last_name+" ("+usuarios[k].fields.email+")</span></br>";
+			break;
+		}
+	}
+	$("#popupinfotutor").append(html);
+	$("#popupinfotutor").fadeIn();
 }
 
 function InformacionUsuario(id){
