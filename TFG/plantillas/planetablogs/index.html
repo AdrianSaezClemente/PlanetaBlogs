@@ -80,7 +80,7 @@
 													<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span></span></p>
 												</div>
 												<div id="fechavalorada" class="col-xs-4 col-sm-4">
-													<span class="pull-right">{{ ent.fecha }}</span></br></br></br>
+													<span class="pull-right">{{ ent.fecha|date:"d" }} de {{ ent.fecha|date:"F" }} de {{ ent.fecha|date:"Y" }}</span></br></br></br>
 													<span style="color:black;" class="pull-right"><strong>Planets: </strong><span id="total{{ ent.id }}"></span></span>
 												</div>
 											</div>

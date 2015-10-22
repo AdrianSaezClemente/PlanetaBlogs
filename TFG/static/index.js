@@ -149,6 +149,7 @@ function Down(identrada,idusuario,idasignatura,up,down){
 
 function AgregarComentario(identrada,idasignatura,iduser){
 	var descripcion = $("#descripcion_comentario").val();
+	fecha = ConvertirFecha();
 	$.ajax({
 		data: {'identrada':identrada,'idasignatura':idasignatura,'iduser':iduser,'descripcion':descripcion},
 		url: '/planetablogs/agregarcomentario/',
@@ -163,7 +164,7 @@ function AgregarComentario(identrada,idasignatura,iduser){
 				$("#descripcion_comentario").val("")
 				BorrarInfo();
 				var html = "<div id='comentario"+datos.comentario[0].pk+"' class='panel panel-warning'>";
-				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+datos.comentario[0].fields.fecha+"</span></div></div>";
+				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+fecha+"</span></div></div>";
 				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
 				html += "<div id='infocomentario"+datos.comentario[0].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.</div></div>";
 				$("#entrada").append(html);
@@ -171,6 +172,20 @@ function AgregarComentario(identrada,idasignatura,iduser){
 			}
 		},
 	});
+}
+
+function ConvertirFecha() {
+	var nombres_dias = new Array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
+	var nombres_meses = new Array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+	var now = new Date();
+	console.log(nombres_dias);
+	if (now.getMinutes()<10){ var minutos = '0' + now.getMinutes()}
+	else { var minutos = now.getMinutes() }
+	if (now.getHours()<10){ var horas = '0' + now.getHours()}
+	else { var horas = now.getHours() }
+	var fecha =  now.getDate() + " de " + nombres_meses[now.getMonth()] + " de " + now.getFullYear() + ", " + nombres_dias[now.getDay()] + " a las " + horas + ":" + minutos;
+	return fecha;
+	//return "hola"
 }
 
 function EliminarComentario(idcomentario,idasignatura){

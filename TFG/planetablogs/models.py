@@ -54,7 +54,7 @@ class Rss(models.Model):
 	alumno = models.ForeignKey(Alumno)
 	asignatura = models.ForeignKey(Asignatura)
 	rss = models.URLField()
-	ultima_fecha = models.DateTimeField(auto_now_add=True)
+	ultima_fecha = models.CharField(max_length=50)
 	def __unicode__(self):
 		return self.rss
 	

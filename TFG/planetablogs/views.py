@@ -15,6 +15,7 @@ from django.template import RequestContext
 import feedparser
 from time import mktime
 from datetime import datetime
+from dateutil import tz
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 from django.utils import simplejson
@@ -217,7 +218,11 @@ def presentacionalumno(request):
 				hilo = formRSS.save(commit=False)
 				hilo.alumno_id = idalumno
 				fechaActual = datetime.now()
-				hilo.ultima_fecha = fechaActual
+				from_zone = tz.tzutc()
+				utc = fechaActual.replace(tzinfo=from_zone)
+				utc_str = utc.strftime("%Y-%m-%d %H:%M:%S")
+				print "Fecha de ingreso: "+utc_str
+				hilo.ultima_fecha = utc_str
 				hilo.save()
 				#Creo valoración para este usuario en este hilo
 				alumno = Alumno.objects.get(id=idalumno)
@@ -374,8 +379,8 @@ def agregarcomentario(request):
 			comenta = Comentario.objects.filter(id=comentario.id)
 			json_comentario = serializers.serialize('json', comenta, ensure_ascii=False)
 			comentario = simplejson.loads(json_comentario)
-			usuario = User.objects.filter(id=request.GET['iduser'])
-			json_usuario = serializers.serialize('json', usuario, ensure_ascii=False)
+			usu = User.objects.filter(id=request.GET['iduser'])
+			json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
 			usuario = simplejson.loads(json_usuario)
 			json_data = simplejson.dumps( {'comentario':comentario, 'usuario':usuario} )
 			SumarValoracionComentario(idasignatura,idalumno)
@@ -758,3 +763,4 @@ def buscarIdEntrada(request):
 
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")
+	os.environ.setdefault("TIME_ZONE", "Europe/Madrid")
