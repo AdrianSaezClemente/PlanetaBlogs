@@ -175,8 +175,10 @@ function AgregarComentario(identrada,idasignatura,iduser){
 				$("#comentariosentrada"+identrada).append("<h5 style='color:red;text-align:center;font-style:oblique;font-size:10px;'>Escribe tu comentario antes de enviar.</h5>"); 
 			}
 			else{
+				var totalcomentarios = parseInt($("#totalcomentarios"+identrada).val()) + 1
 				$("#nohaycomen"+identrada).html("");
 				$("#descripcion_comentario"+identrada).val("");
+				$("#despliegueboton"+identrada).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+totalcomentarios+"</span>)");
 				BorrarInfo();
 				var html = "</br><div id='comentario"+datos.comentario[0].pk+"' class='panel panel-warning'>";
 				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+fecha+"</span></div></div>";
