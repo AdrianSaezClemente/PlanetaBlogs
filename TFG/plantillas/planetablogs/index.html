@@ -74,7 +74,7 @@
 									{% for ent in lista_entradas_valoradas %}
 										<a style="cursor:e-resize;" title="Pulsa para ver el total de planets de esta entrada" onclick="CalcularPlanetsEntrada('{{ ent.id }}','{{ ent.totalup }}','{{ ent.totaldown }}')" class="list-group-item">
 											<div class="row">
-												<h6 style="font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
+												<h6 style="border:0.1em solid #428bca;font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
 												<div style="word-wrap:break-word;" id="entradavalorada" class="col-xs-7 col-sm-7">
 													<p style="font-style:oblique;" class="list-group-item-heading"><strong class="pull-left">#{{ ent.entrada }}</strong><span class="pull-left" style="padding-right:8px;font-style:oblique;font-size:0.9em;word-wrap:break-word;">&nbsp;&nbsp;Escrito por {{ ent.alumno.alumno.username }}</span><h6>{{ ent.titulo }}</h6></p>
 													<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span></span></p>
@@ -134,34 +134,36 @@
 											<div id="escribircomentario">
 												<div class="input-group">
 													<span class="input-group-addon">#{{ entrada.0.entrada }}</span>
-													<textarea id="descripcion_comentario" class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
+													<textarea id="descripcion_comentario{{ entrada.0.id }}" class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
 													<input class="oculto" name="entrada" value="{{ entrada.0.id }}"></input>
 													<span class="input-group-btn">
 														<button class="btn btn-success" onclick="AgregarComentario('{{ entrada.0.id }}','{{ asignatura.id }}','{{ user.id }}')">Enviar <span class="glyphicon glyphicon-send"></span></button>
 													</span>
 												</div>
 											</div>
-											{% for comentario in lista_comentarios %}
-												{% if entrada.0.id == comentario.entrada_id %}
-												<div id="comentarios">
-													<div id="comentario{{ comentario.id }}" class="panel panel-warning">
-														<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha|date:"d" }} de {{ comentario.fecha|date:"F" }} de {{ comentario.fecha|date:"Y" }}, {{ comentario.fecha|date:"l" }} a las {{ comentario.fecha|date:"H:i" }}</span></div></div>
-														<div style="word-wrap:break-word;" class="panel-body">
-															{{ comentario.descripcion }}
-														{% if comentario.alumno.alumno.id == user.id %}
-															<button id="{{ comentario.id }}" onclick="EliminarComentario('{{ comentario.id }}','{{ asignatura.id }}')" type="button" class="btn btn-danger btn-xs pull-right">Eliminar comentario</button>
-														{% endif %}
+											<div id="comentariosentrada{{ entrada.0.id }}">
+												{% for comentario in lista_comentarios %}
+													{% if entrada.0.id == comentario.entrada_id %}
+													<div id="comentarios">
+														<div id="comentario{{ comentario.id }}" class="panel panel-warning">
+															<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha|date:"d" }} de {{ comentario.fecha|date:"F" }} de {{ comentario.fecha|date:"Y" }}, {{ comentario.fecha|date:"l" }} a las {{ comentario.fecha|date:"H:i" }}</span></div></div>
+															<div style="word-wrap:break-word;" class="panel-body">
+																{{ comentario.descripcion }}
+															{% if comentario.alumno.alumno.id == user.id %}
+																<button id="{{ comentario.id }}" onclick="EliminarComentario('{{ comentario.id }}','{{ asignatura.id }}')" type="button" class="btn btn-danger btn-xs pull-right">Eliminar comentario</button>
+															{% endif %}
+															</div>
+														</div>
+														<div id="infocomentario{{ comentario.id }}" class="oculto">
+															<div class="alert alert-success alert-dismissable">
+																<button type="button" class="close" data-dismiss="alert">&times;</button>
+																<strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.
+															</div>
 														</div>
 													</div>
-													<div id="infocomentario{{ comentario.id }}" class="oculto">
-														<div class="alert alert-success alert-dismissable">
-															<button type="button" class="close" data-dismiss="alert">&times;</button>
-															<strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.
-														</div>
-													</div>
-												</div>
-												{% endif %}
-											{% endfor %}
+													{% endif %}
+												{% endfor %}
+											</div>
 										</div>
 									</div>
 								</div>
