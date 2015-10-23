@@ -50,6 +50,15 @@ $(document).ready(function() {
 	});
 });
 
+function MostrarComentarios(id) {
+	if($("#desplieguecomentarios"+id).is(":visible") ){
+		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-down'></span> Mostrar comentarios");
+	}else{
+		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios");
+	}
+	$("#desplieguecomentarios"+id).toggle("fast","swing");
+}
+
 function SacarPosicion(elemento){
 	var posicion = $(elemento).position();
 	var x = posicion.left + 250;
