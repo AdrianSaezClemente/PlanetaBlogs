@@ -14,13 +14,13 @@ $(document).ready(function() {
 	});
 	$(".infotutor").mouseout(function() {
 		var id = $(this).attr("id");
-		$("#popupinfotutor").fadeOut(200);
+		$("#popupinfotutor").fadeOut(100);
 		$("#popupinfotutor").html("");
 	});
 	
 	//Darle el alto y ancho
 	$("#popup").css('width', 350 + 'px');
-	$("#popup").css('height', 200 + 'px');
+	$("#popup").css('height', 'auto');
 	
 	$(".usuario").mouseover(function() {
 		SacarPosicion(this);
@@ -29,7 +29,7 @@ $(document).ready(function() {
 	});
 	$(".usuario").mouseout(function() {
 		var id = $(this).attr("id");
-		$("#popup").fadeOut(200);
+		$("#popup").fadeOut(100);
 		$("#popup").html("");
 	});
 	
@@ -50,11 +50,11 @@ $(document).ready(function() {
 	});
 });
 
-function MostrarComentarios(id) {
+function MostrarComentarios(id,total) {
 	if($("#desplieguecomentarios"+id).is(":visible") ){
-		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-down'></span> Mostrar comentarios");
+		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-down'></span> Mostrar comentarios ("+total+")");
 	}else{
-		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios");
+		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios ("+total+")");
 	}
 	var str = $("#comentariosentrada"+id).text()
 	var cadena = str.replace(/\s/g, '');
@@ -92,11 +92,11 @@ function InformacionTutores(idasignatura){
 		if (usuarios[k].pk == creador){
 			var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><div style='font-style:oblique;font-size:1em;text-align:center;'>Creador del hilo "+titulo+"</div></div></div>";
 			html += "<div class='panel-body'><span style='font-size:11px;' class='pull-left'>"+usuarios[k].fields.first_name+" "+usuarios[k].fields.last_name+" ("+usuarios[k].fields.email+")</span></br>";
+			$("#popupinfotutor").append(html);
+			$("#popupinfotutor").fadeIn();
 			break;
 		}
 	}
-	$("#popupinfotutor").append(html);
-	$("#popupinfotutor").fadeIn();
 }
 
 function InformacionUsuario(id){
@@ -180,7 +180,7 @@ function AgregarComentario(identrada,idasignatura,iduser){
 				BorrarInfo();
 				var html = "</br><div id='comentario"+datos.comentario[0].pk+"' class='panel panel-warning'>";
 				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+fecha+"</span></div></div>";
-				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
+				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+","+identrada+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
 				html += "<div id='infocomentario"+datos.comentario[0].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.</div></div>";
 				$("#comentariosentrada"+identrada).prepend(html);
 				$("#infocomentario"+datos.comentario[0].pk).hide();
@@ -203,11 +203,11 @@ function ConvertirFecha() {
 	//return "hola"
 }
 
-function EliminarComentario(idcomentario,idasignatura){
+function EliminarComentario(idcomentario,idasignatura,identrada){
 	$('#comentario'+idcomentario).hide("slow");
 	$('#infocomentario'+idcomentario).show("slow").delay(2000).hide("slow");
 	$.ajax({
-		data: {'idcomentario':idcomentario,'idasignatura':idasignatura},
+		data: {'idcomentario':idcomentario,'idasignatura':idasignatura,'identrada':identrada},
 		url: '/planetablogs/eliminarcomentario/',
 		type: 'GET',
 		success: function(datos){

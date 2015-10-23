@@ -329,6 +329,7 @@ def ComprobarEntradaPuntuadaDown(i,down,lista_entradas_puntuadas):
 def ConseguirListaEntradas(idasignatura,idalumno):
 	tupla_entradas = []
 	entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
+	print entradas
 	up = Up.objects.filter(alumno_id=idalumno)
 	down = Down.objects.filter(alumno_id=idalumno)
 	for i in entradas:
@@ -365,6 +366,13 @@ def RestarValoracionComentario(idasignatura,idalumno):
 	
 	
 	
+def SumarComentarioEntrada(idasignatura,identrada):
+	entrada = Entrada.objects.get(id=identrada,asignatura_id=idasignatura)
+	entrada.totalcomentarios = entrada.totalcomentarios + 1
+	entrada.save()
+	
+	
+
 #Agrega comentario
 def agregarcomentario(request):
 	if request.method=='GET':
@@ -384,20 +392,32 @@ def agregarcomentario(request):
 			usuario = simplejson.loads(json_usuario)
 			json_data = simplejson.dumps( {'comentario':comentario, 'usuario':usuario} )
 			SumarValoracionComentario(idasignatura,idalumno)
+			print idasignatura
+			print identrada
+			SumarComentarioEntrada(idasignatura,identrada)
 		else:
 			json_data = simplejson.dumps( {'comentario':"", 'usuario':""} )
 	return HttpResponse(json_data, mimetype="application/json") 
 	
 
 
+def RestarComentarioEntrada(idasignatura,identrada):
+	entrada = Entrada.objects.get(id=identrada,asignatura_id=idasignatura)
+	entrada.totalcomentarios = entrada.totalcomentarios - 1
+	entrada.save()
+	
+	
+	
 #Elimina comentario
 def eliminarcomentario(request):
 	if request.method=='GET':
+		identrada = request.GET['identrada']
 		comentario = Comentario.objects.get(id=request.GET['idcomentario'])
 		idasignatura = comentario.asignatura_id
 		idalumno = comentario.alumno_id
 		comentario.delete()
 		RestarValoracionComentario(idasignatura,idalumno)
+		RestarComentarioEntrada(idasignatura,identrada)
 	return render(request,'planetablogs/index.html',{'user': request.user})
 	
 	

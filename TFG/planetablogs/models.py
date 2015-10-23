@@ -46,6 +46,7 @@ class Entrada(models.Model):
 	totalup = models.IntegerField()
 	totaldown = models.IntegerField()
 	total = models.IntegerField()
+	totalcomentarios = models.IntegerField()
 	def __unicode__(self):
 		return self.titulo
 
