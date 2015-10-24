@@ -50,11 +50,15 @@ $(document).ready(function() {
 	});
 });
 
-function MostrarComentarios(id,total) {
+function MostrarComentarios(id) {
+	var totalcomentarios = parseInt($("#totalcomentarios"+id).text())
 	if($("#desplieguecomentarios"+id).is(":visible") ){
-		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-down'></span> Mostrar comentarios ("+total+")");
+		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-down'></span> Mostrar comentarios (<span id='totalcomentarios"+id+"'>"+totalcomentarios+"</span>)");
 	}else{
-		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios ("+total+")");
+		$("#despliegueboton"+id).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+id+"'>"+totalcomentarios+"</span>)");
+	}
+	if(totalcomentarios == 0){
+		$("#comentariosentrada"+id).html("<div id=nohaycomen"+id+"><p style='text-align:center;font-size:9px;font-weight:bold:font-style:oblique;color:red;'>No hay comentarios en esta entrada.</p></div>");
 	}
 	var str = $("#comentariosentrada"+id).text()
 	var cadena = str.replace(/\s/g, '');
@@ -110,8 +114,8 @@ function InformacionUsuario(id){
 			}
 			for (j=0;j<valoraciones.length;j++){
 				if (valoraciones[j].fields.alumno == idalumno){
-					var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><img src='../../../../../static/imagenes/"+usuarios[i].fields.imagen+"' class='fotogrande'> </img><span style='margin-left:45px;'>Información de usuario</span></div></div>";
-					html += "<div class='panel-body'><span style='font-weight:bold;' class='pull-left'>Usuario:</span><span>&nbsp; "+usuarios[i].fields.first_name+" "+usuarios[i].fields.last_name+"</span></br>";
+					var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><img src='../../../../../static/imagenes/"+usuarios[i].fields.imagen+"' class='fotogrande'> </img><span style=margin-left:45px;'>Información de usuario</span></div></div>";
+					html += "<div style='font-family: Verdana, Arial, Helvetica, sans-serif'; class='panel-body'><span style='font-weight:bold;' class='pull-left'>Usuario:</span><span>&nbsp; "+usuarios[i].fields.first_name+" "+usuarios[i].fields.last_name+"</span></br>";
 					html += "<span style='font-weight:bold;' class='pull-left'>Correo:</span><span>&nbsp; "+usuarios[i].fields.email+"</span></br>";
 					html += "<span style='font-weight:bold;' class='pull-left'>Puntos:</span><span>&nbsp; "+valoraciones[j].fields.puntos+"</span></br>";
 					html += "<span style='font-weight:bold;' class='pull-left'>Nivel:</span><span>&nbsp; "+valoraciones[j].fields.nivel+"</span></div>";
@@ -171,11 +175,12 @@ function AgregarComentario(identrada,idasignatura,iduser){
 		success: function(datos){
 			console.log("exitoso")
 			if (descripcion==""){
-				console.log("nada")
-				$("#comentariosentrada"+identrada).append("<h5 style='color:red;text-align:center;font-style:oblique;font-size:10px;'>Escribe tu comentario antes de enviar.</h5>"); 
+				$("#infoescribircomen"+identrada).remove();
+				$("#comentariosentrada"+identrada).prepend("<h5 id=infoescribircomen"+identrada+" style='color:red;text-align:center;font-style:oblique;font-size:10px;'>Escribe tu comentario antes de enviar.</h5>"); 
 			}
 			else{
-				var totalcomentarios = parseInt($("#totalcomentarios"+identrada).val()) + 1
+				$("#infoescribircomen"+identrada).remove();
+				var totalcomentarios = parseInt($("#totalcomentarios"+identrada).text()) + 1
 				$("#nohaycomen"+identrada).html("");
 				$("#descripcion_comentario"+identrada).val("");
 				$("#despliegueboton"+identrada).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+totalcomentarios+"</span>)");
@@ -206,6 +211,9 @@ function ConvertirFecha() {
 }
 
 function EliminarComentario(idcomentario,idasignatura,identrada){
+	$("#infoescribircomen"+identrada).remove();
+	var totalcomentarios = parseInt($("#totalcomentarios"+identrada).text()) - 1
+	$("#despliegueboton"+identrada).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+totalcomentarios+"</span>)");
 	$('#comentario'+idcomentario).hide("slow");
 	$('#infocomentario'+idcomentario).show("slow").delay(2000).hide("slow");
 	$.ajax({
@@ -213,13 +221,17 @@ function EliminarComentario(idcomentario,idasignatura,identrada){
 		url: '/planetablogs/eliminarcomentario/',
 		type: 'GET',
 		success: function(datos){
-			
+			/*if(totalcomentarios == 0){
+				$("#comentariosentrada"+identrada).delay(2500).queue(function(n) {
+					$(this).html("<div id=nohaycomen"+identrada+"><p style='text-align:center;font-size:9px;font-weight:bold:font-style:oblique;color:red;'>No hay comentarios en esta entrada.</p></div>");
+				})
+			}*/
 		},
 	});
 }
 
-function BorrarComentario(idcomentario){
-	$('#infocomentario'+idcomentario).hide("slow");
+function NoHayComentarios(totalcomentarios,identrada){
+	
 }
 
 function CalcularPlanetsEntrada(id,up,down){

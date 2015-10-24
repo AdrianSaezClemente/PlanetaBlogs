@@ -129,7 +129,7 @@
 											</div>
 										</div>
 										{% endif %}
-										<button id="despliegueboton{{ entrada.0.id }}" onclick="MostrarComentarios('{{ entrada.0.id }}','{{ entrada.0.totalcomentarios }}');" style="background-color:#A8ADB1;color:white;" class="col-sm-12 btn btn-xs"><span class="glyphicon glyphicon-arrow-down"></span> Mostrar comentarios (<span id="totalcomentarios{{ entrada.0.id }}">{{ entrada.0.totalcomentarios }})</span></button></br></br>
+										<button id="despliegueboton{{ entrada.0.id }}" onclick="MostrarComentarios('{{ entrada.0.id }}');" style="background-color:#A8ADB1;color:white;" class="col-sm-12 btn btn-xs"><span class="glyphicon glyphicon-arrow-down"></span> Mostrar comentarios (<span id="totalcomentarios{{ entrada.0.id }}">{{ entrada.0.totalcomentarios }}</span>)</button></br></br>
 										<div class="oculto" id="desplieguecomentarios{{ entrada.0.id }}">
 											<div id="escribircomentario">
 												<div class="input-group">
