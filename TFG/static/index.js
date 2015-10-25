@@ -14,7 +14,7 @@ $(document).ready(function() {
 	});
 	$(".infotutor").mouseout(function() {
 		var id = $(this).attr("id");
-		$("#popupinfotutor").fadeOut(100);
+		$("#popupinfotutor").fadeOut(0);
 		$("#popupinfotutor").html("");
 	});
 	
@@ -29,7 +29,7 @@ $(document).ready(function() {
 	});
 	$(".usuario").mouseout(function() {
 		var id = $(this).attr("id");
-		$("#popup").fadeOut(100);
+		$("#popup").fadeOut(0);
 		$("#popup").html("");
 	});
 	
@@ -87,14 +87,14 @@ function SacarPosicionInfoTutor(elemento){
 function InformacionTutores(idasignatura){
 	for (i=0;i<asignaturas.length;i++){
 		if (asignaturas[i].pk == parseInt(idasignatura)){
-			titulo = asignaturas[i].fields.titulo
+			//titulo = asignaturas[i].fields.titulo
 			var creador = asignaturas[i].fields.creador
 			break;
 		}
 	}
 	for (k=0;k<usuarios.length;k++) {
 		if (usuarios[k].pk == creador){
-			var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><div style='font-style:oblique;font-size:1em;text-align:center;'>Creador del hilo "+titulo+"</div></div></div>";
+			var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><div style='font-style:oblique;font-size:1em;text-align:center;'>Creador del hilo</div></div></div>";
 			html += "<div class='panel-body'><span style='font-size:11px;' class='pull-left'>"+usuarios[k].fields.first_name+" "+usuarios[k].fields.last_name+" ("+usuarios[k].fields.email+")</span></br>";
 			$("#popupinfotutor").append(html);
 			$("#popupinfotutor").fadeIn();

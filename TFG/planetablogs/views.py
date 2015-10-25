@@ -145,21 +145,33 @@ def ComprobarUsuario(idusuario):
 #Página de inicio. Registro e identificación.
 def inicio(request):
 	error = None
-	if request.method == 'POST':
-		username = request.POST.get('nick', '')
-		password = request.POST.get('password', '')
-		user = auth.authenticate(username=username, password=password)
-		if user is not None and user.is_active:
-			error = False
-			auth.login(request, user)
-			usuario = ComprobarUsuario(user.id)
+	print request.session.items()
+	try:
+		if request.method == 'POST':
+			username = request.POST.get('nick', '')
+			password = request.POST.get('password', '')
+			user = auth.authenticate(username=username, password=password)
+			if user is not None and user.is_active:
+				error = False
+				auth.login(request, user)
+				request.session['usuario_conectado'] = user.id
+				request.session['conectado'] = True
+				usuario = ComprobarUsuario(user.id)
+				if (usuario == "Alumno"):
+					return HttpResponseRedirect(reverse('presentacionalumno'))
+				else:
+					return HttpResponseRedirect(reverse('presentacionprofesor'))
+			else:
+				error = True
+				return render(request, 'planetablogs/inicio.html', {'login': error})
+		if request.session['usuario_conectado'] == request.user.id:
+			usuario = ComprobarUsuario(request.user.id)
 			if (usuario == "Alumno"):
 				return HttpResponseRedirect(reverse('presentacionalumno'))
 			else:
 				return HttpResponseRedirect(reverse('presentacionprofesor'))
-		else:
-			error = True
-			return render(request, 'planetablogs/inicio.html', {'login': error})
+	except KeyError:
+		pass
 	return render(request, 'planetablogs/inicio.html', {'login': error})
 
 
@@ -221,7 +233,6 @@ def presentacionalumno(request):
 				from_zone = tz.tzutc()
 				utc = fechaActual.replace(tzinfo=from_zone)
 				utc_str = utc.strftime("%Y-%m-%d %H:%M:%S")
-				print "Fecha de ingreso: "+utc_str
 				hilo.ultima_fecha = utc_str
 				hilo.save()
 				#Creo valoración para este usuario en este hilo
@@ -242,14 +253,8 @@ def agregarasignaturaprofesor(request):
 	if request.method=='GET':
 		hilo = Asignatura.objects.get(id=request.GET['id'])
 		hilo.profesores.add(request.user.id)
-		'''profesor = Profesor.objects.filter(profesor_id=request.user.id)
-		print profesor
-		hilo.profesores.add(profesor)
-		hilo.save()'''
 		lista_asignaturas = Asignatura.objects.filter(profesores=request.user.id)
 		lista_no_asignaturas = Asignatura.objects.all().exclude(profesores=request.user.id)
-		print lista_asignaturas
-		print lista_no_asignaturas
 	return render(request,'planetablogs/presentacionprof.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas})
 
 
@@ -271,7 +276,6 @@ def presentacionprofesor(request):
 	asignaturas = Asignatura.objects.all()
 	lista_asignaturas = Asignatura.objects.filter(profesores=request.user.id)
 	lista_no_asignaturas = Asignatura.objects.all().exclude(profesores=request.user.id)
-	print "soy un profesor"
 	if request.method == 'POST':
 		formHilo = FormularioHilo(request.POST)
 		if formHilo.is_valid():
@@ -329,7 +333,6 @@ def ComprobarEntradaPuntuadaDown(i,down,lista_entradas_puntuadas):
 def ConseguirListaEntradas(idasignatura,idalumno):
 	tupla_entradas = []
 	entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
-	print entradas
 	up = Up.objects.filter(alumno_id=idalumno)
 	down = Down.objects.filter(alumno_id=idalumno)
 	for i in entradas:
@@ -392,8 +395,6 @@ def agregarcomentario(request):
 			usuario = simplejson.loads(json_usuario)
 			json_data = simplejson.dumps( {'comentario':comentario, 'usuario':usuario} )
 			SumarValoracionComentario(idasignatura,idalumno)
-			print idasignatura
-			print identrada
 			SumarComentarioEntrada(idasignatura,identrada)
 		else:
 			json_data = simplejson.dumps( {'comentario':"", 'usuario':""} )
@@ -566,7 +567,11 @@ def mostrarhiloprofesor(request,idasignatura):
 
 #Desconectarse de la aplicación
 def salir(request):
-	logout(request)
+	try:
+		print request.session.items()
+		logout(request)
+	except KeyError:
+		pass
 	return HttpResponseRedirect(reverse('login'))
 
 
@@ -765,7 +770,6 @@ def buscarIdEntrada(request):
 	if request.method=='GET':
 		if request.GET['texto'] != "":
 			entrada = Entrada.objects.filter(entrada=request.GET['texto'])
-			print entrada
 			if len(entrada) != 0:
 				alumno = Alumno.objects.filter(id=entrada[0].alumno_id)
 				user = User.objects.filter(id=alumno[0].alumno.id)
