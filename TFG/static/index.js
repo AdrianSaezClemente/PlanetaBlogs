@@ -68,6 +68,11 @@ function MostrarComentarios(id) {
 	$("#desplieguecomentarios"+id).toggle("fast","swing");
 }
 
+function MostrarAnimacion(){
+	$("#popupanim").fadeIn(3500);
+	$("#popupanim").fadeOut(2000);
+}
+
 function SacarPosicion(elemento){
 	var posicion = $(elemento).position();
 	var x = posicion.left + 250;
@@ -78,10 +83,18 @@ function SacarPosicion(elemento){
 
 function SacarPosicionInfoTutor(elemento){
 	var posicion = $(elemento).position();
-	var x = posicion.left;
+	var x = posicion.left - 200;
 	var y = posicion.top + 25;
 	$("#popupinfotutor").css("left",x + "px");
 	$("#popupinfotutor").css("top",y + "px");
+}
+
+function SacarPosicionAnimacion(elemento){
+	var posicion = $(elemento).position();
+	var x = posicion.left - 40;
+	var y = posicion.top + 170;
+	$("#popupanim").css("left",x + "px");
+	$("#popupanim").css("top",y + "px");
 }
 
 function InformacionTutores(idasignatura){
@@ -173,12 +186,13 @@ function AgregarComentario(identrada,idasignatura,iduser){
 		url: '/planetablogs/agregarcomentario/',
 		type: 'GET',
 		success: function(datos){
-			console.log("exitoso")
 			if (descripcion==""){
 				$("#infoescribircomen"+identrada).remove();
 				$("#comentariosentrada"+identrada).prepend("<h5 id=infoescribircomen"+identrada+" style='color:red;text-align:center;font-style:oblique;font-size:10px;'>Escribe tu comentario antes de enviar.</h5>"); 
 			}
 			else{
+				SacarPosicionAnimacion("#entradadescripcion"+identrada);
+				MostrarAnimacion();
 				$("#infoescribircomen"+identrada).remove();
 				var totalcomentarios = parseInt($("#totalcomentarios"+identrada).text()) + 1
 				$("#nohaycomen"+identrada).html("");
@@ -188,7 +202,7 @@ function AgregarComentario(identrada,idasignatura,iduser){
 				var html = "</br><div id='comentario"+datos.comentario[0].pk+"' class='panel panel-warning'>";
 				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+fecha+"</span></div></div>";
 				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+","+identrada+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
-				html += "<div id='infocomentario"+datos.comentario[0].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.</div></div>";
+				html += "<div id='infocomentario"+datos.comentario[0].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado! </strong><em>Se te restarán 3 planets.</em> Vuelve a comentar cuando lo desees.</div></div>";
 				$("#comentariosentrada"+identrada).prepend(html);
 				$("#infocomentario"+datos.comentario[0].pk).hide();
 			}

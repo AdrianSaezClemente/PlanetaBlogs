@@ -196,7 +196,6 @@ h6, .h6 {
 }
 
 .popupcabecera {
-	background-color: #70DB70 !important;
 	border:1px solid black !important;
 }
 
@@ -218,6 +217,26 @@ h6, .h6 {
 	background:white;
 	box-shadow:0 0 5em black;
 	border:8px solid #B9C5CD;
+}
+
+#popupanim{
+	z-index:2;
+	position:absolute;
+	width:auto;
+	height:auto;
+	/*background:white;*/
+	/*box-shadow:0 0 5em black;*/
+	padding:20px;
+	border-radius:70%;
+	
+	/*background-color:Transparent;*/
+}
+
+#textoanim{
+	text-shadow:0 0 1em green;
+	text-align:center;
+	font-style:oblique;
+	color:green;
 }
 
 .pequeña{width: 40px; height: 25px;}
@@ -309,7 +328,7 @@ label {
 }
 
 #titulolista {
-
+	position: relative;
 	margin-bottom:3em;
 	background-color:#1E1E1E;
 	border:7px solid white;
