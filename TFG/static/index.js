@@ -69,8 +69,8 @@ function MostrarComentarios(id) {
 }
 
 function MostrarAnimacion(){
-	$("#popupanim").fadeIn(3500);
-	$("#popupanim").fadeOut(2000);
+	$("#popupanim").fadeIn(250);
+	$("#popupanim").fadeOut(3750);
 }
 
 function SacarPosicion(elemento){
@@ -228,7 +228,7 @@ function EliminarComentario(idcomentario,idasignatura,identrada){
 	$("#infoescribircomen"+identrada).remove();
 	var totalcomentarios = parseInt($("#totalcomentarios"+identrada).text()) - 1
 	$("#despliegueboton"+identrada).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+totalcomentarios+"</span>)");
-	$('#comentario'+idcomentario).hide("slow");
+	$('#comentario'+idcomentario).remove();
 	$('#infocomentario'+idcomentario).show("slow").delay(2000).hide("slow");
 	$.ajax({
 		data: {'idcomentario':idcomentario,'idasignatura':idasignatura,'identrada':identrada},
@@ -242,10 +242,6 @@ function EliminarComentario(idcomentario,idasignatura,identrada){
 			}*/
 		},
 	});
-}
-
-function NoHayComentarios(totalcomentarios,identrada){
-	
 }
 
 function CalcularPlanetsEntrada(id,up,down){
