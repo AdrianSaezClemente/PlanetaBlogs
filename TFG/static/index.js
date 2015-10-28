@@ -130,8 +130,10 @@ function InformacionUsuario(id){
 					var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><img src='../../../../../static/imagenes/"+usuarios[i].fields.imagen+"' class='fotogrande'> </img><span style=margin-left:45px;'>Información de usuario</span></div></div>";
 					html += "<div style='font-family: Verdana, Arial, Helvetica, sans-serif'; class='panel-body'><span style='font-weight:bold;' class='pull-left'>Usuario:</span><span>&nbsp; "+usuarios[i].fields.first_name+" "+usuarios[i].fields.last_name+"</span></br>";
 					html += "<span style='font-weight:bold;' class='pull-left'>Correo:</span><span>&nbsp; "+usuarios[i].fields.email+"</span></br>";
-					html += "<span style='font-weight:bold;' class='pull-left'>Puntos:</span><span>&nbsp; "+valoraciones[j].fields.puntos+"</span></br>";
-					html += "<span style='font-weight:bold;' class='pull-left'>Nivel:</span><span>&nbsp; "+valoraciones[j].fields.nivel+"</span></div>";
+					if (usuarios[i].fields.username != "admin"){
+						html += "<span style='font-weight:bold;' class='pull-left'>Puntos:</span><span>&nbsp; "+valoraciones[j].fields.puntos+"</span></br>";
+						html += "<span style='font-weight:bold;' class='pull-left'>Nivel:</span><span>&nbsp; "+valoraciones[j].fields.nivel+"</span></div>";
+					}
 					$("#popup").append(html);
 					$("#popup").fadeIn();
 					break;
@@ -201,7 +203,7 @@ function AgregarComentario(identrada,idasignatura,iduser){
 				$("#despliegueboton"+identrada).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+totalcomentarios+"</span>)");
 				BorrarInfo();
 				var html = "</br><div id='comentario"+datos.comentario[0].pk+"' class='panel panel-warning'>";
-				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+fecha+"</span></div></div>";
+				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.comentario[0].fields.username+"<span class='pull-right'>"+fecha+"</span></div></div>";
 				html += "<div style='margin-bottom:10px;margin-left:10px;margin-right:10px;font-family:verdana;font-size:12px;word-wrap:break-word;' class='panel-body'>"+descripcionConSaltos+"</br><button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+","+identrada+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
 				html += "<div id='infocomentario"+datos.comentario[0].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado! </strong><em>Se te restarán 3 planets.</em> Vuelve a comentar cuando lo desees.</div></div>";
 				$("#comentariosentrada"+identrada).prepend(html);

@@ -30,7 +30,7 @@ TIME_ZONE = 'Europe/Madrid'
 
 ALLOWED_HOSTS = []
 
-TEMPLATE_DIRS = ('/home/adri/Escritorio/ProyectoGit/TFG/plantillas')
+TEMPLATE_DIRS = ['/home/adri/Escritorio/ProyectoGit/TFG/plantillas']
 
 # Application definition
 

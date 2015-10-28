@@ -292,3 +292,24 @@ body {
 	border:1px solid black;
 	padding-left:5px;
 }
+
+#subir {
+	position: fixed;
+	bottom: 70px; /* Distancia desde abajo */
+	right: 30px; /* Distancia desde la derecha */
+	border:1px solid #428bca;
+	box-shadow:0 0 0.7em #428bca;
+}
+
+#subir span {
+	display: block;
+	background: no-repeat center center;
+}
+
+#comentarios {
+	margin-top:10px;
+}
+
+#titulopanel *{
+	font-size:12px;
+}

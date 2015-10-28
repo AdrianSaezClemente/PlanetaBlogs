@@ -91,7 +91,8 @@ class Comentario(models.Model):
 	entrada = models.ForeignKey(Entrada)
 	fecha = models.DateTimeField()
 	descripcion = models.TextField()
+	username = models.CharField(max_length=35)
 	def __unicode__(self):
-		return self.alumno
+		return unicode(self.alumno)
 	
 	
