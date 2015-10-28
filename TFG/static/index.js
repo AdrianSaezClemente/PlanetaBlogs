@@ -191,6 +191,7 @@ function AgregarComentario(identrada,idasignatura,iduser){
 				$("#comentariosentrada"+identrada).prepend("<h5 id=infoescribircomen"+identrada+" style='color:red;text-align:center;font-style:oblique;font-size:10px;'>Escribe tu comentario antes de enviar.</h5>"); 
 			}
 			else{
+				var descripcionConSaltos = ConvertirDescripcion(datos.comentario[0].fields.descripcion);
 				SacarPosicionAnimacion("#entradadescripcion"+identrada);
 				MostrarAnimacion();
 				$("#infoescribircomen"+identrada).remove();
@@ -201,7 +202,7 @@ function AgregarComentario(identrada,idasignatura,iduser){
 				BorrarInfo();
 				var html = "</br><div id='comentario"+datos.comentario[0].pk+"' class='panel panel-warning'>";
 				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+fecha+"</span></div></div>";
-				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+","+identrada+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
+				html += "<div style='margin:10px;font-family:verdana;font-size:12px;word-wrap:break-word;' class='panel-body'>"+descripcionConSaltos+"</br></br><button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+","+identrada+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
 				html += "<div id='infocomentario"+datos.comentario[0].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado! </strong><em>Se te restarán 3 planets.</em> Vuelve a comentar cuando lo desees.</div></div>";
 				$("#comentariosentrada"+identrada).prepend(html);
 				$("#infocomentario"+datos.comentario[0].pk).hide();
@@ -210,18 +211,23 @@ function AgregarComentario(identrada,idasignatura,iduser){
 	});
 }
 
+function ConvertirDescripcion(descripcion) {
+	var unixNewLine = new RegExp("\n", "g");
+	descripcionConSaltos = descripcion.replace(unixNewLine, '<br/>');
+	return descripcionConSaltos
+}
+
+
 function ConvertirFecha() {
 	var nombres_dias = new Array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
 	var nombres_meses = new Array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 	var now = new Date();
-	console.log(nombres_dias);
 	if (now.getMinutes()<10){ var minutos = '0' + now.getMinutes()}
 	else { var minutos = now.getMinutes() }
 	if (now.getHours()<10){ var horas = '0' + now.getHours()}
 	else { var horas = now.getHours() }
 	var fecha =  now.getDate() + " de " + nombres_meses[now.getMonth()] + " de " + now.getFullYear() + ", " + nombres_dias[now.getDay()] + " a las " + horas + ":" + minutos;
 	return fecha;
-	//return "hola"
 }
 
 function EliminarComentario(idcomentario,idasignatura,identrada){

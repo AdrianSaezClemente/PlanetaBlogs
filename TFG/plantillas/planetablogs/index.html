@@ -149,10 +149,10 @@
 													<div id="comentarios">
 														<div id="comentario{{ comentario.id }}" class="panel panel-warning">
 															<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha|date:"d" }} de {{ comentario.fecha|date:"F" }} de {{ comentario.fecha|date:"Y" }}, {{ comentario.fecha|date:"l" }} a las {{ comentario.fecha|date:"H:i" }}</span></div></div>
-															<div style="word-wrap:break-word;" class="panel-body">
-																{{ comentario.descripcion }}
+															<div style="margin:10px;font-family:verdana;font-size:12px;word-wrap:break-word;" class="panel-body">
+																{{ comentario.descripcion|linebreaksbr }}
 															{% if comentario.alumno.alumno.id == user.id %}
-																<button id="{{ comentario.id }}" onclick="EliminarComentario('{{ comentario.id }}','{{ asignatura.id }}','{{ entrada.0.id }}')" type="button" class="btn btn-danger btn-xs pull-right">Eliminar comentario</button>
+																</br></br><button id="{{ comentario.id }}" onclick="EliminarComentario('{{ comentario.id }}','{{ asignatura.id }}','{{ entrada.0.id }}')" type="button" class="btn btn-danger btn-xs pull-right">Eliminar comentario</button>
 															{% endif %}
 															</div>
 														</div>
