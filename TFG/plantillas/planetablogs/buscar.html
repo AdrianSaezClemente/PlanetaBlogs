@@ -9,16 +9,6 @@
 		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
 	   	<script src="{{ STATIC_URL }}buscar.js"></script>
-	   	<script>
-	   	/*var tmpusuario = '{{ json_usuario|safe }}';
-		console.log(tmpusuario);
-		var usuario = $.parseJSON(tmpusuario);
-		console.log(usuario);*/
-		/*var tmpentradas = '{{ json_entradas|escapejs }}';
-		console.log(tmpentradas);
-		var entradas = $.parseJSON(tmpentradas);
-		console.log(entradas);*/
-	   	</script>
 	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
 		<title>Búsqueda</title>
 	</head>
@@ -51,6 +41,7 @@
 				</div>
 			</div>
 			<!-- FIN CABECERA -->
+			<div id="popupanim" class="oculto"><div id="textoanim"><strong>¡Enhorabuena!</strong></br><span>¡Has ganado 3 planets!</span></br><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></div></div>
 			<div class="row">
 				<div id="buscador" class="col-xs-12 col-sm-12 well">
 					<div id="titulo" class="col-xs-12 col-sm-12">
@@ -86,10 +77,10 @@
 		</div>
 		<!-- FIN CONTENEDOR -->
 		<!-- Pie de página -->
-		<div>
+		<!--<div>
 			<div class="blog-footer">
 				<p>Envía y comparte la página de registro para entrar a tu planeta. Consíguela en este <strong><a target="_blank" href="/planetablogs/login/">enlace</a></stron></p>
 			</div>
-		</div>
+		</div>-->
 	</body>
 </html>

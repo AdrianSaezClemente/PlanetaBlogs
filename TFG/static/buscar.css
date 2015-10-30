@@ -313,3 +313,19 @@ body {
 #titulopanel *{
 	font-size:12px;
 }
+
+#popupanim{
+	z-index:2;
+	position:absolute;
+	width:auto;
+	height:auto;
+	padding:20px;
+	border-radius:70%;
+}
+
+#textoanim{
+	text-shadow:0 0 1em green;
+	text-align:center;
+	font-style:oblique;
+	color:green;
+}
