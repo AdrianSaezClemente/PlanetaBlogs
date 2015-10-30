@@ -64,6 +64,7 @@ function Buscar(idasignatura,iduser){
 		});
 	}
 	if(idopcion == 2){
+		var texto = $("#texto").val();
 		$.ajax({
 			data: {'idopcion':idopcion, 'texto':texto, 'idasignatura':idasignatura},
 			url: '/planetablogs/buscarIdEntrada/',
