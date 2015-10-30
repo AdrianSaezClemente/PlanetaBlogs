@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}ayuda.css" title="style" />
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+		<script src="{{ STATIC_URL }}ayuda.js"></script>
+	   	<script>
+	   	/*var tmpusuario = '{{ json_usuario|safe }}';
+		console.log(tmpusuario);
+		var usuario = $.parseJSON(tmpusuario);
+		console.log(usuario);*/
+		/*var tmpentradas = '{{ json_entradas|escapejs }}';
+		console.log(tmpentradas);
+		var entradas = $.parseJSON(tmpentradas);
+		console.log(entradas);*/
+	   	</script>
+	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
+		<title>Ayuda e información</title>
+	</head>
+	
+	<body>
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<!-- CABECERA -->
+			<div class="row">
+				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-12">
+					<ul class="nav nav-tabs">
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
+						<li>
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-stats"></span>  Ránking</a></li>
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign active"></span> Información</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="active"><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
+						<div style="padding-top:10px;color:white;font-size:10px;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong style="font-size:12px;">{{ user.username }}</strong></em>  |  </span><a style="font-size:12px;color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
+					</ul>
+				</div>
+			</div>
+			<!-- FIN CABECERA -->
+			<div id="contenedorlineas" class="row col-xs-12 col-sm-10 col-sm-offset-1">
+				<div style="background-color:#99FF99;" id="titulo" class="col-xs-12 col-sm-8 col-sm-offset-2 well">
+					<h3 class="centrar"><strong>Información general y consejos de uso</strong></h3></br>
+					<ol>
+						<li>Los hilos sólo podrán ser creados por el tutor.</li></br>
+						<li>Las valoraciones es una parte muy importante de este planeta de blogs. Los comentarios deben ser opiniones o debates con cierto sentido temático. Y los "Up" o "Down" deben ser valorados dentro de una objetividad personal, sin dejarnos llevar por intereses u otros factores.</li></br>
+						<li>El recuento de valoraciones positivas o negativas de cada entrada sólo será visible para el usuario que ya haya valorado dicha entrada.</li></br>
+						<li>Los comentarios, entradas e incluso usuarios suscritos a un hilo, pueden ser eliminados por el tutor o creador del hilo en cualquier momento. </br>
+						<strong>Nota:</strong>&nbsp;&nbsp;Como bien se expone en la información de puntuaciones, cada comentario o entrada borrada obtendrá su correspondiente penalización.</li></br>
+						<li>Los comentarios se podrán eliminar sólo si son creados por el usuario que los borra.</li></br>
+						</br></br>
+					</ol>
+				</div>
+				<div style="background-color:#99FF99;" id="titulo" class="col-xs-12 col-sm-8 col-sm-offset-2 well">
+					<h3 class="centrar"><strong>Sugerencias</strong></h3></br>
+					<ol>
+						<li>Para posibles sugerencias sobre la aplicación o distintas preguntas/problemas que los usuarios se formulen al usar la aplicación (cuentas de usuarios, puntuaciones,...), enviar correo a la dirección <strong>soporte.planetablogs@gmail.com</strong>.</li></br>
+						<li>¡Las sugerencias se tendrán muy en cuenta para futuras mejoras con las que podremos aprender y divertirnos más!</li>
+						</br></br></br>
+					</ol>
+				</div>
+			</div>
+			<div id="subir" class="btn btn-default btn-lg">
+				<a href='javascript:void(0)'><span class="glyphicon glyphicon-circle-arrow-up"></span></a>
+			</div>
+		</div>
+		<!-- FIN CONTENEDOR -->
+		<!-- Pie de página -->
+		<div>
+			<div class="blog-footer">
+				<p>Envía y comparte la página de registro para entrar a tu planeta. Consíguela en este <strong><a target="_blank" href="/planetablogs/login/">enlace</a></stron></p>
+			</div>
+		</div>
+	</body>
+</html>

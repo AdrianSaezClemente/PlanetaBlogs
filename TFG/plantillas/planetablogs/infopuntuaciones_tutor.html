@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}infopuntuaciones.css" title="style" />
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+	   	<script src="{{ STATIC_URL }}infopuntuaciones.js"></script>
+	   	<script>
+	   	var tmp = '{{ lista_usuarios|escapejs }}';
+	   	var usuario = JSON.parse(tmp);
+	   	var info = '{{ info }}';
+	   	</script>
+	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
+		<title>Bases</title>
+	</head>
+	
+	<body>
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<!-- CABECERA -->
+			<div class="row">
+				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-12">
+					<ul class="nav nav-tabs">
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
+						<li class="active">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-stats"></span> Ránking</a></li>
+									<li><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}/infopuntuaciones/"><span style="color:#7A7A7A" class="glyphicon glyphicon-chevron-right"></span>  <span class="glyphicon glyphicon-info-sign"></span> Información</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
+						<div style="padding-top:10px;color:white;font-size:10px;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong style="font-size:12px;">{{ user.username }}</strong></em>  |  </span><a style="font-size:12px;color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
+					</ul>
+				</div>
+			</div>
+			<!-- FIN CABECERA -->
+			<div class="row">
+				<div id="titulo" class="col-xs-12 col-sm-8 col-sm-offset-2 well">
+					<h3 class="centrar"><strong>Bases de las puntuaciones</strong></h3></br>
+					<ol>
+					<li>Por cada entrada, el usuario que blogee dicha entrada recibirá una bonificación de 8 planets. Si la entrada es eliminada, se penalizará con 10 planets.</li></br>
+					<li>Cada valoración positiva que reciba una entrada, corresponde con una bonificación de 2 planets para el usuario que escribió dicha entrada.</li></br>
+					<li>Cada valoración negativa que reciba una entrada, corresponde con una penalización de 1 planets para el usuario que escribió dicha entrada.</li></br>
+					<li>Cada comentario realizado se premiará con una bonificación de 3 planets para el usuario que escribió dicho comentario. Si el comentario es eliminado se penalizará con 3 planets.</li></br>
+					<li>Para la consecución de niveles:</li></br></br>
+					</ol>
+					<div class="col-xs-12 col-sm-10 col-sm-offset-2">
+						<table id="tablainfo" class="table table-bordered centrar">
+							<thead>
+								<tr>
+								<th class="centrar">Nivel</th>
+								<th class="centrar">Planets</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td id="nivel0">0</td>
+									<td><em style="color:#8F6B00"> < 09  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel1">1</td>
+									<td><em style="color:#8F6B00">10  - 24  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel2">2</td>
+									<td><em style="color:#8F6B00">25  - 44  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel3">3</td>
+									<td><em style="color:#8F6B00">45  - 69  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel4">4</td>
+									<td><em style="color:#8F6B00">70  - 99  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel5">5</td>
+									<td><em style="color:#8F6B00">100 - 134  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel6">6</td>
+									<td><em style="color:#8F6B00">135 - 174  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel7">7</td>
+									<td><em style="color:#8F6B00">175 - 219  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel8">8</td>
+									<td><em style="color:#8F6B00">220 - 269  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel9">9</td>
+									<td><em style="color:#8F6B00">270 - 324  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel10">10</td>
+									<td><em style="color:#8F6B00">325 - 384  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel11">11</td>
+									<td><em style="color:#8F6B00">385 - 450  </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+								<tr>
+									<td id="nivel12">12</td>
+									<td><em style="color:#8F6B00"> > 450 </em><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="subir" class="btn btn-default btn-lg">
+				<a href='javascript:void(0)'><span class="glyphicon glyphicon-circle-arrow-up"></span></a>
+			</div>
+		</div>
+		<!-- FIN CONTENEDOR -->
+		<!-- Pie de página -->
+		<!--<div>
+			<div class="blog-footer">
+				<p>Envía y comparte la página de registro para entrar a tu planeta. Consíguela en este <strong><a target="_blank" href="/planetablogs/login/">enlace</a></stron></p>
+			</div>
+		</div>-->
+	</body>
+</html>

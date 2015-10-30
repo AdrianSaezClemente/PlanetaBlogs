@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}puntuaciones.css" title="style" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	   	<script src="{{ STATIC_URL }}puntuaciones.js"></script>
+	   	<script>
+			tmpusuarios = '{{ json_usuarios|escapejs }}';
+			usuarios = JSON.parse(tmpusuarios);
+	   	</script>
+	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
+		<title>Ránking</title>
+	</head>
+	
+	<body>
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<!-- CABECERA -->
+			<div class="row">
+				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-12">
+					<ul class="nav nav-tabs">
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
+						<li>
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu active">
+									<li><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}/puntuaciones/"><span style="color:#7A7A7A" class="glyphicon glyphicon-chevron-right"></span>  <span class="glyphicon glyphicon-stats"></span> Ránking</a></li>
+									<li><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign"></span> Información</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
+						<div style="padding-top:10px;color:white;font-size:10px;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong style="font-size:12px;">{{ user.username }}</strong></em>  |  </span><a style="font-size:12px;color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
+					</ul>
+				</div>
+			</div>
+			<!-- FIN CABECERA -->
+			<div id="popup" class="oculto panel panel-success">
+			</div>
+			<div class="row">
+				<div id="titulo" class="col-xs-12 col-sm-8 col-sm-offset-2 well">
+					<h3 class="centrar"><strong>Ránking de {{ asignatura.titulo }}</strong></h3></br>
+					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+						<table id="tablaranking" class="table table-bordered centrar">
+							<thead>
+								<tr>
+								<th class="centrar">Posición</th>
+								<th class="centrar">Usuario</th>
+								<th class="centrar">Planets</th>
+								<th class="centrar">Nivel</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for val in lista_valoracion %}
+								<tr>
+									<td>{{ forloop.counter }}</td>
+									<td><img style="cursor:zoom-in;" id="{{ val.alumno.alumno.id }}" src="../../../../../static/imagenes/{{ val.alumno.alumno.imagen }}" class="fotomuypequeña pull-left foto"> </img>&nbsp;&nbsp;{{ val.alumno.alumno.username }}</td>
+									<td><em style="color:#8F6B00">{{ val.puntos }} </em><img style="margin-left:6px;" class="muypequeña" src="../../../../../static/imagenes/planets41.png"></td>
+									<td class="nivel" style="cursor:none;">{{ val.nivel }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- FIN CONTENEDOR -->
+		<!-- Pie de página -->
+		<!--<div>
+			<div class="blog-footer">
+				<p>Envía y comparte la página de registro para entrar a tu planeta. Consíguela en este <strong><a target="_blank" href="/planetablogs/login/">enlace</a></stron></p>
+			</div>
+		</div>-->
+	</body>
+</html>

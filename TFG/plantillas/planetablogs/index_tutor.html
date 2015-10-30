@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		{% block head %}
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}index_tutor.css" title="style" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap-dialog.js"></script>
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap-dialog.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}index_tutor.js"></script>
+		<script>
+	   	tmpusuarios = '{{ json_usuarios|escapejs }}';
+	   	usuarios = JSON.parse(tmpusuarios);
+	   	tmpvaloraciones = '{{ json_valoracion|escapejs }}';
+	   	valoraciones = JSON.parse(tmpvaloraciones);
+	   	tmpalumnos = '{{ json_alumnos|escapejs }}';
+	   	alumnos = JSON.parse(tmpalumnos);
+	   	tmpasignaturas = '{{ json_asignaturas|escapejs }}';
+	   	asignaturas = JSON.parse(tmpasignaturas);
+	   	tmpprofesores = '{{ json_profesores|escapejs }}';
+	   	profesores = JSON.parse(tmpprofesores);
+	   	</script>
+	   	<link rel="shortcut icon" href="../../../../static/imagenes/planet.png" type="image/png" />
+		<title>Educational Planet</title>
+		{% endblock head %}
+	</head>
+	<body>
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<!-- CABECERA -->
+			<div class="row">
+				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-12">
+					<ul class="nav nav-tabs">
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
+						<li class="active"><a class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
+						<li>
+							<div class="btn-group active">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-stats"></span>  Ránking</a></li>
+									<li><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign active"></span> Información</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
+						<div style="padding-top:10px;color:white;font-size:10px;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong style="font-size:12px;">{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;font-size:12px;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a>&nbsp;&nbsp;<a class="infotutor" id="{{ asignatura.id }}" href='javascript:void(0)'><span class="glyphicon glyphicon-info-sign" style="cursor:pointer;cursor:hand;font-size:14px;" class=""></span></a></div>
+					</ul>
+				</div>
+			</div>
+			<div id="popup" class="oculto panel panel-info"></div>
+			<div id="popupinfotutor" class="oculto panel panel-primary"></div>
+			<!-- FIN CABECERA -->
+			<div class="row">
+				<div id="titulolista" class="col-xs-12 col-sm-12">
+					<div id="titulo" class="col-xs-12 col-sm-4 blog-header">
+						<img class="pequeñologo" src="../../../../static/imagenes/planet.png">
+						<h2>Educational Planet</h2>
+						<p class="lead blog-description">El planeta educativo</p>
+					</div>
+					<div id="conjuntolista" class="col-xs-12 col-sm-7 col-sm-offset-1 blog-header">
+						<div id="grupolista1" class="list-group">
+							<li id="lista1" class="list-group-item"><h4 style="font-size:14px;font-style:oblique;" class="list-group-item-heading">Entradas más valoradas</h4>
+								<div id="grupolista2" class="list-group">
+								{% if lista_entradas_valoradas %}
+									{% for ent in lista_entradas_valoradas %}
+										<a style="cursor:e-resize;" title="Pulsa para ver el total de planets de esta entrada" onclick="CalcularPlanetsEntrada('{{ ent.id }}','{{ ent.totalup }}','{{ ent.totaldown }}')" class="list-group-item">
+											<div class="row">
+												<h6 style="border:0.1em solid #428bca;font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
+												<div style="word-wrap:break-word;" id="entradavalorada" class="col-xs-7 col-sm-7">
+													<p style="font-style:oblique;" class="list-group-item-heading"><strong class="pull-left">#{{ ent.entrada }}</strong><span class="pull-left" style="padding-right:8px;font-style:oblique;font-size:0.9em;word-wrap:break-word;">&nbsp;&nbsp;Escrito por {{ ent.alumno.alumno.username }}</span><h6>{{ ent.titulo }}</h6></p>
+													<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span></span></p>
+												</div>
+												<div id="fechavalorada" class="col-xs-4 col-sm-4">
+													<span class="pull-right">{{ ent.fecha|date:"d" }} de {{ ent.fecha|date:"F" }} de {{ ent.fecha|date:"Y" }}</span></br></br></br>
+													<span style="color:black;" class="pull-right"><strong>Planets: </strong><span id="total{{ ent.id }}"></span></span>
+												</div>
+											</div>
+										</a>
+									{% endfor %}
+								{% else %}
+									<p id="nohayent" style="font-size:0.9em;height:125px;margin:5px;">No hay entradas en Educational Planet</br></br></br></br> ¡Anímate a escribir en tu blog! </p>
+								{% endif %}
+								</div>
+							</li>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div id="entradassuscrip" class="col-xs-12 col-sm-12">
+					<div id="todasentradas" class="col-xs-12 col-sm-8 blog-main">
+						{% if entradas %}
+							<div id="entradas">
+							{% for entrada in entradas %}
+								<div class="blog-post">
+									<div id="entrada{{ entrada.id }}" class="entrada">
+										<h2 class="blog-post-title"><label> #{{ entrada.entrada }}&nbsp;<img src="../../../../../static/imagenes/{{ entrada.alumno.alumno.imagen }}" class="fotopequeña"> </img></label><a id="{{ entrada.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.url_blog }}> {{ entrada.alumno.alumno.first_name }} {{ entrada.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.fecha|date:"d" }} de {{ entrada.fecha|date:"F" }} de {{ entrada.fecha|date:"Y" }}, {{ entrada.fecha|date:"l" }} a las {{ entrada.fecha|date:"H:i" }} por <a target="_blank" href={{ entrada.url_blog }}>{{ entrada.alumno.alumno.username }}</a></span></h2>
+										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
+										<p id="entradadescripcion{{ entrada.id }}" style="word-wrap:break-word;">{{ entrada.descripcion|linebreaksbr }}</p>
+										<div id="valoracion">
+											<div id="updowninactive{{ entrada.id }}" class="btn-toolbar" role="toolbar">
+												<div class="btn-group">
+													<button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>{{ entrada.totalup }}</span></button>
+												</div> 
+												<div class="btn-group">
+													<button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>{{ entrada.totaldown }}</span></button>
+												</div>
+											</div>
+										</div>
+										<!--<div id="escribircomentario">
+											<div class="input-group">
+												<span class="input-group-addon">#{{ forloop.revcounter }}</span>
+												<textarea id="descripcion_comentario" class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
+												<input class="oculto" name="entrada" value="{{ entrada.id }}"></input>
+												<span class="input-group-btn">
+													<button class="btn btn-success" onclick="AgregarComentario('{{ entrada.id }}','{{ asignatura.id }}','{{ user.id }}')">Enviar <span class="glyphicon glyphicon-send"></span></button>
+												</span>
+											</div>
+										</div>-->
+										<div id="infoentrada{{ entrada.id }}" class="oculto">
+											<div class="alert alert-primary alert-dismissable">
+												<button type="button" class="close" data-dismiss="alert">&times;</button>
+												<strong>¡Entrada borrada!</strong>
+											</div>
+										</div>
+										<button id="despliegueboton{{ entrada.id }}" onclick="MostrarComentarios('{{ entrada.id }}');" style="background-color:#A8ADB1;color:white;" class="col-sm-12 btn btn-xs"><span class="glyphicon glyphicon-arrow-down"></span> Mostrar comentarios (<span id="totalcomentarios{{ entrada.id }}">{{ entrada.totalcomentarios }}</span>)</button></br></br>
+										<div class="oculto" id="desplieguecomentarios{{ entrada.id }}">
+											{% for comentario in lista_comentarios %}
+												{% if entrada.id == comentario.entrada_id %}
+												<div id="comentarios">
+													<div id="comentario{{ comentario.id }}" class="panel panel-warning">
+														<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha|date:"d" }} de {{ comentario.fecha|date:"F" }} de {{ comentario.fecha|date:"Y" }}, {{ comentario.fecha|date:"l" }} a las {{ comentario.fecha|date:"H:i" }}</span></div></div>
+														<div style="margin-bottom:10px;margin-left:10px;margin-right:10px;font-family:verdana;font-size:12px;word-wrap:break-word;" class="panel-body">
+															{{ comentario.descripcion|linebreaksbr }}
+															</br><button id="{{ comentario.id }}" onclick="EliminarComentario('{{ comentario.id }}','{{ asignatura.id }}','{{ entrada.id }}')" type="button" class="btn btn-danger btn-xs pull-right">Eliminar comentario</button>
+														</div>
+													</div>
+													<div id="infocomentario{{ comentario.id }}" class="oculto">
+														<div class="alert alert-success alert-dismissable">
+															<button type="button" class="close" data-dismiss="alert">&times;</button>
+															<strong>¡Comentario borrado!</strong>
+														</div>
+													</div>
+												</div>
+												{% endif %}
+											{% endfor %}
+										</div>
+										<button onclick="EliminarEntradaPopUp('{{ asignatura.id }}','{{ entrada.id }}','{{ entrada.alumno.alumno.first_name }}','{{ entrada.alumno.alumno.last_name }}','{{ entrada.entrada }}')" type="button" style="color:white;" class="btn btn-danger btn-sm btn-block">Eliminar Entrada</button>
+									</div>
+								</div>
+							{% endfor %}
+							</div>
+						{% else %}
+							<p id="nohayent">No hay entradas en Educational Planet</br> ¡Anímate a escribir en tu blog! </p>
+						{% endif %}
+						
+						<div id="paginador" class="col-xs-12 col-sm-9 col-sm-offset-3">
+							<ul class="pagination">
+								<li>
+									{% if entradas.has_previous %}
+										{% if entradas.previous_page_number == 1 %}
+											<span class="pag"><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-chevron-left"></span> Anterior</a></span>
+										{% else %}
+											<span class="pag"><a href="?page={{ entradas.previous_page_number }}"><span class="glyphicon glyphicon-chevron-left"></span> Anterior</a></span>
+										{% endif %}
+									{% endif %}
+								</li>
+								<li>
+									<span class="current">
+										Página {{ entradas.number }} de {{ entradas.paginator.num_pages }}
+									</span>
+								</li>
+								<li>
+									{% if entradas.has_next %}
+										<span class="pag"><a href="?page={{ entradas.next_page_number }}">Siguiente <span class="glyphicon glyphicon-chevron-right"></span></a></span>
+									{% endif %}
+								</li>
+							</ul>
+						</div> 
+					</div>
+					<div class="clearfix visible-xs"></div>
+					<div id="suscriptores" class="col-xs-12 col-sm-4 blog-main">
+						<div id="titulo_columna">Suscriptores</div></br>
+						<table id="tablasuscriptores" class="table table-hover">
+							<thead>
+								<tr>
+								<th>Nick</th>
+								<th>Usuario</th>
+								<th>Rss</th>
+								<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for usuario in lista_usuarios %}
+								<tr id="alumno{{ usuario.0.alumno.id }}">
+									<td>{{ usuario.0.alumno.username }}</td>
+									<td><span style="font-size:0.7em">{{ usuario.0.alumno.first_name }} {{ usuario.0.alumno.last_name }}</span></td>
+									<td><a style="font-size:0.7em" target="_blank" href="{{ usuario.1 }}"> feed</a></td>
+									<td><button onclick="EliminarAlumnoPopUp('{{ asignatura.id }}','{{ usuario.0.alumno.id }}','{{ usuario.0.alumno.first_name }}','{{ usuario.0.alumno.last_name }}')" type="button" title="Eliminar alumno de {{ asignatura.titulo }}" style="color:white;font-size:0.7em;" class="btn btn-danger btn-xs btn-block">Eliminar</button></td>
+								</tr>
+								{% empty %}
+								<tr><td id="nohaysuscrip" colspan="4">No hay personas suscritas</td></tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="subir" class="btn btn-default btn-lg">
+				<a href='javascript:void(0)'><span class="glyphicon glyphicon-circle-arrow-up"></span></a>
+			</div>
+		</div>
+		
+		<!-- FIN CONTENEDOR -->
+		<!-- Pie de página -->
+		<div>
+			<div class="blog-footer">
+				<p>Envía y comparte la página de registro para entrar a tu planeta. Consíguela en este <strong><a target="_blank" href="/planetablogs/login/">enlace</a></stron></p>
+			</div>
+		</div>
+	</body>
+</html>

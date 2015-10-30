@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}buscar_tutor.css" title="style" />
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+	   	<script src="{{ STATIC_URL }}buscar_tutor.js"></script>
+	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
+		<title>Búsqueda</title>
+	</head>
+	
+	<body>
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<!-- CABECERA -->
+			<div class="row">
+				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-12">
+					<ul class="nav nav-tabs">
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
+						<li class="active"><a class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
+						<li>
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-stats"></span>  Ránking</a></li>
+									<li><a href="/planetablogs/tutores/hilo/{{ asignatura.id }}/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign active"></span> Información</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/tutores/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
+						<div style="font-size:10px;padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong style="font-size:12px;" strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;font-size:12px;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
+					</ul>
+				</div>
+			</div>
+			<!-- FIN CABECERA -->
+			<div class="row">
+				<div id="buscador" class="col-xs-12 col-sm-12 well">
+					<div id="titulo" class="col-xs-12 col-sm-12">
+						<h2 style="font-style:oblique;font-size:20px;"> Búsqueda avanzada </h2>
+					</div>
+					<div id="formulario" class="col-xs-12 col-sm-12 form-group">
+						<label class="col-xs-12 col-sm-3 col-sm-offset-2 control-label">
+							<select class="form-control">
+								<option value="1">Nick de usuario</option>
+								<option value="2">Identificador de entrada</option>
+								<!-- <option value="3">Nombre de usuario</option> -->
+							</select>
+						</label>
+						<div class="col-xs-12 col-sm-4">
+							<input type="text" class="form-control" id="texto" placeholder="Introduce un texto válido">
+						</div>
+						<div class="col-xs-12 col-sm-2">
+							<button id="buscar" onclick="Buscar('{{ asignatura.id }}','{{ user.id }}');" type="button" class="btn btn-primary"><span style="color:black" class="glyphicon glyphicon-search"> Buscar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div id="todasentradas">
+					<div id="resultado" class="col-xs-12 col-sm-8 col-sm-offset-2 well">
+						
+					</div>
+				</div>
+			</div>
+			<div id="subir" class="btn btn-default btn-lg">
+				<a href='javascript:void(0)'><span class="glyphicon glyphicon-circle-arrow-up"></span></a>
+			</div>
+		</div>
+		<!-- FIN CONTENEDOR -->
+		<!-- Pie de página -->
+		<!--<div>
+			<div class="blog-footer">
+				<p>Envía y comparte la página de registro para entrar a tu planeta. Consíguela en este <strong><a target="_blank" href="/planetablogs/login/">enlace</a></stron></p>
+			</div>
+		</div>-->
+	</body>
+</html>
