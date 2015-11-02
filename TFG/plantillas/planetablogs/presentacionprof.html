@@ -111,9 +111,11 @@
 																	<span><strong>Título: </strong>{{ asig.titulo }}</span></br>
 																	<span><strong>Descripción: </strong>{{ asig.descripcion }}</span>
 																</div>
+																{% if asig.creador == user.id %}
 																<div id="botonagregar{{ asig.id }}" class="col-sm-3">
 																	<button onclick="Agregar('{{ asig.id }}','{{ asig.titulo }}','{{ asig.descripcion }}');" id="agregar{{ asig.id }}" title="Añadir hilo" type="button" class="btn-xs btn-primary pull-right boton"><span class="glyphicon glyphicon-plus"></span>Añadir</button>
 																</div>
+																{% endif %}
 															</div>
 														</h6>
 													</div>
