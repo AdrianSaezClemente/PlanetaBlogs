@@ -329,3 +329,16 @@ body {
 .pequeñologo{
 	width: 100px; height: 80px;
 }
+
+#subir {
+	position: fixed;
+	bottom: 30px; /* Distancia desde abajo */
+	right: 30px; /* Distancia desde la derecha */
+	border:1px solid #428bca;
+	box-shadow:0 0 0.7em #428bca;
+}
+
+#subir span {
+	display: block;
+	background: no-repeat center center;
+}

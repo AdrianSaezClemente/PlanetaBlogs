@@ -3,19 +3,24 @@ $(document).ready(function(){
 		source: asignaturas
 	});
 	$(".oculto").hide();
-	//InfoFormulario(info)
+	
+	$("#subir").hide();
+	$(function () {
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 200) {
+				$('#subir').fadeIn();
+			} else {
+				$('#subir').fadeOut();
+			}
+		});
+		$('#subir a').click(function () {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 800);
+			return false;
+		});
+	});
 });
-
-/*
- * SALTA ERROR SI NO SE INTRODUCE RSS
-function ErrorAgregarRss(id,titulo){
-	var valorInput = $('#rss'+id).val();
-	if (valorInput == null){
-		var html = '<div class="alert alert-warning alert-dismissable alert-sm"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Cuidado!</strong> Es necesario introducir un RSS válido para '+titulo+'.</div>'
-		$('#'+id).append(html);
-	}
-}
-*/
 
 function EliminarHilo(idasignatura,titulo,descripcion){
 	console.log(titulo)
