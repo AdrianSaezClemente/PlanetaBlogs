@@ -3,6 +3,11 @@ $(document).ready(function() {
 	$(".oculto").hide();
 	$("#subir").hide();
 	
+	FrasesAleatorias("#slogan");
+	$("#slogan").click(function () {
+		FrasesAleatorias(this);
+	});
+	
 	//Darle el alto y ancho
 	$("#popupinfotutor").css('width', 'auto');
 	$("#popupinfotutor").css('height', 'auto');
@@ -260,4 +265,39 @@ function CalcularPlanetsEntrada(id,up,down){
 
 function BorrarInfo(){
 	$(".info").remove();
+}
+
+function FrasesAleatorias(elemento){
+	console.log("hago click")
+	//almacenando las citas
+	frases = new Array(21);
+	frases[0] = "El fracaso derrota a los perdedores, el fracaso inspira a los ganadores.";
+	frases[1] = "La única parte donde el ‘éxito’ aparece antes que el ‘trabajo’ es en el diccionario.";
+	frases[2] = "Algunas personas sueñan con hacer grandes cosas, mientras otras están despiertas y las hacen.";
+	frases[3] = "No puede impedirse el viento, pero hay que saber construir molinos.";
+	frases[4] = "Tan solo los mediocres nunca tienen un mal día.";
+	frases[5] = "Si vives cada día como si fuera el último, algún día tendrás razón.";
+	frases[6] = "Un hombre con una nueva idea es un loco hasta que ésta triunfa.";
+	frases[7] = "Tan solo hay tres grupos de personas: los que hacen que las cosas pasen, los que miran las cosas que pasan y los que preguntan qué pasó.";
+	frases[8] = "Hombre sin sonrisa no abre tienda.";
+	frases[9] = "No he fracasado, he encontrado 10.000 maneras en las que esto no funciona.";
+	frases[10] = "Solo cuando baja la marea se sabe quién nadaba desnudo.";
+	frases[11] = "Nada tarda tanto en llegar como lo que nunca se empieza.";
+	frases[12] = "El genio consta de un 1% de inspiración y un 99% de transpiración.";
+	frases[13] = "El crecimiento constante es el mejor mecanismo de supervivencia.";
+	frases[14] = "El éxito es la capacidad de ir de fracaso en fracaso sin perder entusiasmo.";
+	frases[15] = "Nada muere más rápidamente que una idea en una mente cerrada.";
+	frases[16] = "El mejor momento del día es ahora.";
+	frases[17] = "Nunca conseguirás seguir adelante si siempre piensas en la venganza.";
+	frases[18] = "Elige un trabajo que te guste, y nunca tendrás que volver a trabajar en tu vida.";
+	frases[19] = "Los ganadores nunca abandonan y los que abandonan nunca ganan.";
+	frases[20] = "Visualizar el final es suficiente para poner en marcha los medios.";
+	
+	
+	//calculando el random
+	index = Math.floor(Math.random() * frases.length);
+	console.log(index)
+	//mostrar las citas
+	$(elemento).html("");
+	$(elemento).html("<span>"+frases[index]+"</span>");
 }

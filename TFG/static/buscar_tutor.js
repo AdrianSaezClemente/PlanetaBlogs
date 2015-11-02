@@ -148,7 +148,7 @@ function EliminarComentario(idcomentario,idasignatura,identrada){
 	var totalcomentarios = parseInt($("#totalcomentarios"+identrada).text()) - 1
 	$("#despliegueboton"+identrada).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+totalcomentarios+"</span>)");
 	$('#comentario'+idcomentario).remove();
-	$('#infocomentario'+idcomentario).show("slow").delay(2000).hide("slow");
+	//$('#infocomentario'+idcomentario).show("slow").delay(2000).hide("slow");
 	$.ajax({
 		data: {'idcomentario':idcomentario,'idasignatura':idasignatura,'identrada':identrada},
 		url: '/planetablogs/eliminarcomentario/',
@@ -160,9 +160,7 @@ function EliminarComentario(idcomentario,idasignatura,identrada){
 }
 
 function InfoEntrada(identrada,entrada){
-	var html = "<div id='infoentrada"+identrada+"' class='oculto'><div class='alert alert-primary alert-dismissable'>";
-	html +=	"<button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Entrada borrada!</strong></div></div>";
-	html += "<button id=despliegueboton"+identrada+" onclick=MostrarComentarios("+identrada+"); style='background-color:#A8ADB1;color:white;' class='col-sm-12 btn btn-xs'><span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+entrada.fields.totalcomentarios+"</span>)</button></br></br>";
+	var html = "<button id=despliegueboton"+identrada+" onclick=MostrarComentarios("+identrada+"); style='background-color:#A8ADB1;color:white;' class='col-sm-12 btn btn-xs'><span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+entrada.fields.totalcomentarios+"</span>)</button></br></br>";
 	html += "<div class='oculto' id='desplieguecomentarios"+identrada+"'>";
 	return html
 }
@@ -178,7 +176,6 @@ function ObtenerComentarios(lista_comentarios,identrada,idasignatura){
 			html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+lista_comentarios[i].fields.username+"<span class='pull-right'>"+fecha+"</span></div></div>";
 			html += "<div style='margin-bottom:10px;margin-left:10px;margin-right:10px;font-family:verdana;font-size:12px;word-wrap:break-word;' class='panel-body'>";
 			html += descripcionConSaltos+"</br><button id="+lista_comentarios[i].pk+" onclick=EliminarComentario('"+lista_comentarios[i].pk+"','"+idasignatura+"','"+identrada+"') type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div></div>"
-			html += "<div id='infocomentario"+lista_comentarios[i].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado! </strong></div></div>";
 		}
 	}
 	html += "</div></div></div></div>";
