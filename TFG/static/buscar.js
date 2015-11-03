@@ -271,7 +271,7 @@ function ConvertirFechaMilisec(fecha) {
 function SacarPosicionAnimacion(elemento){
 	var posicion = $(elemento).position();
 	var x = posicion.left + 50;
-	var y = posicion.top + 170;
+	var y = posicion.top + 370;
 	$("#popupanim").css("left",x + "px");
 	$("#popupanim").css("top",y + "px");
 }

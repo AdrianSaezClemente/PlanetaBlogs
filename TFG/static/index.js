@@ -97,7 +97,7 @@ function SacarPosicionInfoTutor(elemento){
 function SacarPosicionAnimacion(elemento){
 	var posicion = $(elemento).position();
 	var x = posicion.left - 40;
-	var y = posicion.top + 170;
+	var y = posicion.top + 370;
 	$("#popupanim").css("left",x + "px");
 	$("#popupanim").css("top",y + "px");
 }
