@@ -173,9 +173,7 @@ function AgregarComentario(identrada,idasignatura,iduser){
 			}
 			else{
 				var descripcionConSaltos = ConvertirDescripcion(datos.comentario[0].fields.descripcion);
-				console.log(descripcionConSaltos)
 				SacarPosicionAnimacion("#entradadescripcion"+identrada);
-				console.log("ya he sacado animacion")
 				MostrarAnimacion();
 				$("#infoescribircomen"+identrada).remove();
 				var totalcomentarios = parseInt($("#totalcomentarios"+identrada).text()) + 1

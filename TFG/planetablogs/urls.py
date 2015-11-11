@@ -1,5 +1,8 @@
 from django.conf.urls import patterns, include, url
 from planetablogs import views
+from django.conf import settings
+from django.conf.urls.static import static
+#from django.contrib.staticfiles import views
 
 urlpatterns = patterns('',
 	url(r'^login/$', views.inicio, name='login'),
@@ -31,4 +34,9 @@ urlpatterns = patterns('',
 	url(r'^buscarIdEntrada/$',views.buscarIdEntrada, name='buscarIdEntrada'),
 	url(r'^logout/$', views.salir, name="logout"),
 )
-
+'''
+if settings.DEBUG is False:   #if DEBUG is True it will be served automatically
+	urlpatterns += patterns('',
+			url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+	)
+'''

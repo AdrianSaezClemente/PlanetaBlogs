@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -21,6 +20,7 @@ SECRET_KEY = '+2#5&97_k1$8j4nwf47oo#b*8=t2nynb5b!5_va#^4og+6%yny'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
+
 
 TEMPLATE_DEBUG = True
 
@@ -91,13 +91,9 @@ LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'Europe/Madrid'
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-
+SETTINGS_PATH = '/home/adri/Escritorio/ProyectoGit/TFG'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/', "static"),
-)
+#STATIC_ROOT = '/home/adri/Escritorio/ProyectoGit/TFG/static/'
+STATICFILES_DIRS = (os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/', "static"),)
 
 MEDIA_ROOT = os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/static/imagenes')
