@@ -100,7 +100,7 @@ function InformacionTutores(idasignatura){
 	for (k=0;k<usuarios.length;k++) {
 		if (usuarios[k].pk == creador){
 			var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><div style='font-style:oblique;font-size:1em;text-align:center;'>Creador del hilo</div></div></div>";
-			html += "<div class='panel-body'><span style='font-size:11px;' class='pull-left'>"+usuarios[k].fields.first_name+" "+usuarios[k].fields.last_name+" ("+usuarios[k].fields.email+")</span></br>";
+			html += "<div class='panel-body'><span style='font-size:11px;' class='pull-left'><img src='../../../../../static/imagenes/"+usuarios[k].fields.imagen+"' class='pequeña'> </img>"+usuarios[k].fields.first_name+" "+usuarios[k].fields.last_name+" ("+usuarios[k].fields.email+")</span></br>";
 			break;
 		}
 	}
