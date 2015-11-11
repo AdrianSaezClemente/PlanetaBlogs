@@ -23,7 +23,6 @@ from django.contrib import auth
 from django.db.models import F
 import time
 from django.core.serializers.json import DjangoJSONEncoder
-
 	
 	
 def mierror404(request):

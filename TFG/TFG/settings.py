@@ -93,7 +93,9 @@ TIME_ZONE = 'Europe/Madrid'
 
 SETTINGS_PATH = '/home/adri/Escritorio/ProyectoGit/TFG'
 STATIC_URL = '/static/'
-#STATIC_ROOT = '/home/adri/Escritorio/ProyectoGit/TFG/static/'
-STATICFILES_DIRS = (os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/', "static"),)
+
+STATICFILES_DIRS = (
+	os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/', "static"),
+)
 
 MEDIA_ROOT = os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/static/imagenes')
