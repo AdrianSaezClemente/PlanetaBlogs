@@ -541,7 +541,8 @@ def mostrarhiloalumno(request,idasignatura):
 		asignatura = Asignatura.objects.get(id=idasignatura)
 		lista_usuarios = ConseguirListaAlumnos(idasignatura)
 		lista_comentarios = ConseguirListaComentarios(idasignatura)
-		lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
+		#CAMBIAR SI NO HAY ADMIN (Quitar exclude)
+		lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).exclude(alumno_id=1).order_by('-total')[:10]
 		tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
 
 		json_serializer = serializers.get_serializer("json")()
@@ -572,7 +573,8 @@ def mostrarhiloprofesor(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
-	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
+	#CAMBIAR SI NO HAY ADMIN (Quitar exclude)
+	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).exclude(alumno_id=1).order_by('-total')[:10]
 	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
 
 	json_serializer = serializers.get_serializer("json")()
@@ -618,7 +620,7 @@ def puntuaciones(request,idasignatura):
 		lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos').exclude(alumno_id=1)
 		json_serializer = serializers.get_serializer("json")()
 		json_usuarios = json_serializer.serialize(User.objects.all().exclude(username="admin"), ensure_ascii=False)
-		print "[****] Alumno "+request.user.username.encode('utf-8')+" visita RÁNKING de", asignatura
+		print "[****] Alumno "+request.user.username.encode('utf-8')+" visita RANKING de", asignatura
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
 	return render(request, 'planetablogs/puntuaciones.html', {'json_usuarios':json_usuarios, 'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
