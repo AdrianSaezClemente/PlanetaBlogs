@@ -851,7 +851,7 @@ def buscarNickUsuario(request):
 			idasignatura = request.GET['idasignatura']
 			if len(usu) != 0:
 				idalumno = ConseguirIdAlumno(usu)
-				entradas = Entrada.objects.filter(alumno_id=idalumno)
+				entradas = Entrada.objects.filter(alumno_id=idalumno).filter(asignatura_id=idasignatura)
 				comentarios = ConseguirListaComentarios(idasignatura)
 				json_usuario = serializers.serialize('json', usu, ensure_ascii=False)
 				list_usuario = simplejson.loads(json_usuario)
@@ -899,8 +899,8 @@ def buscarIdEntrada(request):
 	ficheroNohup = open('nohup.out', 'a')
 	if request.method=='GET':
 		if request.GET['texto'] != "":
-			entrada = Entrada.objects.filter(entrada=request.GET['texto'])
 			idasignatura = request.GET['idasignatura']
+			entrada = Entrada.objects.filter(entrada=request.GET['texto']).filter(asignatura_id=idasignatura)
 			if len(entrada) != 0:
 				alumno = Alumno.objects.filter(id=entrada[0].alumno_id)
 				user = User.objects.filter(id=alumno[0].alumno.id)
