@@ -787,12 +787,15 @@ def buscar(request,idasignatura):
 
 #Pestaña de ayuda
 def ayuda(request,idasignatura):
+	ficheroNohup = open('nohup.out', 'a')
 	idalumno = ConseguirIdAlumno(request.user.id)
 	suscrito = ComprobarUsuarioAsignatura(idasignatura,idalumno)
 	if suscrito == True:
 		asignatura = Asignatura.objects.get(id=idasignatura)
+		ficheroNohup.write("[**AYA**] Alumno "+request.user.username.encode('utf-8')+" visita AYUDA de "+ str(asignatura) +"\n")
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
+	ficheroNohup.close()
 	return render(request,'planetablogs/ayuda.html',{'user': request.user, 'asignatura': asignatura})
 
 
@@ -807,7 +810,10 @@ def buscar_tutor(request,idasignatura):
 
 #Pestaña de ayuda en tutores
 def ayuda_tutor(request,idasignatura):
+	ficheroNohup = open('nohup.out', 'a')
 	asignatura = Asignatura.objects.get(id=idasignatura)
+	ficheroNohup.write("[**AYT**] Alumno "+request.user.username.encode('utf-8')+" visita AYUDA de "+ str(asignatura) +"\n")
+	ficheroNohup.close()
 	return render(request,'planetablogs/ayuda_tutor.html',{'user': request.user, 'asignatura': asignatura})
 
 
