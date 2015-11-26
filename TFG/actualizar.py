@@ -19,6 +19,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 import time
 import re
+import lxml.html
+
 
 #Obtiene el RSS con feedparser
 def ObtenerRss(url):
@@ -92,8 +94,6 @@ def ConvertirDescripcionSinTags(html):
 	text = re.sub('</p>', '\n', text)
 	text = re.sub('</div>', '\n', text)
 	text = re.sub('<br>', '\n', text)
-	text = re.sub('<![CDATA[', '', text)
-	text = re.sub(']]', '', text)
 	
 	'''for (k,v) in salto.items():
 		text = text.replace(k, v)'''
@@ -101,6 +101,11 @@ def ConvertirDescripcionSinTags(html):
 	text = re.sub('<[^>]*>', '', text)
 	return text
 
+
+def ConvertirDescripcionSinTagsPrueba(html):
+	t = lxml.html.fromstring(html)
+	descripcion = t.text_content()
+	return descripcion
 
 
 #Parsear las etiquetas del RSS y devuelve una entrada
