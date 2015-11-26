@@ -3,8 +3,8 @@ $(document).ready(function() {
 
 	$("#popup").hide()
 	//Darle el alto y ancho
-	$("#popup").css('width', 120 + 'px');
-	$("#popup").css('height', 120 + 'px');
+	$("#popup").css('width', 166 + 'px');
+	$("#popup").css('height', 166 + 'px');
 	
 	$(".foto").mouseover(function() {
 		SacarPosicion(this);
