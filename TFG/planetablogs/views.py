@@ -765,7 +765,7 @@ def down(request):
 		down.save()
 		GuardarDown(identrada)
 		RestarValoracionDown(idasignatura,idalumno,identrada)
-		ficheroNohup.write("[**PD**] Alumno "+request.user.username.encode('utf-8')+" pulsa DOWN en entrada"+ identrada.encode('utf-8') +"\n")
+		ficheroNohup.write("[**PD**] Alumno "+request.user.username.encode('utf-8')+" pulsa DOWN en entrada "+ identrada.encode('utf-8') +"\n")
 		#print "[****] Alumno "+request.user.username.encode('utf-8')+" pulsa DOWN en entrada", identrada
 	ficheroNohup.close()
 	return render(request,'planetablogs/index.html',{'user': request.user})

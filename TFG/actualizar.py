@@ -91,6 +91,9 @@ def ConvertirDescripcionSinTags(html):
 	text = re.sub('</br>', '\n', text)
 	text = re.sub('</p>', '\n', text)
 	text = re.sub('</div>', '\n', text)
+	text = re.sub('<br>', '\n', text)
+	text = re.sub('<![CDATA[', '', text)
+	text = re.sub(']]', '', text)
 	
 	'''for (k,v) in salto.items():
 		text = text.replace(k, v)'''
