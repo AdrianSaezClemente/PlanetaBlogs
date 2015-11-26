@@ -30,7 +30,7 @@ TIME_ZONE = 'Europe/Madrid'
 
 ALLOWED_HOSTS = []
 
-TEMPLATE_DIRS = ['/home/adri/Escritorio/ProyectoGit/TFG/plantillas']
+TEMPLATE_DIRS = ['/home/asaez/FinalProyecto/PlanetaBlogs/TFG/plantillas']
 
 # Application definition
 
@@ -95,7 +95,8 @@ SETTINGS_PATH = '/home/adri/Escritorio/ProyectoGit/TFG'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-	os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/', "static"),
+    os.path.join('/home/asaez/FinalProyecto/PlanetaBlogs/TFG/', "static"),
 )
 
-MEDIA_ROOT = os.path.join('/home/adri/Escritorio/ProyectoGit/TFG/static/imagenes')
+MEDIA_ROOT = os.path.join('/home/asaez/FinalProyecto/PlanetaBlogs/TFG/static/imagenes')
+
