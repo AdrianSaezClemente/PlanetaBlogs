@@ -301,7 +301,6 @@ function EliminarAlumno(idasignatura,idalumno){
 }
 
 function FrasesAleatorias(elemento){
-	console.log("hago click")
 	//almacenando las citas
 	frases = new Array(21);
 	frases[0] = "El fracaso derrota a los perdedores, el fracaso inspira a los ganadores.";
@@ -325,12 +324,33 @@ function FrasesAleatorias(elemento){
 	frases[18] = "Elige un trabajo que te guste, y nunca tendrás que volver a trabajar en tu vida.";
 	frases[19] = "Los ganadores nunca abandonan y los que abandonan nunca ganan.";
 	frases[20] = "Visualizar el final es suficiente para poner en marcha los medios.";
-	
-	
 	//calculando el random
 	index = Math.floor(Math.random() * frases.length);
-	console.log(index)
 	//mostrar las citas
 	$(elemento).html("");
 	$(elemento).html("<span>"+frases[index]+"</span>");
+}
+
+function ValoracionTutor(idasignatura,identrada,idalumno){
+	console.log(idasignatura)
+	console.log(identrada)
+	console.log(idalumno)
+	$('#valoraciontutor'+identrada).hide();
+	valor = $('#selectvaltutor'+identrada).val();
+	console.log(valor)
+	var html = "<button type='button' disabled='disabled' class='btn btn-warning btn-xs'><span style='color:black;' class='badge'>"+valor+"</span></button>"
+	$('#updowninactive'+identrada).append(html);
+	$.ajax({
+		data: {'idalumno':idalumno, 'idasignatura':idasignatura, 'identrada':identrada, 'valor':valor},
+		url: '/planetablogs/valoraciontutor/',
+		type: 'GET',
+		success: function(datos){
+
+		},
+	});
+}
+
+function Dameidopcion() {
+	
+	return idopcion
 }

@@ -159,28 +159,41 @@ function CompararNick(nick,contra){
 	}
 }
 
-function Up(identrada,idusuario,idasignatura,up,down){
+function Up(identrada,idusuario,idasignatura,up,down,valortutor){
 	var up1 = parseInt(up) + parseInt(1)
 	$.ajax({
 		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura,'up':up},
 		url: '/planetablogs/up/',
 		type: 'GET',
 		success: function(datos){
-			var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down+"</span></button></div>"
-			$("#updown"+identrada).html(html);
+			if (valortutor == 0){
+				var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down+"</span></button></div><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-primary btn-xs'><span style='color:black;' class='badge'> SC </span></button></div></div>"
+				$("#updown"+identrada).html(html);
+			}
+			else {
+				var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down+"</span></button></div><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-warning btn-xs'><span style='color:black;' class='badge'>"+valortutor+"</span></button></div></div>"
+				$("#updown"+identrada).html(html);
+			}
+			
 		},
 	});
 }
 
-function Down(identrada,idusuario,idasignatura,up,down){
+function Down(identrada,idusuario,idasignatura,up,down,valortutor){
 	var down1 = parseInt(down) + parseInt(1)
 	$.ajax({
 		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura,'down':down},
 		url: '/planetablogs/down/',
 		type: 'GET',
 		success: function(datos){
-			var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down1+"</span></button></div>"
-			$("#updown"+identrada).html(html);
+			if (valortutor == 0){
+				var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down1+"</span></button></div><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-primary btn-xs'><span style='color:black;' class='badge'> SC </span></button></div></div>"
+				$("#updown"+identrada).html(html);
+			}
+			else {
+				var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down1+"</span></button></div><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-warning btn-xs'><span style='color:black;' class='badge'>"+valortutor+"</span></button></div></div>"
+				$("#updown"+identrada).html(html);
+			}
 		},
 	});
 }

@@ -112,11 +112,20 @@
 										<div id="valoracion">
 											<div id="updown{{ entrada.0.id }}" class="btn-toolbar" role="toolbar">
 												<div title="Me gusta" class="btn-group">
-													<a href='javascript:void(0)' onclick="Up('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','{{ entrada.0.totalup }}','{{ entrada.0.totaldown }}')"><button type="button" class="btn btn-success btn-xs"><span id="up{{ entrada.0.id }}" class="badge"><span class="glyphicon glyphicon-plus-sign"></span></span></button></a>
+													<a href='javascript:void(0)' onclick="Up('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','{{ entrada.0.totalup }}','{{ entrada.0.totaldown }}','{{ entrada.0.puntuaciontutor }}')"><button type="button" class="btn btn-success btn-xs"><span id="up{{ entrada.0.id }}" class="badge"><span class="glyphicon glyphicon-plus-sign"></span></span></button></a>
 												</div> 
 												<div title="No me gusta" class="btn-group">
-													<a href='javascript:void(0)' onclick="Down('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','{{ entrada.0.totalup }}','{{ entrada.0.totaldown }}')"><button type="button" class="btn btn-danger btn-xs"><span id="down{{ entrada.0.id }}" class="badge"><span class="glyphicon glyphicon-minus-sign"></span></span></button></a>
+													<a href='javascript:void(0)' onclick="Down('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','{{ entrada.0.totalup }}','{{ entrada.0.totaldown }}','{{ entrada.0.puntuaciontutor }}')"><button type="button" class="btn btn-danger btn-xs"><span id="down{{ entrada.0.id }}" class="badge"><span class="glyphicon glyphicon-minus-sign"></span></span></button></a>
 												</div>
+												{% if entrada.0.puntuaciontutor == 0 %}
+													<div title="Puntuación tutor" class="btn-group">
+														<button type='button' disabled='disabled' class='btn btn-primary btn-xs'><span style='color:black;' class='badge'> SC </span></button>
+													</div>
+												{% else %}
+													<div title="Puntuación tutor" class="btn-group">
+														<button type='button' disabled='disabled' class='btn btn-warning btn-xs'><span style='color:black;' class='badge'>{{ entrada.0.puntuaciontutor }}</span></button>
+													</div>
+												{% endif %}
 											</div>
 										</div>
 										{% else %}
@@ -128,6 +137,15 @@
 												<div title="No me gusta" class="btn-group">
 													<button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>{{ entrada.0.totaldown }}</span></button>
 												</div>
+												{% if entrada.0.puntuaciontutor == 0 %}
+													<div title="Puntuación tutor" class="btn-group">
+														<button type='button' disabled='disabled' class='btn btn-primary btn-xs'><span style='color:black;' class='badge'> SC </span></button>
+													</div>
+												{% else %}
+													<div title="Puntuación tutor" class="btn-group">
+														<button type='button' disabled='disabled' class='btn btn-warning btn-xs'><span style='color:black;' class='badge'>{{ entrada.0.puntuaciontutor }}</span></button>
+													</div>
+												{% endif %}
 											</div>
 										</div>
 										{% endif %}

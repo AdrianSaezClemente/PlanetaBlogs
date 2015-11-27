@@ -114,6 +114,24 @@
 												<div class="btn-group">
 													<button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>{{ entrada.totaldown }}</span></button>
 												</div>
+												{% if entrada.puntuaciontutor == 0 %}
+													<div id="valoraciontutor{{ entrada.id }}" style="font-size:10px;width:auto;">
+														<button id="botonenviarvaltutor{{ entrada.id }}" type='button' onclick="ValoracionTutor('{{ asignatura.id }}','{{ entrada.id }}','{{ entrada.alumno_id }}')" style="height:34px;text-align:center;" class='btn btn-primary btn-xs pull-right'><span class='badge'>Enviar</span></button>
+														<select id="selectvaltutor{{ entrada.id }}" class="form-control pull-right" style="font-size:10px;width:auto;">
+															<option value="4">4</option>
+															<option value="3">3</option>
+															<option value="2">2</option>
+															<option value="1">1</option>
+															<option value="-1">-1</option>
+															<option value="-2">-2</option>
+														</select>
+														<label class="pull-right" style="height:34px;text-align:center;padding-top:7px;padding-right:3px;">Selecciona puntuación para la entrada #{{ entrada.entrada }}</label>
+													</div>
+												{% else %}
+													<div id="botvaltutor{{ entrada.id }}" class="btn-group">
+														<button type='button' disabled='disabled' class='btn btn-warning btn-xs'><span style='color:black;' class='badge'>{{ entrada.puntuaciontutor }}</span></button>
+													</div>
+												{% endif %}
 											</div>
 										</div>
 										<!--<div id="escribircomentario">
