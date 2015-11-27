@@ -82,7 +82,7 @@ def ConseguirNumeroEntradaEnAsignatura(asignatura):
 	
 def ConvertirDescripcionSinTags(html):
 	text = html
-	print text
+
 	special = {
 		'&nbsp;' : ' ', '&amp;' : '&', '&quot;' : '"',
 		'&lt;'   : '<', '&gt;'  : '>'
@@ -110,9 +110,6 @@ def ConvertirDescripcionSinTags(html):
 	text = re.sub('/iframe>', '/iframe></p></br>', text)
 	#text = re.sub('[</br>]+', '</br>', text)
 	
-
-
-	print text
 	'''
 	link = re.search('src="([^"]+)"',text)
 	print link
