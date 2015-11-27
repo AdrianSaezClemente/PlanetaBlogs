@@ -105,7 +105,7 @@
 									<div id="entrada{{ entrada.id }}" class="entrada">
 										<h2 class="blog-post-title"><label> #{{ entrada.entrada }}&nbsp;<img src="../../../../../static/imagenes/{{ entrada.alumno.alumno.imagen }}" class="fotopequeña"> </img></label><a id="{{ entrada.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.url_blog }}> {{ entrada.alumno.alumno.first_name }} {{ entrada.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.fecha|date:"d" }} de {{ entrada.fecha|date:"F" }} de {{ entrada.fecha|date:"Y" }}, {{ entrada.fecha|date:"l" }} a las {{ entrada.fecha|date:"H:i" }} por <a target="_blank" href={{ entrada.url_blog }}>{{ entrada.alumno.alumno.username }}</a></span></h2>
 										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
-										<p id="entradadescripcion{{ entrada.id }}" style="word-wrap:break-word;">{{ entrada.descripcion|linebreaksbr }}</p>
+										<div class="descripcion" id="entradadescripcion{{ entrada.id }}" style="word-wrap:break-word;">{{ entrada.descripcion|safe }}</div>
 										<div id="valoracion">
 											<div id="updowninactive{{ entrada.id }}" class="btn-toolbar" role="toolbar">
 												<div class="btn-group">

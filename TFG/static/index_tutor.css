@@ -319,6 +319,13 @@ label {
 	padding-left:13em;
 }
 
+#entrada div.descripcion, #entrada ul, #entrada ol, #entrada li, #entrada blockquote {
+	padding:20px;
+	font-size:12px;
+	margin-left:1.5em;
+	margin-right:1.5em;
+}
+
 #entradassuscrip {
 	border:0.1em solid #428bca;
 	border-style:dashed;
