@@ -81,7 +81,7 @@ function MostrarAnimacion(){
 function SacarPosicion(elemento){
 	var posicion = $(elemento).position();
 	var x = posicion.left + 250;
-	var y = posicion.top + 250;
+	var y = posicion.top + 173;
 	$("#popup").css("left",x + "px");
 	$("#popup").css("top",y + "px");
 }
@@ -133,7 +133,7 @@ function InformacionUsuario(id){
 			for (j=0;j<valoraciones.length;j++){
 				if (valoraciones[j].fields.alumno == idalumno){
 					var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><img src='../../../../../static/imagenes/"+usuarios[i].fields.imagen+"' class='fotogrande'> </img><span style=margin-left:45px;'>Información de usuario</span></div></div>";
-					html += "<div style='font-family: Verdana, Arial, Helvetica, sans-serif'; class='panel-body'><span style='font-weight:bold;' class='pull-left'>Usuario:</span><span>&nbsp; "+usuarios[i].fields.first_name+" "+usuarios[i].fields.last_name+"</span></br>";
+					html += "<div style='font-family: Verdana, Arial, Helvetica, sans-serif;font-size:11px;' class='panel-body'><span style='font-weight:bold;' class='pull-left'>Usuario:</span><span>&nbsp; "+usuarios[i].fields.first_name+" "+usuarios[i].fields.last_name+"</span></br>";
 					html += "<span style='font-weight:bold;' class='pull-left'>Correo:</span><span>&nbsp; "+usuarios[i].fields.email+"</span></br>";
 					if (usuarios[i].fields.username != "admin"){
 						html += "<span style='font-weight:bold;' class='pull-left'>Puntos:</span><span>&nbsp; "+valoraciones[j].fields.puntos+"</span></br>";
