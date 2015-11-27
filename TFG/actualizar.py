@@ -19,7 +19,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 import time
 import re
-import lxml.html
 
 
 #Obtiene el RSS con feedparser
