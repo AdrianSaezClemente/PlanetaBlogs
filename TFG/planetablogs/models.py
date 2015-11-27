@@ -43,11 +43,11 @@ class Entrada(models.Model):
 	descripcion = models.TextField()
 	link = models.URLField()
 	url_blog = models.URLField()
-	puntuaciontutor = models.IntegerField()
 	totalup = models.IntegerField()
 	totaldown = models.IntegerField()
 	total = models.IntegerField()
 	totalcomentarios = models.IntegerField()
+	puntuaciontutor = models.IntegerField()
 	def __unicode__(self):
 		return self.titulo
 

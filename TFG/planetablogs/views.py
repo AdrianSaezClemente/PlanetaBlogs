@@ -932,25 +932,16 @@ def buscarIdEntrada(request):
 #Valoración de entrada por parte del tutor
 def valoraciontutor(request):
 	if request.method=='GET':
-		print "estoy aqui"
 		idasignatura = request.GET['idasignatura']
 		idalumno = request.GET['idalumno']
 		identrada = request.GET['identrada']
 		valor = request.GET['valor']
-		print idasignatura
-		print idalumno
-		print identrada
-		print valor
 		val = Valoracion.objects.get(asignatura=idasignatura,alumno=idalumno)
-		print val.puntos
-		print "valoracion aqui"
 		val.puntos = val.puntos + int(valor)
-		print val.puntos
 		nivel = ActualizarNivel(val.puntos)
 		val.nivel = nivel
 		val.save()
 		entrada = Entrada.objects.get(id=identrada)
-		print "entrada aqui"
 		entrada.puntuaciontutor = entrada.puntuaciontutor + int(valor)
 		entrada.save()
 		

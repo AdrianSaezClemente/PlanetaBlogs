@@ -326,12 +326,8 @@ function FrasesAleatorias(elemento){
 }
 
 function ValoracionTutor(idasignatura,identrada,idalumno){
-	console.log(idasignatura)
-	console.log(identrada)
-	console.log(idalumno)
 	$('#valoraciontutor'+identrada).hide();
 	valor = $('#selectvaltutor'+identrada).val();
-	console.log(valor)
 	var html = "<button type='button' disabled='disabled' class='btn btn-warning btn-xs'><span style='color:black;' class='badge'>"+valor+"</span></button>"
 	$('#updowninactive'+identrada).append(html);
 	$.ajax({
@@ -342,9 +338,4 @@ function ValoracionTutor(idasignatura,identrada,idalumno){
 
 		},
 	});
-}
-
-function Dameidopcion() {
-	
-	return idopcion
 }
