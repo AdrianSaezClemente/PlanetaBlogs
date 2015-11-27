@@ -74,7 +74,7 @@
 								<div id="grupolista2" class="list-group">
 								{% if lista_entradas_valoradas %}
 									{% for ent in lista_entradas_valoradas %}
-										<a style="cursor:e-resize;" title="Pulsa para ver el total de planets de esta entrada" onclick="CalcularPlanetsEntrada('{{ ent.id }}','{{ ent.totalup }}','{{ ent.totaldown }}')" class="list-group-item">
+										<a style="cursor:e-resize;" target="_blank" href="{{ ent.link }}" class="list-group-item">
 											<div class="row">
 												<h6 style="border:0.1em solid #428bca;font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
 												<div style="word-wrap:break-word;" id="entradavalorada" class="col-xs-7 col-sm-7">
@@ -83,7 +83,7 @@
 												</div>
 												<div id="fechavalorada" class="col-xs-4 col-sm-4">
 													<span class="pull-right">{{ ent.fecha|date:"d" }} de {{ ent.fecha|date:"F" }} de {{ ent.fecha|date:"Y" }}</span></br></br></br>
-													<span style="color:black;" class="pull-right"><strong>Planets: </strong><span id="total{{ ent.id }}"></span></span>
+													<span style="color:black;" class="pull-right"><strong>Planets: </strong><span>{{ ent.total }}</span></span>
 												</div>
 											</div>
 										</a>

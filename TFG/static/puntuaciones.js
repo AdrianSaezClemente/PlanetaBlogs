@@ -32,6 +32,7 @@ $(document).ready(function() {
 		if (nivel == 9) {$(this).addClass("nivel9");}
 		if (nivel == 10) {$(this).addClass("nivel10");}
 		if (nivel == 11) {$(this).addClass("nivel11");}
+		if (nivel == 12) {$(this).addClass("nivel12");}
 	});
 	$(".nivel").mouseout(function() {
 		var nivel = $(this).html()
@@ -47,6 +48,7 @@ $(document).ready(function() {
 		if (nivel == 9) {$(this).removeClass("nivel9");}
 		if (nivel == 10) {$(this).removeClass("nivel10");}
 		if (nivel == 11) {$(this).removeClass("nivel11");}
+		if (nivel == 12) {$(this).removeClass("nivel12");}
 	});
 });
 

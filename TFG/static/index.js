@@ -270,12 +270,6 @@ function EliminarComentario(idcomentario,idasignatura,identrada){
 	});
 }
 
-function CalcularPlanetsEntrada(id,up,down){
-	$("#total"+id).html("")
-	var total = up*2-down*1
-	$("#total"+id).html(total)
-}
-
 function BorrarInfo(){
 	$(".info").remove();
 }
