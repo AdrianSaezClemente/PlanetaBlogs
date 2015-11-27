@@ -131,7 +131,7 @@ def ParsearEtiquetasRss(objetorss,i):
 	fecha = utc.strftime("%Y-%m-%d %H:%M:%S")										#fecha se guarda en un objeto Entrada con dos horas menos de la hora local.
 	descripcion_tags = rss.entries[i].description
 	descripcion = ConvertirDescripcionSinTags(descripcion_tags)
-	entrada = Entrada(asignatura=asignatura,alumno=alumno,entrada=entrada,titulo=titulo,fecha=fecha,descripcion=descripcion,link=link,url_blog=url_blog,puntuaciontutor=0,totalup=0,totaldown=0,total=0,totalcomentarios=0)
+	entrada = Entrada(asignatura=asignatura,alumno=alumno,entrada=entrada,titulo=titulo,fecha=fecha,descripcion=descripcion,link=link,url_blog=url_blog,totalup=0,totaldown=0,total=0,totalcomentarios=0,puntuaciontutor=0)
 	entrada.save()
 	GuardarValoracionEntrada(idasignatura,idalumno)
 
