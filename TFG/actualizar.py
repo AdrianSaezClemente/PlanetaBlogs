@@ -109,19 +109,7 @@ def ConvertirDescripcionSinTags(html):
 	#text = re.sub('<iframe', '<p><iframe', text)
 	text = re.sub('/iframe>', '/iframe></p></br>', text)
 	#text = re.sub('[</br>]+', '</br>', text)
-	
-	'''
-	link = re.search('src="([^"]+)"',text)
-	print link
-	video = re.search('<iframe[^>]*iframe>"',text)
-	print video
-	if (video != None):
-		s = video.group()
-		text = text + "\n" + "Fuentes de imagen o video:\n" + s + "\n"
-	if (link != None):
-		s = link.group().split[1]
-		text = text + "\n" + "Fuentes de imagen o video:\n" + s + "\n"
-	'''
+
 	#text = re.sub('<[^>]*>', '', text)
 	return text
 
