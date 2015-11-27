@@ -82,30 +82,51 @@ def ConseguirNumeroEntradaEnAsignatura(asignatura):
 	
 def ConvertirDescripcionSinTags(html):
 	text = html
+	print text
 	special = {
 		'&nbsp;' : ' ', '&amp;' : '&', '&quot;' : '"',
 		'&lt;'   : '<', '&gt;'  : '>'
 	}
 	for (k,v) in special.items():
 		text = text.replace (k, v)
-
-	text = re.sub('<br />', '\n', text)
-	text = re.sub('</br>', '\n', text)
-	text = re.sub('</p>', '\n', text)
-	text = re.sub('</div>', '\n', text)
-	text = re.sub('<br>', '\n', text)
+		
+	text = re.sub('<p><br /></p>', '</br>', text)
+	text = re.sub('<br /><br /><br />', '</br>', text)
+	text = re.sub('<br /><br />', '</br>', text)
+	text = re.sub('<br />', '</br>', text)
+	text = re.sub('<br>', '</br>', text)
+	text = re.sub('<b>', '<strong>', text)
+	text = re.sub('</b>', '</strong>', text)
+	text = re.sub('</strong></br>', '</strong>', text)
+	text = re.sub('<h2>', '<h4>', text)
+	text = re.sub('</h2>', '</h4>', text)
+	text = re.sub('<h3>', '<h4>', text)
+	text = re.sub('</h3>', '</h4>', text)
+	#text = re.sub('<p>', '', text)
+	#text = re.sub('</p>', '</br>', text)
+	#text = re.sub('<img', '<p><img', text)
+	text = re.sub(' /></p>', ' /></p></br>', text)
+	#text = re.sub('<iframe', '<p><iframe', text)
+	text = re.sub('/iframe>', '/iframe></p></br>', text)
+	#text = re.sub('[</br>]+', '</br>', text)
 	
-	'''for (k,v) in salto.items():
-		text = text.replace(k, v)'''
-	#p = re.compile(r'<.*?>')
-	text = re.sub('<[^>]*>', '', text)
+
+
+	print text
+	'''
+	link = re.search('src="([^"]+)"',text)
+	print link
+	video = re.search('<iframe[^>]*iframe>"',text)
+	print video
+	if (video != None):
+		s = video.group()
+		text = text + "\n" + "Fuentes de imagen o video:\n" + s + "\n"
+	if (link != None):
+		s = link.group().split[1]
+		text = text + "\n" + "Fuentes de imagen o video:\n" + s + "\n"
+	'''
+	#text = re.sub('<[^>]*>', '', text)
 	return text
-
-
-def ConvertirDescripcionSinTagsPrueba(html):
-	t = lxml.html.fromstring(html)
-	descripcion = t.text_content()
-	return descripcion
 
 
 #Parsear las etiquetas del RSS y devuelve una entrada
@@ -172,6 +193,9 @@ def ActualizarUsuarios():
 
 
 if __name__ == '__main__':
+	elements = ['iframe', 'embed', 'object',]
+	elements += list(feedparser._HTMLSanitizer.acceptable_elements)
+	feedparser._HTMLSanitizer.acceptable_elements = set(elements)
 	ActualizarUsuarios()
     
     

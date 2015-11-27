@@ -461,7 +461,7 @@ label {
 	color: black;
 }
 
-#entrada p {
+#entrada div.descripcion, #entrada ul, #entrada ol, #entrada li, #entrada blockquote {
 	padding:20px;
 	font-size:12px;
 	margin-left:1.5em;
