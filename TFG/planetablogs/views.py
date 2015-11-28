@@ -161,6 +161,7 @@ def inicio(request):
 	ficheroNohup = open('nohup.out', 'a')
 	error = None
 	try:
+		#usuario.set_password(passwd)
 		if request.method == 'POST':
 			ficheroNohup.write("Inicio de aplicación\n")
 			username = request.POST.get('nick', '')
@@ -335,6 +336,97 @@ def ConseguirListaAlumnos(idasignatura):
 			lista_usuarios.append(lista_alumno_rss)
 	return lista_usuarios
 	
+
+
+#Devuelve el total de comentarios de un alumno dados
+def ConseguirTotalComentariosDados(idalumno,idasignatura):
+	totalComentariosDados = 0
+	comentarios = Comentario.objects.filter(alumno_id=idalumno).filter(asignatura_id=idasignatura)
+	for comen in comentarios:
+		totalComentariosDados = totalComentariosDados + 1
+	return totalComentariosDados
+
+
+
+#Devuelve el total de comentarios de un alumno recibidos
+def ConseguirTotalComentariosRecibidos(idalumno,idasignatura):
+	totalComentariosRecibidos = 0
+	entradas = Entrada.objects.filter(alumno_id=idalumno).filter(asignatura_id=idasignatura)
+	for ent in entradas:
+		totalComentariosRecibidos = totalComentariosRecibidos + ent.totalcomentarios
+	return totalComentariosRecibidos
+
+
+
+#Devuelve el total de down de un alumno dados
+def ConseguirTotalDownDados(idalumno,idasignatura):
+	totalDownDados = 0
+	downs = Down.objects.filter(alumno_id=idalumno).filter(asignatura_id=idasignatura)
+	for down in downs:
+		totalDownDados = totalDownDados + 1
+	return totalDownDados
+
+
+
+#Devuelve el total de up de un alumno dados
+def ConseguirTotalUpDados(idalumno,idasignatura):
+	totalUpDados = 0
+	ups = Up.objects.filter(alumno_id=idalumno).filter(asignatura_id=idasignatura)
+	for up in ups:
+		totalUpDados = totalUpDados + 1
+	return totalUpDados
+
+
+
+#Devuelve el total de up de un alumno recibidos
+def ConseguirTotalUpRecibidos(idalumno,idasignatura):
+	totalUpRecibidos = 0
+	entradas = Entrada.objects.filter(alumno_id=idalumno).filter(asignatura_id=idasignatura)
+	for ent in entradas:
+		totalUpRecibidos = totalUpRecibidos + ent.totalup
+	return totalUpRecibidos
+
+
+
+#Devuelve el total de down de un alumno recibidos
+def ConseguirTotalDownRecibidos(idalumno,idasignatura):
+	totalDownRecibidos = 0
+	entradas = Entrada.objects.filter(alumno_id=idalumno).filter(asignatura_id=idasignatura)
+	for ent in entradas:
+		totalDownRecibidos = totalDownRecibidos + ent.totaldown
+	return totalDownRecibidos
+
+
+
+#Devuelve el total de las entradas de un alumno
+def ConseguirTotalEntradas(idalumno,idasignatura):
+	total = 0
+	entradas = Entrada.objects.filter(alumno_id=idalumno).filter(asignatura_id=idasignatura)
+	for ent in entradas:
+		total = total + 1
+	return total
+		
+		
+		
+#A través del id de la asignatura te devuelve la lista de alumnos con el total de entradas de cada uno.
+def ConseguirTotalEntradasUsuario(idasignatura):
+	lista_alumno_totalentradas = []
+	lista_usuario_totalentradas = []
+	rss = Rss.objects.filter(asignatura_id=idasignatura)
+	for i in rss:
+		alumno = Alumno.objects.get(id=i.alumno_id)
+		if alumno.alumno.username != "admin":
+			totalentradas = ConseguirTotalEntradas(alumno.id,idasignatura)
+			totalUpRecibidos = ConseguirTotalUpRecibidos(alumno.id,idasignatura)
+			totalDownRecibidos = ConseguirTotalDownRecibidos(alumno.id,idasignatura)
+			totalUpDados = ConseguirTotalUpDados(alumno.id,idasignatura)
+			totalDownDados = ConseguirTotalDownDados(alumno.id,idasignatura)
+			totalComentariosRecibidos = ConseguirTotalComentariosRecibidos(alumno.id,idasignatura)
+			totalComentariosDados = ConseguirTotalComentariosDados(alumno.id,idasignatura)
+			lista_alumno_totalentradas = [alumno,totalentradas,totalUpRecibidos,totalDownRecibidos,totalUpDados,totalDownDados,totalComentariosRecibidos,totalComentariosDados]
+			lista_usuario_totalentradas.append(lista_alumno_totalentradas)
+	return lista_usuario_totalentradas
+
 
 
 #Comprueba si una entrada (i) está puntuada como UP por un alumno
@@ -673,6 +765,21 @@ def puntuaciones(request,idasignatura):
 
 
 
+#Pestaña de estadísticas de usuarios
+@login_required()
+def estadisticas(request,idasignatura):
+	idalumno = ConseguirIdAlumno(request.user.id)
+	suscrito = ComprobarUsuarioAsignatura(idasignatura,idalumno)
+	if suscrito == True:
+		asignatura = Asignatura.objects.get(id=idasignatura)
+		lista_usuario_totalentradas = ConseguirTotalEntradasUsuario(idasignatura)
+		entradas = Entrada.objects.filter(asignatura_id=idasignatura)
+	else:
+		return HttpResponseRedirect(reverse('presentacionalumno'))
+	return render(request, 'planetablogs/estadisticas.html', {'entradas':entradas, 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
+
+
+
 #Pestaña de información de puntuaciones de usuarios
 @login_required()
 def infopuntuaciones(request,idasignatura):
@@ -830,6 +937,16 @@ def puntuaciones_tutor(request,idasignatura):
 	#print "[****] Tutor "+request.user.username.encode('utf-8')+" visita RÁNKING de", asignatura
 	ficheroNohup.close()
 	return render(request, 'planetablogs/puntuaciones_tutor.html', {'json_usuarios':json_usuarios, 'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
+
+
+
+#Pestaña de estadísticas de usuarios en tutores
+@login_required()
+def estadisticas_tutor(request,idasignatura):
+	asignatura = Asignatura.objects.get(id=idasignatura)
+	lista_usuario_totalentradas = ConseguirTotalEntradasUsuario(idasignatura)
+	entradas = Entrada.objects.filter(asignatura_id=idasignatura)
+	return render(request, 'planetablogs/estadisticas_tutor.html', {'entradas':entradas, 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
 
 
 

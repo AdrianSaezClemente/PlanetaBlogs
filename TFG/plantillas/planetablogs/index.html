@@ -47,7 +47,8 @@
 									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu">
-									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-stats"></span>  Ránking</a></li>
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-screenshot"></span>  Ránking</a></li>
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/estadisticas/"><span class="glyphicon glyphicon-stats"></span>  Estadísticas</a></li>
 									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign active"></span> Información</a></li>
 								</ul>
 							</div>
@@ -79,7 +80,7 @@
 												<h6 style="border:0.1em solid #428bca;font-weight:bold;background-color:#DCDCDC;margin-top:0px !important;"><span style="margin-left:10px;font-weight:bold;">{{ forloop.counter }}</span></h6>
 												<div style="word-wrap:break-word;" id="entradavalorada" class="col-xs-7 col-sm-7">
 													<p style="font-style:oblique;" class="list-group-item-heading"><strong class="pull-left">#{{ ent.entrada }}</strong><span class="pull-left" style="padding-right:8px;font-style:oblique;font-size:0.9em;word-wrap:break-word;">&nbsp;&nbsp;Escrito por {{ ent.alumno.alumno.username }}</span><h6>{{ ent.titulo }}</h6></p>
-													<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-plus-sign"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-minus-sign"></span></span></p>
+													<p class="list-group-item-text"><span style="color:green;">{{ ent.totalup }} <span class="muypequeña glyphicon glyphicon-thumbs-up"></span></span><span style="color:red;">{{ ent.totaldown }} <span class="muypequeña glyphicon glyphicon-thumbs-down"></span></span></p>
 												</div>
 												<div id="fechavalorada" class="col-xs-4 col-sm-4">
 													<span class="pull-right">{{ ent.fecha|date:"d" }} de {{ ent.fecha|date:"F" }} de {{ ent.fecha|date:"Y" }}</span></br></br></br>
@@ -112,10 +113,10 @@
 										<div id="valoracion">
 											<div id="updown{{ entrada.0.id }}" class="btn-toolbar" role="toolbar">
 												<div title="Me gusta" class="btn-group">
-													<a href='javascript:void(0)' onclick="Up('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','{{ entrada.0.totalup }}','{{ entrada.0.totaldown }}','{{ entrada.0.puntuaciontutor }}')"><button type="button" class="btn btn-success btn-xs"><span id="up{{ entrada.0.id }}" class="badge"><span class="glyphicon glyphicon-plus-sign"></span></span></button></a>
+													<a href='javascript:void(0)' onclick="Up('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','{{ entrada.0.totalup }}','{{ entrada.0.totaldown }}','{{ entrada.0.puntuaciontutor }}')"><button type="button" class="btn btn-success btn-xs"><span id="up{{ entrada.0.id }}" class="badge"><span class="glyphicon glyphicon-thumbs-up"></span></span></button></a>
 												</div> 
 												<div title="No me gusta" class="btn-group">
-													<a href='javascript:void(0)' onclick="Down('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','{{ entrada.0.totalup }}','{{ entrada.0.totaldown }}','{{ entrada.0.puntuaciontutor }}')"><button type="button" class="btn btn-danger btn-xs"><span id="down{{ entrada.0.id }}" class="badge"><span class="glyphicon glyphicon-minus-sign"></span></span></button></a>
+													<a href='javascript:void(0)' onclick="Down('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','{{ entrada.0.totalup }}','{{ entrada.0.totaldown }}','{{ entrada.0.puntuaciontutor }}')"><button type="button" class="btn btn-danger btn-xs"><span id="down{{ entrada.0.id }}" class="badge"><span class="glyphicon glyphicon-thumbs-down"></span></span></button></a>
 												</div>
 												{% if entrada.0.puntuaciontutor == 0 %}
 													<div title="Puntuación tutor" class="btn-group">

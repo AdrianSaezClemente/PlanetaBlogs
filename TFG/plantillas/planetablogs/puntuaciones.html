@@ -28,14 +28,15 @@
 						<li><a class="blog-nav-item" href="/planetablogs/alumnos/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
 						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
 						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
-						<li>
+						<li class="active">
 							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 									Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
 									<span class="caret"></span>
 								</button>
-								<ul class="dropdown-menu active">
-									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/puntuaciones/"><span style="color:#7A7A7A" class="glyphicon glyphicon-chevron-right"></span>  <span class="glyphicon glyphicon-stats"></span> Ránking</a></li>
+								<ul class="dropdown-menu">
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/puntuaciones/"><span style="color:#7A7A7A" class="glyphicon glyphicon-chevron-right"></span>  <span class="glyphicon glyphicon-screenshot"></span>  Ránking</a></li>
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/estadisticas/"><span class="glyphicon glyphicon-stats"></span>  Estadísticas</a></li>
 									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign"></span> Información</a></li>
 								</ul>
 							</div>

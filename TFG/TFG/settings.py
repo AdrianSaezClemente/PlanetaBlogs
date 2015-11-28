@@ -20,7 +20,13 @@ SECRET_KEY = '+2#5&97_k1$8j4nwf47oo#b*8=t2nynb5b!5_va#^4og+6%yny'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
-
+#from django.core.mail import send_mail
+#send_mail('test email', 'hello world', 'adry21ciru@gmail.com', ['adry21ciru@gmail.com'], fail_silently=False)
+'''EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'adry21ciru@gmail.com'
+EMAIL_HOST_PASSWORD = 'teleko33'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True'''
 
 TEMPLATE_DEBUG = True
 
