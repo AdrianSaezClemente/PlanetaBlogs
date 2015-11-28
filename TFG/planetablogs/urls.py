@@ -36,6 +36,8 @@ urlpatterns = patterns('',
 	url(r'^buscarNombreUsuario/$',views.buscarNombreUsuario, name='buscarNombreUsuario'),
 	url(r'^buscarIdEntrada/$',views.buscarIdEntrada, name='buscarIdEntrada'),
 	url(r'^logout/$', views.salir, name="logout"),
+	url(r'^tutores/resetear_password/$', views.resetear_password, name="resetear_password"),
+	
 )
 '''
 if settings.DEBUG is False:   #if DEBUG is True it will be served automatically

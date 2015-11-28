@@ -22,6 +22,15 @@ class FormularioRegistro(ModelForm):
         }
 		
 
+class FormularioResetPasswd(ModelForm):
+	class Meta:
+		model = User
+		fields = ['username', 'password']
+		widgets = {
+			'password': forms.PasswordInput(),
+		}
+	
+	
 class FormularioHilo(ModelForm):
 	class Meta:
 		model = Asignatura

@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario, Up, Down, Valoracion
-from planetablogs.formularios import FormularioRegistro, FormularioIdentidad, FormularioHilo, FormularioAgregarRSS, FormularioAgregarComentario
+from planetablogs.formularios import FormularioResetPasswd, FormularioRegistro, FormularioIdentidad, FormularioHilo, FormularioAgregarRSS, FormularioAgregarComentario
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -161,7 +161,6 @@ def inicio(request):
 	ficheroNohup = open('nohup.out', 'a')
 	error = None
 	try:
-		#usuario.set_password(passwd)
 		if request.method == 'POST':
 			ficheroNohup.write("Inicio de aplicación\n")
 			username = request.POST.get('nick', '')
@@ -1064,6 +1063,35 @@ def valoraciontutor(request):
 		
 		
 
+#Reseteo de contraseña
+def resetear_password(request):
+	encontrado = False
+	info = ""
+	if request.method=='POST':
+		username = request.POST.get('username', '')
+		print username
+		passwd = request.POST.get('password', '')
+		print passwd
+		usuarios = User.objects.all()
+		for usu in usuarios:
+			if (usu.username == username):
+				encontrado = True
+				break;
+		if (encontrado == True):
+			print "encontrado"
+			usuario = User.objects.get(username=username)
+			usuario.set_password(passwd)
+			usuario.save()
+			print "guardado"
+			return HttpResponseRedirect(reverse('presentacionprofesor')) 
+		else:
+			print "no encontrado"
+			info = "False"
+			return render(request, 'planetablogs/resetear_password.html', {'info':info})
+	return render(request, 'planetablogs/resetear_password.html', {'info':info})
+	
+	
+	
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")
 	os.environ.setdefault("TIME_ZONE", "Europe/Madrid")
