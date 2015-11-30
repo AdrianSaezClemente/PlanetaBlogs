@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}ayuda.css" title="style" />
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+		<script src="{{ STATIC_URL }}ayuda.js"></script>
+	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
+		<title>Página no encontrada</title>
+	</head>
+	<body>
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<span style="text-align:center;" id="result" class="alert alert-danger col-sm-10 col-sm-offset-1">
+						<button id="buttondialog" type="button" class="close" data-dismiss="alert">&times;</button>
+						<span>¡Página errónea! Introdúcela otra vez.</span></br>
+					</span>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

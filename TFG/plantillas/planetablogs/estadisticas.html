@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}estadisticas.css" title="style" />
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	   	<script src="{{ STATIC_URL }}estadisticas.js"></script>
+	   	<script>
+			$(function() {
+				var icons = {
+					header: "ui-icon-circle-arrow-e",
+					activeHeader: "ui-icon-circle-arrow-s"
+				};
+				$( "#accordion" ).accordion({
+					heightStyle: "content",
+					icons: icons
+				});
+			});
+		</script>
+	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
+		<title>Estadísticas</title>
+	</head>
+	
+	<body>
+		<!-- CONTENEDOR -->
+		<div class="container">
+			<!-- CABECERA -->
+			<div class="row">
+				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-12">
+					<ul class="nav nav-tabs">
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}"><span class="glyphicon glyphicon-pencil"></span> {{ asignatura }}</a></li>
+						<li><a class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/buscar/"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
+						<li class="active">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Puntuaciones <img class="pequeña" src="../../../../../static/imagenes/planets41.png">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/puntuaciones/"><span class="glyphicon glyphicon-screenshot"></span>  Ránking</a></li>
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/estadisticas/"><span style="color:#7A7A7A" class="glyphicon glyphicon-chevron-right"></span>  <span class="glyphicon glyphicon-stats"></span>  Estadísticas</a></li>
+									<li><a href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/infopuntuaciones/"><span class="glyphicon glyphicon-info-sign"></span> Información</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a style="color:#999966;" class="blog-nav-item" href="/planetablogs/alumnos/hilo/{{ asignatura.id }}/ayuda/"><span class="glyphicon glyphicon-book"></span> Ayuda</a></li>
+						<div style="padding-top:10px;color:white;font-size:10px;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong style="font-size:12px;">{{ user.username }}</strong></em>  |  </span><a style="font-size:12px;color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div id="titulo" style="background-color:#ffe066;" class="col-xs-12 col-sm-12 well">
+					<h3 class="centrar"><strong>Estadísticas de usuarios de {{ asignatura.titulo }}</strong></h3></br>
+					<div class="well">
+						<div class="radio">
+							<label>
+								<input type="radio" name="opciones" id="opcion1" value="1" checked>
+								Sólo estadísticas generales
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="opciones" id="opcion2" value="2">
+								Sólo resumen de entradas
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="opciones" id="opcion3" value="3">
+								Ambas
+							</label>
+						</div>
+					</div>
+					<div id="accordion" >
+					{% for usuario in lista_usuario_totalentradas %}
+						<h3>{{ usuario.0.alumno.first_name }} {{ usuario.0.alumno.last_name }}</h3>
+						<div>
+							<div class="tablausuario">
+								<h4 style="font-style:oblique;font-size:12px;" class="centrar"><strong>Estadísticas generales de {{ usuario.0.alumno.username }}</strong></h4>
+								<table id="tablausuario" class="table table-bordered" style="border-color:black;">
+									<thead>
+										<tr>
+										<th>Usuario</th>
+										<th>Nº total posts</th>
+										<th>Nº total <span style="color:green;" class="glyphicon glyphicon-thumbs-up"></span></th>
+										<th>Nº total <span style="color:red;" class="glyphicon glyphicon-thumbs-down"></span></th>
+										<th>Nº total comentarios</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><img class="foto pull-left" src="../../../../../static/imagenes/{{ usuario.0.alumno.imagen }}"/> <p style="margin-top:10px;" class="centrar">{{ usuario.0.alumno.username }}</p></td>
+											<td class="centrar"><p style="margin-top:10px;">{{ usuario.1 }}</p></td>
+											<td><em>Recibidos: {{ usuario.2 }}</em></br><em>Dados: {{ usuario.4 }}</em></td>
+											<td><em>Recibidos: {{ usuario.3 }}</em></br><em>Dados: {{ usuario.5 }}</em></td>
+											<td><em>Recibidos: {{ usuario.6 }}</em></br><em>Dados: {{ usuario.7 }}</em></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="tablaentradas">
+								<h4 style="font-style:oblique;font-size:12px;" class="centrar"><strong>Entradas de {{ usuario.0.alumno.username }}</strong></h4>
+								<table id="tablaentradas" class="table table-bordered" style="height:auto;border-color:black;">
+									<thead>
+										<tr>
+										<th>Post</th>
+										<th>Fecha</th>
+										<th>Título</th>
+										<th>Nº <span style="color:green;" class="glyphicon glyphicon-thumbs-up"></span></th>
+										<th>Nº <span style="color:red;" class="glyphicon glyphicon-thumbs-down"></span></th>
+										<th>Nº comentarios</th>
+										<th>Valoración tutor</th>
+										</tr>
+									</thead>
+									<tbody>
+									{% for entrada in entradas %}
+										{% if usuario.0.id == entrada.alumno_id %}
+										<tr>
+											<td><a style="color:blue;" target="_blank" href="{{ entrada.link }}">{{ entrada.entrada }}</a></td>
+											<td style="font-size:12px;">{{ entrada.fecha|date:"d" }} de {{ entrada.fecha|date:"F" }} de {{ entrada.fecha|date:"Y" }}, {{ entrada.fecha|date:"l" }} a las {{ entrada.fecha|date:"H:i" }}</td>
+											<td style="font-size:12px;">{{ entrada.titulo }}</td>
+											<td>{{ entrada.totalup }}</td>
+											<td>{{ entrada.totaldown }}</td>
+											<td>{{ entrada.totalcomentarios }}</td>
+											{% if entrada.puntuaciontutor == 0 %}
+												<td style="font-size:12px;">Sin calificar</td>
+											{% else %}
+												<td>{{ entrada.puntuaciontutor }}</td>
+											{% endif %}
+										</tr>
+										{% endif %}
+									{% empty %}
+										<tr><td id="nohayent" colspan="4">No tiene entradas</td></tr>
+									{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					{% empty %}
+						<tr><td id="nohayent" colspan="4">No tiene usuarios</td></tr>
+					{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div id="subir" class="btn btn-default btn-lg">
+				<a href='javascript:void(0)'><span class="glyphicon glyphicon-circle-arrow-up"></span></a>
+			</div>
+		</div>
+	</body>
+</html>
