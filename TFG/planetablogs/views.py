@@ -775,7 +775,7 @@ def estadisticas(request,idasignatura):
 		entradas = Entrada.objects.filter(asignatura_id=idasignatura)
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
-	return render(request, 'planetablogs/estadisticas.html', {'entradas':entradas, 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
+	return render(request, 'planetablogs/estadisticas.html', {'entradas':entradas[::-1], 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
 
 
 
@@ -945,7 +945,7 @@ def estadisticas_tutor(request,idasignatura):
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuario_totalentradas = ConseguirTotalEntradasUsuario(idasignatura)
 	entradas = Entrada.objects.filter(asignatura_id=idasignatura)
-	return render(request, 'planetablogs/estadisticas_tutor.html', {'entradas':entradas, 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
+	return render(request, 'planetablogs/estadisticas_tutor.html', {'entradas':entradas[::-1], 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
 
 
 
