@@ -767,14 +767,17 @@ def puntuaciones(request,idasignatura):
 #Pestaña de estadísticas de usuarios
 @login_required()
 def estadisticas(request,idasignatura):
+	ficheroNohup = open('nohup.out', 'a')
 	idalumno = ConseguirIdAlumno(request.user.id)
 	suscrito = ComprobarUsuarioAsignatura(idasignatura,idalumno)
 	if suscrito == True:
 		asignatura = Asignatura.objects.get(id=idasignatura)
 		lista_usuario_totalentradas = ConseguirTotalEntradasUsuario(idasignatura)
 		entradas = Entrada.objects.filter(asignatura_id=idasignatura)
+		ficheroNohup.write("[**VEA**] Alumno "+request.user.username.encode('utf-8')+" visita ESTADISTICAS de "+ str(asignatura) +"\n")
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
+	ficheroNohup.close()
 	return render(request, 'planetablogs/estadisticas.html', {'entradas':entradas[::-1], 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
 
 
@@ -942,9 +945,12 @@ def puntuaciones_tutor(request,idasignatura):
 #Pestaña de estadísticas de usuarios en tutores
 @login_required()
 def estadisticas_tutor(request,idasignatura):
+	ficheroNohup = open('nohup.out', 'a')
 	asignatura = Asignatura.objects.get(id=idasignatura)
 	lista_usuario_totalentradas = ConseguirTotalEntradasUsuario(idasignatura)
 	entradas = Entrada.objects.filter(asignatura_id=idasignatura)
+	ficheroNohup.write("[**VET**] Tutor "+request.user.username.encode('utf-8')+" visita ESTADISTICAS de "+ str(asignatura) +"\n")
+	ficheroNohup.close()
 	return render(request, 'planetablogs/estadisticas_tutor.html', {'entradas':entradas[::-1], 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
 
 
@@ -1065,29 +1071,27 @@ def valoraciontutor(request):
 
 #Reseteo de contraseña
 def resetear_password(request):
+	ficheroNohup = open('nohup.out', 'a')
 	encontrado = False
 	info = ""
 	if request.method=='POST':
 		username = request.POST.get('username', '')
-		print username
 		passwd = request.POST.get('password', '')
-		print passwd
 		usuarios = User.objects.all()
 		for usu in usuarios:
 			if (usu.username == username):
 				encontrado = True
 				break;
 		if (encontrado == True):
-			print "encontrado"
 			usuario = User.objects.get(username=username)
 			usuario.set_password(passwd)
 			usuario.save()
-			print "guardado"
+			ficheroNohup.write("[**RC**] Búsqueda de "+request.user.username.encode('utf-8')+" por id de entrada "+ request.GET['texto'].encode('utf-8') +"\n")
 			return HttpResponseRedirect(reverse('presentacionprofesor')) 
 		else:
-			print "no encontrado"
 			info = "False"
 			return render(request, 'planetablogs/resetear_password.html', {'info':info})
+	ficheroNohup.close()
 	return render(request, 'planetablogs/resetear_password.html', {'info':info})
 	
 	
