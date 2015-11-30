@@ -1086,7 +1086,7 @@ def resetear_password(request):
 			usuario = User.objects.get(username=username)
 			usuario.set_password(passwd)
 			usuario.save()
-			ficheroNohup.write("[**RC**] Búsqueda de "+request.user.username.encode('utf-8')+" por id de entrada "+ request.GET['texto'].encode('utf-8') +"\n")
+			ficheroNohup.write("[**RC**] Reseteo de contraseña de "+username+"\n")
 			return HttpResponseRedirect(reverse('presentacionprofesor')) 
 		else:
 			info = "False"

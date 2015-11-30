@@ -319,11 +319,12 @@ label {
 	padding-left:13em;
 }
 
-#entrada div.descripcion, #entrada ul, #entrada ol, #entrada li, #entrada blockquote {
+.entrada div.descripcion {
 	padding:20px;
+}
+
+.entrada div.descripcion, .entrada ul, .entrada ol, .entrada li, .entrada blockquote {
 	font-size:12px;
-	margin-left:1.5em;
-	margin-right:1.5em;
 }
 
 #entradassuscrip {
@@ -440,13 +441,6 @@ label {
 .entrada h2 a {
 	text-decoration:none;
 	color: black;
-}
-
-.entrada p {
-	padding:20px;
-	font-size:12px;
-	margin-left:1.5em;
-	margin-right:1.5em;
 }
 
 .pagination {
