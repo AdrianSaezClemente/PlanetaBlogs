@@ -7,12 +7,11 @@ body {
     text-align: left;
     float:center;
     z-index:0;
-}
-
-body {
-    font-family: Georgia, "Times New Roman", Times, serif;
+	background-attachment: "fixed";
+	font-family: Georgia, "Times New Roman", Times, serif;
     color: #555;
 }
+
 
 h1, .h1,
 h2, .h2,
@@ -152,11 +151,6 @@ h6, .h6 {
   color: #999;
 }
 
-.blog-post-meta a {
-	font-size:1.3em;
-	font-weight:bold;
-}
-
 /*
  * Footer
  */
@@ -226,6 +220,24 @@ h6, .h6 {
 	height:auto;
 	padding:20px;
 	border-radius:70%;
+}
+
+#popupvisitantes{
+	z-index:2;
+	position:absolute;
+	padding-left:20px;
+	padding-right:20px;
+	padding-top:5px;
+	color:white;
+	width:auto;
+	height:auto;
+	background:#595959;
+	border:2px solid white;
+	box-shadow:0 0 13px black, inset 0 0 5px #0066ff;
+}
+
+#popupvisitantes * th{
+	text-align:center;
 }
 
 #textoanim{
@@ -406,11 +418,11 @@ label {
 	font-size:15px;
 }
 
-#tablasuscriptores * th,tr{
+#tablasuscriptores * th, #tablasuscriptores * tr{
 	text-align:center;
 }
 
-#entrada {
+.entrada {
 	height:70px;
 	border:0.4em solid #D7DBE0;
 	border-style:ridge;
@@ -422,7 +434,7 @@ label {
 	padding:0.3em;
 }
 
-#entrada h2 {
+.entrada h2 {
 	/*border:1px solid black;
 	border-radius:15px;*/
 	background: #B9C5CD;
@@ -433,7 +445,7 @@ label {
 	color: black;
 }
 
-#entrada h3 {
+.entrada h3 {
 	margin-left:1.5em;
 	margin-right:1.5em;
 	background: #B9C5CD;
@@ -444,7 +456,7 @@ label {
 	text-align:center;
 }
 
-#entrada h2 span {
+.entrada h2 span {
 	float:right;
 	color: black;
 	font-size:11px;
@@ -452,21 +464,26 @@ label {
 	padding-top: 0.3em;
 }
 
-#entrada h3 a {
+.entrada h3 a {
 	color: black;
 }
 
-#entrada h2 a {
+.entrada h2 a {
 	text-decoration:none;
 	color: black;
 }
 
-#entrada div.descripcion {
+.entrada div.descripcion {
 	padding:20px;
 }
 
-#entrada div.descripcion, #entrada ul, #entrada ol, #entrada li, #entrada blockquote {
+.entrada div.descripcion, .entrada ul, .entrada ol, .entrada li, .entrada blockquote {
 	font-size:12px;
+}
+
+.enlacenick {
+	font-size:1.2em;
+	font-weight:bold;	
 }
 
 .pagination {
@@ -482,6 +499,36 @@ label {
 	box-shadow:0.2em 0.2em 0.2em black;
 	border:2px solid black;
 	border-radius: 5px;
+}
+
+option {
+	 cursor: pointer !important;
+}
+
+#fondo{
+	position: fixed; 
+	top: 0; 
+	left: 0; 
+	width: 100%; 
+	height: 100%;
+	background-repeat: repeat;
+	z-index: -1;
+}
+
+.numerovisitas {
+	font-size:10px;
+	color:#4e4e32 !important;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.visitas {
+	font-size:10px;
+	color:#4e4e32 !important;
+}
+
+.centrar {
+	text-align:center;
 }
 
 /********************FIN DE MI CSS**********************************/

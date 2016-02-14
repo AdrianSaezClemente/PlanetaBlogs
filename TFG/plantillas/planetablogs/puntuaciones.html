@@ -13,6 +13,10 @@
 	   	<script>
 			tmpusuarios = '{{ json_usuarios|escapejs }}';
 			usuarios = JSON.parse(tmpusuarios);
+			var tmpdisenos = '{{ json_disenos|escapejs }}';
+			disenos = JSON.parse(tmpdisenos);
+			var tmpusuario = '{{ json_usuario|escapejs }}';
+			usuario = JSON.parse(tmpusuario);
 	   	</script>
 	   	<link rel="shortcut icon" href="../../../../../static/imagenes/planet.png" type="image/png" />
 		<title>Ránking</title>

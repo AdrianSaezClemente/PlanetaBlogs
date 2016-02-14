@@ -2,17 +2,21 @@ $.noConflict();
 $(document).ready(function() {
 	$(".oculto").hide();
 	$("#subir").hide();
+
 	
 	FrasesAleatorias("#slogan");
 	$("#slogan").click(function () {
 		FrasesAleatorias(this);
 	});
 	
-	//Darle el alto y ancho
+	
+	//Darle el alto y ancho POPUPINFOTUTOR
 	$("#popupinfotutor").css('width', 'auto');
 	$("#popupinfotutor").css('height', 'auto');
 	
 	$(".infotutor").mouseover(function() {
+		$("#popupinfotutor").css("visibility","visible");
+		$("#popupinfotutor").fadeIn();
 		SacarPosicionInfoTutor(this);
 		var idasignatura = $(this).attr("id");
 		InformacionTutores(idasignatura);
@@ -20,14 +24,18 @@ $(document).ready(function() {
 	$(".infotutor").mouseout(function() {
 		var id = $(this).attr("id");
 		$("#popupinfotutor").fadeOut(0);
+		$("#popupinfotutor").css("visibility","hidden");
 		$("#popupinfotutor").html("");
 	});
 	
-	//Darle el alto y ancho
+	
+	//Darle el alto y ancho POPUPINFOUSUARIO
 	$("#popup").css('width', 350 + 'px');
 	$("#popup").css('height', 'auto');
 	
 	$(".usuario").mouseover(function() {
+		$("#popup").css("visibility","visible");
+		$("#popup").fadeIn();
 		SacarPosicion(this);
 		var id = $(this).attr("id");
 		InformacionUsuario(id);
@@ -35,9 +43,21 @@ $(document).ready(function() {
 	$(".usuario").mouseout(function() {
 		var id = $(this).attr("id");
 		$("#popup").fadeOut(0);
+		$("#popup").css("visibility","hidden");
 		$("#popup").html("");
 	});
 	
+	
+	//POPUPVISITANTES
+	$(".numerovisitas").click(function () {
+		var idnumerovisitas = $(this).attr("id");
+		MostrarVisitasUsuarios(idnumerovisitas);
+		SacarPosicionVisitantes(this);
+		$("#popupvisitantes").toggle();
+	});
+	
+	
+	//FUNCIÓN PARA SUBIR SCROLL DE PÁGINA
 	$(function () {
 		$(window).scroll(function () {
 			if ($(this).scrollTop() > 200) {
@@ -53,7 +73,45 @@ $(document).ready(function() {
 			return false;
 		});
 	});
+	
+	MostrarEstiloUsuario(usuario);
+	
 });
+
+function MostrarVisitasUsuarios(idnumerovisitas){
+	var parseEntrada = idnumerovisitas.split("-"); 
+	var identrada = parseEntrada[1]
+	$.ajax({
+		data: {'identrada':identrada},
+		url: '/planetablogs/mostrarvisitasusuarios/',
+		type: 'GET',
+		success: function(datos){
+			var lista_visitantes = datos.split("|")
+			var html = "<table class='table'><thead><tr><th style='font: small-caps 100%/200% serif;color:black;font-weight:bold;' class='centrar'>Visitantes</th></tr></thead><tbody>"
+			if (lista_visitantes != "") {
+				for (i=0;i<(lista_visitantes.length-1);i++){
+					html += "<tr><td style='font-size:12px !important;font: bold 90% monospace;color:#B9C5CD;font-style:oblique;'>"+lista_visitantes[i]+"</td></tr>";
+				}
+				html += "</tbody></table>";
+				$("#popupvisitantes").html(html)
+			}
+			else {
+				html += "<tr><td style='font-size:12px !important;font: bold 90% monospace;color:#ff4d4d;font-style:oblique;'>Esta entrada no tiene visitantes</td></tr>";
+				html += "</tbody></table>";
+				$("#popupvisitantes").html(html)
+			}
+		},
+	});
+}
+
+function MostrarEstiloUsuario(usuario) {
+	for (i=0;i<disenos.length;i++){
+		if (usuario[0].fields.estilo == disenos[i].fields.estilo){
+			$("body").prepend("<img id='fondo' src='../../../../../static/imagenes/"+disenos[i].fields.imagen+"'/>");
+			break;
+		}
+	}
+}
 
 function MostrarComentarios(id) {
 	var totalcomentarios = parseInt($("#totalcomentarios"+id).text())
@@ -79,27 +137,35 @@ function MostrarAnimacion(){
 }
 
 function SacarPosicion(elemento){
-	var posicion = $(elemento).position();
-	var x = posicion.left + 250;
-	var y = posicion.top + 173;
+	var offset = $(elemento).offset();
+	var x = offset.left + 235;
+	var y = offset.top - 125;
 	$("#popup").css("left",x + "px");
 	$("#popup").css("top",y + "px");
 }
 
 function SacarPosicionInfoTutor(elemento){
-	var posicion = $(elemento).position();
-	var x = posicion.left - 200;
-	var y = posicion.top + 25;
+	var offset = $(elemento).offset();
+	var x = offset.left - 300;
+	var y = offset.top + 25;
 	$("#popupinfotutor").css("left",x + "px");
 	$("#popupinfotutor").css("top",y + "px");
 }
 
 function SacarPosicionAnimacion(elemento){
-	var posicion = $(elemento).position();
-	var x = posicion.left - 40;
-	var y = posicion.top + 370;
+	var offset = $(elemento).offset();
+	var x = offset.left - 187;
+	var y = offset.top;
 	$("#popupanim").css("left",x + "px");
 	$("#popupanim").css("top",y + "px");
+}
+
+function SacarPosicionVisitantes(elemento){
+	var offset = $(elemento).offset();
+	var x = offset.left + 18;
+	var y = offset.top;
+	$("#popupvisitantes").css("left",x + "px");
+	$("#popupvisitantes").css("top",y + "px");
 }
 
 function InformacionTutores(idasignatura){
@@ -115,7 +181,6 @@ function InformacionTutores(idasignatura){
 			var html = "<div class='panel-heading popupcabecera'><div class='panel-title'><div style='font-style:oblique;font-size:1em;text-align:center;'>Creador del hilo</div></div></div>";
 			html += "<div class='panel-body'><span style='font-size:11px;' class='pull-left'><img src='../../../../../static/imagenes/"+usuarios[k].fields.imagen+"' style='border:1px solid black;' class='fotopequeña'> </img>"+usuarios[k].fields.first_name+" "+usuarios[k].fields.last_name+" ("+usuarios[k].fields.email+")</span></br>";
 			$("#popupinfotutor").append(html);
-			$("#popupinfotutor").fadeIn();
 			break;
 		}
 	}
@@ -140,7 +205,6 @@ function InformacionUsuario(id){
 						html += "<span style='font-weight:bold;' class='pull-left'>Nivel:</span><span>&nbsp; "+valoraciones[j].fields.nivel+"</span></div>";
 					}
 					$("#popup").append(html);
-					$("#popup").fadeIn();
 					break;
 				}
 			}
@@ -212,7 +276,7 @@ function AgregarComentario(identrada,idasignatura,iduser){
 			}
 			else{
 				var descripcionConSaltos = ConvertirDescripcion(datos.comentario[0].fields.descripcion);
-				SacarPosicionAnimacion("#entradadescripcion"+identrada);
+				SacarPosicionAnimacion("#descripcion_comentario"+identrada);
 				MostrarAnimacion();
 				$("#infoescribircomen"+identrada).remove();
 				var totalcomentarios = parseInt($("#totalcomentarios"+identrada).text()) + 1
@@ -275,7 +339,6 @@ function BorrarInfo(){
 }
 
 function FrasesAleatorias(elemento){
-	console.log("hago click")
 	//almacenando las citas
 	frases = new Array(21);
 	frases[0] = "El fracaso derrota a los perdedores, el fracaso inspira a los ganadores.";
@@ -303,8 +366,39 @@ function FrasesAleatorias(elemento){
 	
 	//calculando el random
 	index = Math.floor(Math.random() * frases.length);
-	console.log(index)
 	//mostrar las citas
 	$(elemento).html("");
 	$(elemento).html("<span>"+frases[index]+"</span>");
+}
+
+function EntradaLeida(identrada,idusuario,idasignatura,visita){	
+	var numero = $("#numerovisitas-"+identrada).text();
+	$.ajax({
+		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura,'visita':visita},
+		url: '/planetablogs/entradaleida/',
+		type: 'GET',
+		datatype: 'json',
+		success: function(datos){
+			var html = "<button style='text-align:center;' disabled='disabled' type='button' class='btn fotopequeña'><span class='glyphicon glyphicon-eye-close'></span></button>";
+			$("#lecturaentrada"+identrada).html(html);
+			if (visita == "true"){
+				var lista_usuarios_estado_anterior = datos[0].fields.visitantes
+				var encontrado = ComprobarVisitasUsuario(idusuario,lista_usuarios_estado_anterior)
+				if (encontrado != true) {
+					$("#numerovisitas-"+identrada).html(parseInt(numero)+1);
+				}
+			}
+		},
+	});
+}
+
+function ComprobarVisitasUsuario(idusuario,lista_usuarios) {
+	var resultado = (lista_usuarios.search("'"+idusuario+"'"))
+	if (resultado == -1){
+		var encontrado = false
+	}
+	else{
+		var encontrado = true
+	}
+	return encontrado
 }

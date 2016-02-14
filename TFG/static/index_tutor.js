@@ -8,11 +8,13 @@ $(document).ready(function() {
 		FrasesAleatorias(this);
 	});
 	
-	//Darle el alto y ancho
+	//Darle el alto y ancho POPINFOTUTOR
 	$("#popupinfotutor").css('width', 'auto');
 	$("#popupinfotutor").css('height', 'auto');
 	
 	$(".infotutor").mouseover(function() {
+		$("#popupinfotutor").css("visibility","visible");
+		$("#popupinfotutor").fadeIn();
 		SacarPosicionInfoTutor(this);
 		var idasignatura = $(this).attr("id");
 		InformacionTutores(idasignatura);
@@ -20,14 +22,17 @@ $(document).ready(function() {
 	$(".infotutor").mouseout(function() {
 		var id = $(this).attr("id");
 		$("#popupinfotutor").fadeOut(0);
+		$("#popupinfotutor").css("visibility","hidden");
 		$("#popupinfotutor").html("");
 	});
 	
-	//Darle el alto y ancho
+	//Darle el alto y ancho POPUPINFOUSUARIO
 	$("#popup").css('width', 350 + 'px');
 	$("#popup").css('height', 'auto');
 	
 	$(".usuario").mouseover(function() {
+		$("#popup").css("visibility","visible");
+		$("#popup").fadeIn();
 		SacarPosicion(this);
 		var id = $(this).attr("id");
 		InformacionUsuario(id);
@@ -35,7 +40,17 @@ $(document).ready(function() {
 	$(".usuario").mouseout(function() {
 		var id = $(this).attr("id");
 		$("#popup").fadeOut(0);
+		$("#popup").css("visibility","hidden");
 		$("#popup").html("");
+	});
+	
+	//POPUPVISITANTES
+	$(".numerovisitas").click(function () {
+		var idnumerovisitas = $(this).attr("id");
+		console.log(idnumerovisitas)
+		MostrarVisitasUsuarios(idnumerovisitas);
+		SacarPosicionVisitantes(this);
+		$("#popupvisitantes").toggle();
 	});
 	
 	$(function () {
@@ -54,6 +69,32 @@ $(document).ready(function() {
 		});
 	});
 });
+
+function MostrarVisitasUsuarios(idnumerovisitas){
+	var parseEntrada = idnumerovisitas.split("-"); 
+	var identrada = parseEntrada[1]
+	$.ajax({
+		data: {'identrada':identrada},
+		url: '/planetablogs/mostrarvisitasusuarios/',
+		type: 'GET',
+		success: function(datos){
+			var lista_visitantes = datos.split("|")
+			var html = "<table class='table'><thead><tr><th style='font: small-caps 100%/200% serif;color:black;font-weight:bold;' class='centrar'>Visitantes</th></tr></thead><tbody>"
+			if (lista_visitantes != "") {
+				for (i=0;i<(lista_visitantes.length-1);i++){
+					html += "<tr><td style='font-size:12px !important;font: bold 90% monospace;color:#B9C5CD;font-style:oblique;'>"+lista_visitantes[i]+"</td></tr>";
+				}
+				html += "</tbody></table>";
+				$("#popupvisitantes").html(html)
+			}
+			else {
+				html += "<tr><td style='font-size:12px !important;font: bold 90% monospace;color:#ff4d4d;font-style:oblique;'>Esta entrada no tiene visitantes</td></tr>";
+				html += "</tbody></table>";
+				$("#popupvisitantes").html(html)
+			}
+		},
+	});
+}
 
 function MostrarComentarios(id) {
 	var totalcomentarios = parseInt($("#totalcomentarios"+id).text())
@@ -74,19 +115,27 @@ function MostrarComentarios(id) {
 }
 
 function SacarPosicion(elemento){
-	var posicion = $(elemento).position();
-	var x = posicion.left + 250;
-	var y = posicion.top + 173;
+	var offset = $(elemento).offset();
+	var x = offset.left + 235;
+	var y = offset.top - 125;
 	$("#popup").css("left",x + "px");
 	$("#popup").css("top",y + "px");
 }
 
 function SacarPosicionInfoTutor(elemento){
-	var posicion = $(elemento).position();
-	var x = posicion.left - 200;
-	var y = posicion.top + 25;
+	var offset = $(elemento).offset();
+	var x = offset.left - 300;
+	var y = offset.top + 25;
 	$("#popupinfotutor").css("left",x + "px");
 	$("#popupinfotutor").css("top",y + "px");
+}
+
+function SacarPosicionVisitantes(elemento){
+	var offset = $(elemento).offset();
+	var x = offset.left + 18;
+	var y = offset.top;
+	$("#popupvisitantes").css("left",x + "px");
+	$("#popupvisitantes").css("top",y + "px");
 }
 
 function InformacionTutores(idasignatura){
@@ -174,33 +223,7 @@ function Down(identrada,idusuario,idasignatura,up,down){
 	var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down1+"</span></button></div>"
 	$("#updown"+identrada).html(html);
 }
-/*
-function AgregarComentario(identrada,idasignatura,iduser){
-	var descripcion = $("#descripcion_comentario").val();
-	$.ajax({
-		data: {'identrada':identrada,'idasignatura':idasignatura,'iduser':iduser,'descripcion':descripcion},
-		url: '/planetablogs/agregarcomentario/',
-		type: 'GET',
-		success: function(datos){
-			console.log("exitoso")
-			if (descripcion==""){
-				console.log("nada")
-				$("#entrada").append("<h5 style='color:red;text-align:center;font-style:oblique;font-size:10px;'>Escribe tu comentario antes de enviar.</h5>"); 
-			}
-			else{
-				$("#descripcion_comentario").val("")
-				BorrarInfo();
-				var html = "<div id='comentario"+datos.comentario[0].pk+"' class='panel panel-warning'>";
-				html += "<div id='titulopanel' class='panel-heading'><div class='panel-title'>Comentario publicado por "+datos.usuario[0].fields.username+"<span class='pull-right'>"+datos.comentario[0].fields.fecha+"</span></div></div>";
-				html += "<div style='word-wrap:break-word;' class='panel-body'>"+datos.comentario[0].fields.descripcion+"<button id='"+datos.comentario[0].pk+"' onclick='EliminarComentario("+datos.comentario[0].pk+","+datos.comentario[0].fields.asignatura+")' type='button' class='btn btn-danger btn-xs pull-right'>Eliminar comentario</button></div></div>";
-				html += "<div id='infocomentario"+datos.comentario[0].pk+"' class='info oculto'><div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>¡Comentario borrado!</strong> Vuelve a comentar cuando lo desees.</div></div>";
-				$("#entrada").append(html);
-				$("#infocomentario"+datos.comentario[0].pk).hide();
-			}
-		},
-	});
-}
-*/
+
 function EliminarComentario(idcomentario,idasignatura,identrada){
 	var totalcomentarios = parseInt($("#totalcomentarios"+identrada).text()) - 1
 	$("#despliegueboton"+identrada).html("<span class='glyphicon glyphicon-arrow-up'></span> Ocultar comentarios (<span id='totalcomentarios"+identrada+"'>"+totalcomentarios+"</span>)");
@@ -336,6 +359,19 @@ function ValoracionTutor(idasignatura,identrada,idalumno){
 		type: 'GET',
 		success: function(datos){
 
+		},
+	});
+}
+
+function EntradaLeidaTutor(identrada,idusuario,idasignatura){
+	console.log("hola")
+	$.ajax({
+		data: {'identrada':identrada,'idusuario':idusuario,'idasignatura':idasignatura},
+		url: '/planetablogs/entradaleidatutor/',
+		type: 'GET',
+		success: function(datos){
+			var html = "<button style='text-align:center;' disabled='disabled' type='button' class='btn fotopequeña'><span class='glyphicon glyphicon-eye-close'></span></button>";
+			$("#lecturaentrada"+identrada).html(html);
 		},
 	});
 }

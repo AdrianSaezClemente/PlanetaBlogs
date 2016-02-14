@@ -24,6 +24,10 @@
 	   	asignaturas = JSON.parse(tmpasignaturas);
 	   	tmpprofesores = '{{ json_profesores|escapejs }}';
 	   	profesores = JSON.parse(tmpprofesores);
+	   	var tmpdisenos = '{{ json_disenos|escapejs }}';
+		disenos = JSON.parse(tmpdisenos);
+		var tmpusuario = '{{ json_usuario|escapejs }}';
+		usuario = JSON.parse(tmpusuario);
 	   	</script>
 		</style>
 	   	<link rel="shortcut icon" href="../../../../static/imagenes/planet.png" type="image/png" />
@@ -58,16 +62,17 @@
 					</ul>
 				</div>
 			</div>
-			<div id="popupanim" class="oculto"><div id="textoanim"><strong>¡Enhorabuena!</strong></br><span>¡Has ganado 3 planets!</span></br><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></div></div>
+			<div id="popupanim" class="oculto"><div id="textoanim"><strong>¡Enhorabuena!</strong></br><span>Has ganado,</br> ¡3 planets!</span></br><img class="pequeña" src="../../../../../static/imagenes/planets41.png"></div></div>
 			<div id="popup" class="oculto panel panel-info"></div>
 			<div id="popupinfotutor" class="oculto panel panel-primary"></div>
+			<div id="popupvisitantes" class="oculto"></div>
 			<!-- FIN CABECERA -->
 			<div class="row">
 				<div id="titulolista" class="col-xs-12 col-sm-12">
 					<div id="titulo" class="col-xs-12 col-sm-4 blog-header">
 						<img class="pequeñologo" src="../../../../static/imagenes/planet.png">
 						<h2>Educational Planet</h2>
-						<p id="slogan" style="cursor:pointer;cursor:hand;" class="lead blog-description">Pulsa para mostrar frase :)</p>
+						<p id="slogan" style="cursor:pointer;cursor:hand;" class="lead blog-description">Pulsa para mostrar frase aleatoria :)</p>
 					</div>
 					<div id="conjuntolista" class="col-xs-12 col-sm-7 col-sm-offset-1 blog-header">
 						<div id="grupolista1" class="list-group">
@@ -105,9 +110,46 @@
 							<div id="entradas">
 							{% for entrada in entradas %}
 								<div class="blog-post">
-									<div id="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.0.entrada }}&nbsp;<img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img></label><a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.0.fecha|date:"d" }} de {{ entrada.0.fecha|date:"F" }} de {{ entrada.0.fecha|date:"Y" }}, {{ entrada.0.fecha|date:"l" }} a las {{ entrada.0.fecha|date:"H:i" }} por <a target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></h2>
-										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.0.link }}>{{ entrada.0.titulo }}</a></h3>
+									<div id="entrada{{ entrada.0.id }}" class="entrada">
+										<h2 class="blog-post-title">
+											<div class="row">
+											{% for extra in lista_extras %}
+												{% if entrada.0.id == extra.entrada_id %}
+													{% if user.id|stringformat:"i" in extra.leido %}
+													<div class="col-xs-6 col-sm-6">
+													<label> #{{ entrada.0.entrada }}&nbsp;
+														<div id="lecturaentrada{{ entrada.0.id }}" class="btn-group">
+															<button style="text-align:center;" disabled='disabled' type="button" class="btn fotopequeña"><span class="glyphicon glyphicon-eye-close"></span></button>
+														</div>
+														<img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img>
+													</label>
+													{% else %}
+													<div class="col-xs-6 col-sm-6">
+													<label> #{{ entrada.0.entrada }}&nbsp;
+														<div id="lecturaentrada{{ entrada.0.id }}" class="btn-group">
+															<a href='javascript:void(0)' onclick="EntradaLeida('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','false')"><button style="text-align:center;background-color:#a3c2c2;" type="button" class="btn fotopequeña"><span class="glyphicon glyphicon-eye-open"></span></button></a>
+														</div>
+														<img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img>
+													</label>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+											{% for entext in lista_sinextras %}
+												{% if entrada.0.id == entext.id %}
+													<div class="col-xs-6 col-sm-6">
+													<label> #{{ entrada.0.entrada }}&nbsp; 
+														<div id="lecturaentrada{{ entrada.0.id }}" class="btn-group">
+															<a href='javascript:void(0)' onclick="EntradaLeida('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','false')"><button style="text-align:center;background-color:#a3c2c2;" type="button" class="btn fotopequeña"><span class="glyphicon glyphicon-eye-open"></span></button></a>
+														</div>
+														<img src="../../../../../static/imagenes/{{ entrada.0.alumno.alumno.imagen }}" class="fotopequeña"> </img>
+													</label>
+												{% endif %}
+											{% endfor %}
+											<a id="{{ entrada.0.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.0.url_blog }}> {{ entrada.0.alumno.alumno.first_name }} {{ entrada.0.alumno.alumno.last_name }}</a></div>
+											<div class="col-xs-6 col-sm-6"><span class="pull-right">{{ entrada.0.fecha|date:"d" }} de {{ entrada.0.fecha|date:"F" }} de {{ entrada.0.fecha|date:"Y" }}, {{ entrada.0.fecha|date:"l" }} a las {{ entrada.0.fecha|date:"H:i" }} por <a class="enlacenick" target="_blank" href={{ entrada.0.url_blog }}>{{ entrada.0.alumno.alumno.username }}</a></span></br><span id="numerovisitas-{{ entrada.0.id }}" class="numerovisitas pull-right">{{ entrada.0.visitas }}</span><span class="visitas pull-right">Visitas al post:</span></div>
+											</div>
+										</h2>
+										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.0.link }} onclick="EntradaLeida('{{ entrada.0.id }}','{{ user.id }}','{{ asignatura.id }}','true')">{{ entrada.0.titulo }}</a></h3>
 										<div class="descripcion" id="entradadescripcion{{ entrada.0.id }}" style="word-wrap:break-word;">{{ entrada.0.descripcion|safe }}</div>
 										{% if entrada.1 == False %}
 										<div id="valoracion">

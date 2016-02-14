@@ -59,6 +59,7 @@
 			</div>
 			<div id="popup" class="oculto panel panel-info"></div>
 			<div id="popupinfotutor" class="oculto panel panel-primary"></div>
+			<div id="popupvisitantes" class="oculto"></div>
 			<!-- FIN CABECERA -->
 			<div class="row">
 				<div id="titulolista" class="col-xs-12 col-sm-12">
@@ -104,8 +105,45 @@
 							{% for entrada in entradas %}
 								<div class="blog-post">
 									<div id="entrada{{ entrada.id }}" class="entrada">
-										<h2 class="blog-post-title"><label> #{{ entrada.entrada }}&nbsp;<img src="../../../../../static/imagenes/{{ entrada.alumno.alumno.imagen }}" class="fotopequeña"> </img></label><a id="{{ entrada.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.url_blog }}> {{ entrada.alumno.alumno.first_name }} {{ entrada.alumno.alumno.last_name }}</a><span class="blog-post-meta">{{ entrada.fecha|date:"d" }} de {{ entrada.fecha|date:"F" }} de {{ entrada.fecha|date:"Y" }}, {{ entrada.fecha|date:"l" }} a las {{ entrada.fecha|date:"H:i" }} por <a target="_blank" href={{ entrada.url_blog }}>{{ entrada.alumno.alumno.username }}</a></span></h2>
-										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.link }}>{{ entrada.titulo }}</a></h3>
+										<h2 class="blog-post-title">
+											<div class="row">
+												{% for extra in lista_extras %}
+													{% if entrada.id == extra.entrada_id %}
+														{% if user.id|stringformat:"i" in extra.leido %}
+														<div class="col-xs-6 col-sm-6">
+															<label> #{{ entrada.entrada }}&nbsp;
+																<div id="lecturaentrada{{ entrada.id }}" class="btn-group">
+																	<button style="text-align:center;" disabled='disabled' type="button" class="btn fotopequeña"><span class="glyphicon glyphicon-eye-close"></span></button>
+																</div>
+																<img src="../../../../../static/imagenes/{{ entrada.alumno.alumno.imagen }}" class="fotopequeña"> </img>
+															</label>
+														{% else %}
+														<div class="col-xs-6 col-sm-6">
+															<label> #{{ entrada.entrada }}&nbsp;
+																<div id="lecturaentrada{{ entrada.id }}" class="btn-group">
+																	<a href='javascript:void(0)' onclick="EntradaLeidaTutor('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button style="text-align:center;background-color:#a3c2c2;" type="button" class="btn fotopequeña"><span class="glyphicon glyphicon-eye-open"></span></button></a>
+																</div>
+																<img src="../../../../../static/imagenes/{{ entrada.alumno.alumno.imagen }}" class="fotopequeña"> </img>
+															</label>
+														{% endif %}
+													{% endif %}
+												{% endfor %}
+												{% for entext in lista_sinextras %}
+													{% if entrada.id == entext.id %}
+													<div class="col-xs-6 col-sm-6">
+														<label> #{{ entrada.entrada }}&nbsp;
+															<div id="lecturaentrada{{ entrada.id }}" class="btn-group">
+																<a href='javascript:void(0)' onclick="EntradaLeidaTutor('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')"><button style="text-align:center;background-color:#a3c2c2;" type="button" class="btn fotopequeña"><span class="glyphicon glyphicon-eye-open"></span></button></a>
+															</div>
+															<img src="../../../../../static/imagenes/{{ entrada.alumno.alumno.imagen }}" class="fotopequeña"> </img>
+														</label>
+													{% endif %}
+												{% endfor %}
+												<a id="{{ entrada.alumno.alumno_id }}" class="usuario" target="_blank" href={{ entrada.url_blog }}> {{ entrada.alumno.alumno.first_name }} {{ entrada.alumno.alumno.last_name }}</a></div>
+												<div class="col-xs-6 col-sm-6"><span class="pull-right">{{ entrada.fecha|date:"d" }} de {{ entrada.fecha|date:"F" }} de {{ entrada.fecha|date:"Y" }}, {{ entrada.fecha|date:"l" }} a las {{ entrada.fecha|date:"H:i" }} por <a class="enlacenick" target="_blank" href={{ entrada.url_blog }}>{{ entrada.alumno.alumno.username }}</a></span></br><span id="numerovisitas-{{ entrada.id }}" class="numerovisitas pull-right">{{ entrada.visitas }}</span><span class="visitas pull-right">Visitas al post:</span></div>
+											</div>
+										</h2>
+										<h3 style="word-wrap:break-word;"><a target="_blank" href={{ entrada.link }} onclick="EntradaLeidaTutor('{{ entrada.id }}','{{ user.id }}','{{ asignatura.id }}')">{{ entrada.titulo }}</a></h3>
 										<div class="descripcion" id="entradadescripcion{{ entrada.id }}" style="word-wrap:break-word;">{{ entrada.descripcion|safe }}</div>
 										<div id="valoracion">
 											<div id="updowninactive{{ entrada.id }}" class="btn-toolbar" role="toolbar">
@@ -220,7 +258,7 @@
 							</thead>
 							<tbody>
 								{% for usuario in lista_usuarios %}
-								<tr id="alumno{{ usuario.0.alumno.id }}">
+								<tr id="alumno{{ usuario.alumno.id }}">
 									<td>{{ usuario.0.alumno.username }}</td>
 									<td><span style="font-size:0.7em">{{ usuario.0.alumno.first_name }} {{ usuario.0.alumno.last_name }}</span></td>
 									<td><a style="font-size:0.7em" target="_blank" href="{{ usuario.1 }}"> feed</a></td>

@@ -1,4 +1,4 @@
-from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario, Valoracion, Up, Down
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario, Valoracion, Up, Down, Diseno
 from django import forms
 from django.forms import ModelForm
 from django.utils import timezone  
@@ -13,6 +13,12 @@ class FormularioIdentidad(ModelForm):
 		exclude = ('nombre_apellidos','rss','entradas','url_blog',)
 
 
+class FormularioDiseno(ModelForm):
+    class Meta:
+        model = Diseno
+        fields = ['estilo', 'imagen']
+		
+		
 class FormularioRegistro(ModelForm):
     class Meta:
         model = User

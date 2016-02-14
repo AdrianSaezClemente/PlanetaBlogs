@@ -2,20 +2,26 @@ $.noConflict();
 $(document).ready(function() {
 
 	$("#popup").hide()
+	
+	
 	//Darle el alto y ancho
 	$("#popup").css('width', 166 + 'px');
 	$("#popup").css('height', 166 + 'px');
 	
 	$(".foto").mouseover(function() {
+		$("#popup").css("visibility","visible");
+		$("#popup").fadeIn();
 		SacarPosicion(this);
 		var id = $(this).attr("id");
 		InformacionUsuario(id);
 	});
 	$(".foto").mouseout(function() {
 		var id = $(this).attr("id");
-		$("#popup").fadeOut(200);
+		$("#popup").fadeOut(0);
+		$("#popup").css("visibility","hidden");
 		$("#popup").html("");
 	});
+	
 	
 	$(".nivel").mouseover(function() {
 		var nivel = $(this).html()
@@ -50,12 +56,14 @@ $(document).ready(function() {
 		if (nivel == 11) {$(this).removeClass("nivel11");}
 		if (nivel == 12) {$(this).removeClass("nivel12");}
 	});
+	
+	MostrarEstiloUsuario(usuario);
 });
 
 function SacarPosicion(elemento){
-	var posicion = $(elemento).position();
-	var x = posicion.left + 360;
-	var y = posicion.top + 250;
+	var offset = $(elemento).offset();
+	var x = offset.left - 60;
+	var y = offset.top + 40;
 	$("#popup").css("left",x + "px");
 	$("#popup").css("top",y + "px");
 }
@@ -66,6 +74,15 @@ function InformacionUsuario(id){
 			var html = "<img src='../../../../../static/imagenes/"+usuarios[i].fields.imagen+"' class='fotogrande'> </img>";
 			$("#popup").append(html);
 			$("#popup").fadeIn();
+			break;
+		}
+	}
+}
+
+function MostrarEstiloUsuario(usuario) {
+	for (i=0;i<disenos.length;i++){
+		if (usuario[0].fields.estilo == disenos[i].fields.estilo){
+			$("body").prepend("<img id='fondo' src='../../../../../static/imagenes/"+disenos[i].fields.imagen+"'/>");
 			break;
 		}
 	}

@@ -52,7 +52,7 @@ function Buscar(idasignatura,iduser){
 						var descripcionConSaltos = ConvertirDescripcion(datos.entradas[i].fields.descripcion);
 						var html = "<div class='blog-post'><div id='entrada'><h2 class='blog-post-title'><label id='label'>#"+datos.entradas[i].fields.entrada+"&nbsp;<img src=../../../../../static/imagenes/"+datos.usuario[0].fields.imagen+" class='fotopequeña'> </img></label><a target='_blank' href='"+datos.entradas[i].fields.url_blog+"'> "+datos.usuario[0].fields.first_name+" "+datos.usuario[0].fields.last_name+"</a><span class='blog-post-meta'>"+fecha+" por <a target='_blank' href='"+datos.entradas[i].fields.url_blog+"'><strong>"+datos.usuario[0].fields.username+"</strong></a></span></h2>";
 						html += "<h3><a target='_blank' href='"+datos.entradas[i].fields.link+"'>"+datos.entradas[i].fields.titulo+"</a></h3>";
-						html += "<p id='entradadescripcion"+datos.entradas[i].pk+"' style='word-wrap:break-word;'>"+descripcionConSaltos+"</p>";
+						html += "<div class='descripcion' id='entradadescripcion"+datos.entradas[i].pk+"' style='word-wrap:break-word;'>"+descripcionConSaltos+"</div>";
 						html += "<div id='valoracion'><div class='btn-toolbar' role='toolbar'><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+datos.entradas[i].fields.totalup+"</span></button></div><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+datos.entradas[i].fields.totaldown+"</span></button></div></div></div>";
 						var htmlEscribir = EscribirComentarios(datos.entradas[i],idasignatura,iduser);
 						htmlEscribir += "<div id='comentariosentrada"+datos.entradas[i].pk+"'>";
@@ -83,7 +83,7 @@ function Buscar(idasignatura,iduser){
 					var descripcionConSaltos = ConvertirDescripcion(datos.entrada[0].fields.descripcion);
 					var html = "<div class='blog-post'><div id='entrada'><h2 class='blog-post-title'><label id='label'>#"+datos.entrada[0].fields.entrada+"&nbsp;<img src=../../../../../static/imagenes/"+datos.usuario[0].fields.imagen+" class='fotopequeña'> </img></label><a target='_blank' href='"+datos.entrada[0].fields.url_blog+"'> "+datos.usuario[0].fields.first_name+" "+datos.usuario[0].fields.last_name+"</a><span class='blog-post-meta'>"+fecha+" por <a target='_blank' href='"+datos.entrada[0].fields.url_blog+"'><strong>"+datos.usuario[0].fields.username+"</strong></a></span></h2>";
 					html += "<h3><a target='_blank' href='"+datos.entrada[0].fields.link+"'>"+datos.entrada[0].fields.titulo+"</a></h3>";
-					html += "<p id='entradadescripcion"+datos.entrada[0].pk+"' style='word-wrap:break-word;'>"+descripcionConSaltos+"</p>";
+					html += "<div class='descripcion' id='entradadescripcion"+datos.entrada[0].pk+"' style='word-wrap:break-word;'>"+descripcionConSaltos+"</div>";
 					html += "<div id='valoracion'><div class='btn-toolbar' role='toolbar'><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+datos.entrada[0].fields.totalup+"</span></button></div><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+datos.entrada[0].fields.totaldown+"</span></button></div></div></div>";
 					var htmlEscribir = EscribirComentarios(datos.entrada[0],idasignatura,iduser);
 					htmlEscribir += "<div id='comentariosentrada"+datos.entrada[0].pk+"'>";
@@ -221,7 +221,7 @@ function ObtenerComentarios(lista_comentarios,identrada){
 
 function ConvertirDescripcion(descripcion) {
 	var unixNewLine = new RegExp("\n", "g");
-	descripcionConSaltos = descripcion.replace(unixNewLine, '<br/>');
+	descripcionConSaltos = descripcion.replace(unixNewLine, '');
 	return descripcionConSaltos
 }
 

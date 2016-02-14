@@ -9,13 +9,15 @@
 		<script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
 		<script src="{{STATIC_URL}}bootstrap/js/bootstrap-dialog.js"></script>
 		<link href="{{STATIC_URL}}bootstrap/css/bootstrap-dialog.css" rel="stylesheet" media="screen">
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-		<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="{{STATIC_URL}}presentacionalum.js"></script>
 		<script>
-			var asignaturas = '{{ asignaturas|escapejs }}';
-			var info = '{{ info|escapejs }}';
-			var idasignatura = '{{ idasignatura|escapejs }}';
+			var tmpdisenos = '{{ json_disenos|escapejs }}';
+			disenos = JSON.parse(tmpdisenos);
+			var tmpusuario = '{{ json_usuario|escapejs }}';
+			usuario = JSON.parse(tmpusuario);
 	   	</script>
 	   	<link rel="shortcut icon" href="../../static/imagenes/planet.png" type="image/png" />
 		<title>Educational Planet</title>
@@ -29,6 +31,42 @@
 				<div style="background-color:#303030;" class="navegacion col-xs-12 col-sm-10 col-sm-offset-1">
 					<ul class="nav nav-tabs">
 						<li class="active"><a class="blog-nav-item" href="/planetablogs/alumnos/"><span class="glyphicon glyphicon-home"></span> Mis hilos</a></li>
+						<li>
+							<div class="btn-group active">
+								{% if disenos %}
+									{% ifequal user.estilo '' %}
+									<button id="botonlistadisenos" class="btnmenu btn btn-default dropdown-toggle" data-toggle="dropdown">
+										Mis diseños
+										<span class="pequeña glyphicon glyphicon-list"></span>
+										<span class="caret"></span>
+									</button>
+									{% else %}
+									<button id="botonlistadisenos" class="btnmenu btn btn-default dropdown-toggle" data-toggle="dropdown">
+										{{ user.estilo }}
+										<span class="pequeña glyphicon glyphicon-list"></span>
+										<span class="caret"></span>
+									</button>
+									{% endifequal %}
+								{% else %}
+								<button id="botonlistadisenos" class="btnmenu btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Mis diseños
+									<span class="pequeña glyphicon glyphicon-list"></span>
+									<span class="caret"></span>
+								</button>
+								{% endif %}
+								<ul style="width:auto;" id="listadisenos" class="dropdown-menu">
+								{% if disenos %}
+									<li style="font-weight:bold;font-style:oblique;font-size:10px;text-align:center;">&nbsp;<span class="glyphicon glyphicon-info-sign"></span> Elige tu diseño</span></li>
+									{% for diseno in disenos %}
+										<li value="{{ diseno.id }}"><a href="javascript:CambiarEstilo('{{ diseno.id }}')">{{ diseno.estilo }}</a></li>
+									{% endfor %}
+									<p style="font-size:12px;text-align:center;font-style:oblique;background-color:#e5ffe5;"><a style="color:#008000 !important;text-decoration:none;" href="/planetablogs/agregardisenoalumno/">&nbsp;<span class="glyphicon glyphicon-pencil"></span> Agregar/Eliminar diseño&nbsp;</a></p>
+								{% else %}
+									<p style="font-size:12px;text-align:center;font-style:oblique;background-color:#e5ffe5;"><a style="color:#008000 !important;text-decoration:none;" href="/planetablogs/agregardisenoalumno/">&nbsp;<span class="glyphicon glyphicon-pencil"></span> Agregar/Eliminar diseño&nbsp;</a></p>
+								{% endif %}
+								</ul>
+							</div>
+						</li>
 						<div style="padding-top:10px;color:white;" id="login" class="pull-right"><span>Iniciada sesión como <em><strong>{{ user.username }}</strong></em>  |  </span><a style="color:#A30000;" href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Desconectar</a></div>
 					</ul>
 				</div>

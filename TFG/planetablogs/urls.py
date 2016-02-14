@@ -20,6 +20,8 @@ urlpatterns = patterns('',
 	url(r'^valoraciontutor/$', views.valoraciontutor, name='valoraciontutor'),
 	url(r'^nuevoalumno/$',views.nuevo_alumno, name='nuevo_alumno'),
 	url(r'^nuevoprofesor/$',views.nuevo_profesor, name='nuevo_profesor'),
+	url(r'^cambiarestilo/$',views.cambiarestilo, name='cambiarestilo'),
+	url(r'^eliminardiseno/$',views.eliminardiseno, name='eliminardiseno'),
 	url(r'^alumnos/hilo/(?P<idasignatura>\d+)/puntuaciones/$',views.puntuaciones, name='puntuaciones'),
 	url(r'^alumnos/hilo/(?P<idasignatura>\d+)/estadisticas/$',views.estadisticas, name='estadisticas'),
 	url(r'^alumnos/hilo/(?P<idasignatura>\d+)/infopuntuaciones/$',views.infopuntuaciones, name='infopuntuaciones'),
@@ -35,9 +37,12 @@ urlpatterns = patterns('',
 	url(r'^buscarNickUsuario/$',views.buscarNickUsuario, name='buscarNickUsuario'),
 	url(r'^buscarNombreUsuario/$',views.buscarNombreUsuario, name='buscarNombreUsuario'),
 	url(r'^buscarIdEntrada/$',views.buscarIdEntrada, name='buscarIdEntrada'),
+	url(r'^entradaleida/$',views.entradaleida, name='entradaleida'),
+	url(r'^entradaleidatutor/$',views.entradaleidatutor, name='entradaleidatutor'),
+	url(r'^mostrarvisitasusuarios/$',views.mostrarvisitasusuarios, name='mostrarvisitasusuarios'),
 	url(r'^logout/$', views.salir, name="logout"),
 	url(r'^tutores/resetear_password/$', views.resetear_password, name="resetear_password"),
-	
+	url(r'^agregardisenoalumno/$', views.agregardisenoalumno, name='agregardisenoalumno'),
 )
 '''
 if settings.DEBUG is False:   #if DEBUG is True it will be served automatically

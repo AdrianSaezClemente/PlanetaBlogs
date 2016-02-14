@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 import os
 from django.shortcuts import render, get_object_or_404, render_to_response
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, StreamingHttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario, Up, Down, Valoracion
-from planetablogs.formularios import FormularioResetPasswd, FormularioRegistro, FormularioIdentidad, FormularioHilo, FormularioAgregarRSS, FormularioAgregarComentario
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Comentario, Up, Down, Valoracion, Extra, Diseno
+from planetablogs.formularios import FormularioResetPasswd, FormularioRegistro, FormularioIdentidad, FormularioHilo, FormularioAgregarRSS, FormularioAgregarComentario, FormularioDiseno
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -24,11 +24,6 @@ from django.db.models import F
 import time
 from django.core.serializers.json import DjangoJSONEncoder
 import sys
-	
-def mierror404(request):
-	print "error404"
-	return render(request, 'planetablogs/error404.html')
-
 
 
 #Introducir datos de registro de alumno
@@ -57,11 +52,9 @@ def nuevo_alumno(request):
 			alum = Alumno(alumno=user)
 			alum.save()
 			ficheroNohup.write("[**NA**] Alumno "+user.username.encode('utf-8')+" registrado con éxito.\n")
-			#print "[****] Alumno "+user.username.encode('utf-8')+" registrado con éxito."
 			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
 		else:
 			ficheroNohup.write("[**FR**] Alumno registrado sin éxito.\n")
-			#print "[****] Alumno registrado sin éxito."
 			info = False
 			return render(request, 'planetablogs/nuevoalumno.html', {'info': info, 'json_usuarios': json_usuarios})
 	else:
@@ -96,11 +89,9 @@ def nuevo_profesor(request):
 			profe = Profesor(profesor=user)
 			profe.save()
 			ficheroNohup.write("[**NT**] Tutor "+user.username.encode('utf-8')+" registrado con éxito.\n")
-			#print "[****] Tutor "+user.username.encode('utf-8')+" registrado con éxito."
 			return HttpResponseRedirect(reverse('login'))  # Redirect after POST
 		else:
 			ficheroNohup.write("[**FR**] Tutor registrado sin éxito.\n")
-			#print "[****] Tutor registrado sin éxito."
 			info = False
 			return render(request, 'planetablogs/nuevoprofesor.html', {'info': info, 'json_usuarios': json_usuarios})
 	else:
@@ -185,11 +176,9 @@ def inicio(request):
 			usuario = ComprobarUsuario(request.user.id)
 			if (usuario == "Alumno"):
 				ficheroNohup.write("[**SLA**] Alumno "+request.user.username.encode('utf-8')+" identificado sin logout.\n")
-				#print "[****] Alumno "+request.user.username.encode('utf-8')+" identificado sin logout."
 				return HttpResponseRedirect(reverse('presentacionalumno'))
 			else:
 				ficheroNohup.write("[**SLT**] Tutor "+request.user.username.encode('utf-8')+" identificado sin logout.\n")
-				#print "[****] Tutor "+request.user.username.encode('utf-8')+" identificado sin logout."
 				return HttpResponseRedirect(reverse('presentacionprofesor'))
 	except KeyError:
 		pass
@@ -216,7 +205,6 @@ def eliminarasignaturaalumno(request):
 		hilo = Rss.objects.get(asignatura=idasignatura,alumno=idalumno)
 		hilo.delete()
 		ficheroNohup.write("[**EAA**] Alumno "+request.user.username.encode('utf-8')+" elimina hilo "+ idasignatura.encode('utf-8') +"\n")
-		#print "[****] Alumno "+request.user.username.encode('utf-8')+" elimina hilo", idasignatura
 		EliminarTodoAlumno(idasignatura,idalumno)
 	ficheroNohup.close()
 	return render(request,'planetablogs/presentacionalum.html')
@@ -243,6 +231,10 @@ def presentacionalumno(request):
 	ficheroNohup.write("Inicio de presentación de alumno\n")
 	info = None
 	idasignatura = 0
+	disenos = Diseno.objects.filter(usuario=request.user.id)
+	json_serializer = serializers.get_serializer("json")()
+	json_disenos = json_serializer.serialize(Diseno.objects.filter(usuario=request.user.id), ensure_ascii=False)
+	json_usuario = json_serializer.serialize(User.objects.filter(id=request.user.id), ensure_ascii=False)
 	idalumno = ConseguirIdAlumno(request.user.id)
 	asignaturas = Asignatura.objects.all()
 	lista_asignaturas = Asignatura.objects.filter(alumnos=idalumno)
@@ -274,7 +266,7 @@ def presentacionalumno(request):
 		else:
 			info = True
 	ficheroNohup.close()
-	return render(request,'planetablogs/presentacionalum.html',{'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas, 'info': info, 'idasignatura':idasignatura})
+	return render(request,'planetablogs/presentacionalum.html',{'json_usuario':json_usuario, 'json_disenos':json_disenos, 'user': request.user, 'lista_asignaturas': lista_asignaturas, 'lista_no_asignaturas': lista_no_asignaturas, 'asignaturas': asignaturas, 'info': info, 'idasignatura':idasignatura, 'disenos':disenos})
 
 
 		
@@ -522,7 +514,6 @@ def agregarcomentario(request):
 			SumarValoracionComentario(idasignatura,idalumno)
 			SumarComentarioEntrada(idasignatura,identrada)
 			ficheroNohup.write("[**AAC**] Alumno "+username.encode('utf-8')+" agrega comentario a entrada "+ identrada.encode('utf-8') +"\n")
-			#print "[****] Alumno "+username.encode('utf-8')+" agrega comentario a entrada", identrada
 		else:
 			json_data = simplejson.dumps( {'comentario':""} )
 	ficheroNohup.close()
@@ -549,7 +540,6 @@ def eliminarcomentario(request):
 		RestarValoracionComentario(idasignatura,idalumno)
 		RestarComentarioEntrada(idasignatura,identrada)
 		ficheroNohup.write("[**CE**] Comentario de "+comentario.username.encode('utf-8')+" eliminado en entrada "+ identrada.encode('utf-8') +"\n")
-		#print "[****] Comentario de "+comentario.username.encode('utf-8')+" eliminado en entrada", identrada
 	ficheroNohup.close()
 	return render(request,'planetablogs/index.html',{'user': request.user})
 	
@@ -622,7 +612,6 @@ def eliminarentrada(request):
 		entrada.delete()#Elimino Entrada, y recalculo valoración de alumno
 		RestarValoracionEntrada(idasignatura,idalumno)
 		ficheroNohup.write("[**EET**] Tutor "+request.user.username.encode('utf-8')+" elimina entrada "+ identrada.encode('utf-8') +"\n")
-		#print "[****] Tutor "+request.user.username.encode('utf-8')+" elimina entrada", identrada
 		#FALTA RECALCULAR ELIMINAR COMENTARIOS DE LA ENTRADA ELIMINADA--------------------------------------------------------------------
 	ficheroNohup.close()
 	return render(request,'planetablogs/index.html',{'user': request.user})
@@ -640,7 +629,6 @@ def eliminaralumno(request):
 		rss.delete()
 		EliminarTodoAlumno(idasignatura,idalumno)
 		ficheroNohup.write("[**EAT**] Tutor "+request.user.username.encode('utf-8')+" elimina alumno "+ str(idalumno) +"\n")
-		#print "[****] Tutor "+request.user.username.encode('utf-8')+" elimina alumno", idalumno
 	ficheroNohup.close()
 	return render(request,'planetablogs/index.html',{'user': request.user})
 
@@ -669,18 +657,23 @@ def mostrarhiloalumno(request,idasignatura):
 		lista_usuarios = ConseguirListaAlumnos(idasignatura)
 		lista_comentarios = ConseguirListaComentarios(idasignatura)
 		#CAMBIAR SI NO HAY ADMIN (Quitar exclude)
-		lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).exclude(alumno_id=1).order_by('-total')[:10]
+		lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
+		lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
 		tupla_entradas = ConseguirListaEntradas(idasignatura,idalumno)
-
+		lista_extras = Extra.objects.filter(asignatura_id=idasignatura)
+		lista_sinextras = CompararListasEntradaExtra(lista_entradas,lista_extras)
+		
 		json_serializer = serializers.get_serializer("json")()
 		json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 		json_valoracion = json_serializer.serialize(Valoracion.objects.filter(asignatura_id=idasignatura), ensure_ascii=False)
 		json_alumnos = json_serializer.serialize(Alumno.objects.all(), ensure_ascii=False)
 		json_asignaturas = json_serializer.serialize(Asignatura.objects.all(), ensure_ascii=False)
 		json_profesores = json_serializer.serialize(Profesor.objects.all(), ensure_ascii=False)
+		json_serializer = serializers.get_serializer("json")()
+		json_disenos = json_serializer.serialize(Diseno.objects.filter(usuario=request.user.id), ensure_ascii=False)
+		json_usuario = json_serializer.serialize(User.objects.filter(id=request.user.id), ensure_ascii=False)
 		
 		ficheroNohup.write("[**VHA**] Alumno "+request.user.username.encode('utf-8')+" visita hilo "+ str(asignatura) +"\n")
-		#print "[****] Alumno "+request.user.username.encode('utf-8')+" visita hilo", asignatura
 		paginator = Paginator(tupla_entradas, 5) #Muestra 5 entradas por página
 		page = request.GET.get('page')
 		try:
@@ -692,7 +685,22 @@ def mostrarhiloalumno(request,idasignatura):
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
 	ficheroNohup.close()
-	return render(request,'planetablogs/index.html',{'json_profesores':json_profesores, 'json_asignaturas':json_asignaturas, 'json_alumnos':json_alumnos, 'json_valoracion':json_valoracion, 'json_usuarios':json_usuarios, 'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
+	return render(request,'planetablogs/index.html',{'json_usuario':json_usuario, 'json_disenos':json_disenos, 'json_profesores':json_profesores, 'json_asignaturas':json_asignaturas, 'json_alumnos':json_alumnos, 'json_valoracion':json_valoracion, 'json_usuarios':json_usuarios, 'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas, 'lista_extras':lista_extras, 'lista_sinextras':lista_sinextras})
+
+
+
+#Compara entradas y extras de una asignatura
+def CompararListasEntradaExtra(lista_entradas,lista_extras):
+	lista_sinextras = []
+	for ent in lista_entradas:
+		encontrada = False
+		for ext in lista_extras:
+			if(ent.id == ext.entrada_id):
+				encontrada = True
+				break;
+		if not encontrada:
+			lista_sinextras.append(ent)
+	return lista_sinextras
 
 
 
@@ -704,9 +712,11 @@ def mostrarhiloprofesor(request,idasignatura):
 	lista_usuarios = ConseguirListaAlumnos(idasignatura)
 	lista_comentarios = ConseguirListaComentarios(idasignatura)
 	#CAMBIAR SI NO HAY ADMIN (Quitar exclude)
-	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).exclude(alumno_id=1).order_by('-total')[:10]
+	lista_entradas_valoradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-total')[:10]
 	lista_entradas = Entrada.objects.filter(asignatura_id=idasignatura).order_by('-fecha')
-
+	lista_extras = Extra.objects.filter(asignatura_id=idasignatura)
+	lista_sinextras = CompararListasEntradaExtra(lista_entradas,lista_extras)
+	
 	json_serializer = serializers.get_serializer("json")()
 	json_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 	json_valoracion = json_serializer.serialize(Valoracion.objects.filter(asignatura_id=idasignatura), ensure_ascii=False)
@@ -715,7 +725,6 @@ def mostrarhiloprofesor(request,idasignatura):
 	json_profesores = json_serializer.serialize(Profesor.objects.all(), ensure_ascii=False)
 	
 	ficheroNohup.write("[**VHT**] Tutor "+request.user.username.encode('utf-8')+" visita hilo "+ str(asignatura) +"\n")
-	#print "[****] Tutor "+request.user.username.encode('utf-8')+" visita hilo", asignatura
 	paginator = Paginator(lista_entradas, 5) #Muestra 5 entradas por página
 	page = request.GET.get('page')
 	try:
@@ -725,7 +734,7 @@ def mostrarhiloprofesor(request,idasignatura):
 	except EmptyPage:	
 		entradas = paginator.page(paginator.num_pages)
 	ficheroNohup.close()
-	return render(request,'planetablogs/index_tutor.html',{'json_profesores':json_profesores, 'json_asignaturas':json_asignaturas, 'json_alumnos':json_alumnos, 'json_valoracion':json_valoracion, 'json_usuarios':json_usuarios, 'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas})
+	return render(request,'planetablogs/index_tutor.html',{'json_profesores':json_profesores, 'json_asignaturas':json_asignaturas, 'json_alumnos':json_alumnos, 'json_valoracion':json_valoracion, 'json_usuarios':json_usuarios, 'user': request.user, 'asignatura': asignatura, 'lista_usuarios':lista_usuarios, 'entradas':entradas, 'lista_comentarios':lista_comentarios[::-1], 'lista_entradas_valoradas':lista_entradas_valoradas, 'lista_extras':lista_extras, 'lista_sinextras':lista_sinextras})
 
 
 
@@ -736,7 +745,6 @@ def salir(request):
 		username = request.user
 		logout(request)
 		ficheroNohup.write("[**LU**] Usuario "+ str(username) +" ha salido de la aplicación.\n")
-		#print "[****] Usuario", username ,"ha salido de la aplicación."
 	except KeyError:
 		pass
 	ficheroNohup.close()
@@ -750,17 +758,21 @@ def puntuaciones(request,idasignatura):
 	ficheroNohup = open('nohup.out', 'a')
 	idalumno = ConseguirIdAlumno(request.user.id)
 	suscrito = ComprobarUsuarioAsignatura(idasignatura,idalumno)
+	json_serializer = serializers.get_serializer("json")()
+	json_disenos = json_serializer.serialize(Diseno.objects.filter(usuario=request.user.id), ensure_ascii=False)
+	json_usuario = json_serializer.serialize(User.objects.filter(id=request.user.id), ensure_ascii=False)
+	
 	if suscrito == True:
 		asignatura = Asignatura.objects.get(id=idasignatura)
-		lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos').exclude(alumno_id=1)
+		#QUITAR SI NO HAY ADMIN (exclude(alumno_id=1))
+		lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos')
 		json_serializer = serializers.get_serializer("json")()
 		json_usuarios = json_serializer.serialize(User.objects.all().exclude(username="admin"), ensure_ascii=False)
 		ficheroNohup.write("[**VRA**] Alumno "+request.user.username.encode('utf-8')+" visita RANKING de "+ str(asignatura) +"\n")
-		#print "[****] Alumno "+request.user.username.encode('utf-8')+" visita RANKING de", asignatura
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
 	ficheroNohup.close()
-	return render(request, 'planetablogs/puntuaciones.html', {'json_usuarios':json_usuarios, 'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
+	return render(request, 'planetablogs/puntuaciones.html', {'json_usuario':json_usuario, 'json_disenos':json_disenos, 'json_usuarios':json_usuarios, 'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
 
 
 
@@ -770,6 +782,10 @@ def estadisticas(request,idasignatura):
 	ficheroNohup = open('nohup.out', 'a')
 	idalumno = ConseguirIdAlumno(request.user.id)
 	suscrito = ComprobarUsuarioAsignatura(idasignatura,idalumno)
+	json_serializer = serializers.get_serializer("json")()
+	json_disenos = json_serializer.serialize(Diseno.objects.filter(usuario=request.user.id), ensure_ascii=False)
+	json_usuario = json_serializer.serialize(User.objects.filter(id=request.user.id), ensure_ascii=False)
+	
 	if suscrito == True:
 		asignatura = Asignatura.objects.get(id=idasignatura)
 		lista_usuario_totalentradas = ConseguirTotalEntradasUsuario(idasignatura)
@@ -778,7 +794,7 @@ def estadisticas(request,idasignatura):
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
 	ficheroNohup.close()
-	return render(request, 'planetablogs/estadisticas.html', {'entradas':entradas[::-1], 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
+	return render(request, 'planetablogs/estadisticas.html', {'json_usuario':json_usuario, 'json_disenos':json_disenos, 'entradas':entradas[::-1], 'user': request.user, 'asignatura': asignatura, 'lista_usuario_totalentradas':lista_usuario_totalentradas})
 
 
 
@@ -793,7 +809,6 @@ def infopuntuaciones(request,idasignatura):
 		json_serializer = serializers.get_serializer("json")()
 		lista_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 		ficheroNohup.write("[**VIA**] Alumno "+request.user.username.encode('utf-8')+" visita INFOPUNTUACIONES de "+ str(asignatura) +"\n")
-		#print "[****] Alumno "+request.user.username.encode('utf-8')+" visita INFOPUNTUACIONES de", asignatura
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
 	ficheroNohup.close()
@@ -835,7 +850,6 @@ def up(request):
 		GuardarUp(identrada)
 		SumarValoracionUp(idasignatura,idalumno,identrada)
 		ficheroNohup.write("[**PU**] Alumno "+request.user.username.encode('utf-8')+" pulsa UP en entrada "+ identrada.encode('utf-8') +"\n")
-		#print "[****] Alumno "+request.user.username.encode('utf-8')+" pulsa UP en entrada", identrada
 	ficheroNohup.close()
 	return render(request,'planetablogs/index.html',{'user': request.user})
 	
@@ -875,7 +889,6 @@ def down(request):
 		GuardarDown(identrada)
 		RestarValoracionDown(idasignatura,idalumno,identrada)
 		ficheroNohup.write("[**PD**] Alumno "+request.user.username.encode('utf-8')+" pulsa DOWN en entrada "+ identrada.encode('utf-8') +"\n")
-		#print "[****] Alumno "+request.user.username.encode('utf-8')+" pulsa DOWN en entrada", identrada
 	ficheroNohup.close()
 	return render(request,'planetablogs/index.html',{'user': request.user})
 
@@ -886,11 +899,15 @@ def down(request):
 def buscar(request,idasignatura):
 	idalumno = ConseguirIdAlumno(request.user.id)
 	suscrito = ComprobarUsuarioAsignatura(idasignatura,idalumno)
+	json_serializer = serializers.get_serializer("json")()
+	json_disenos = json_serializer.serialize(Diseno.objects.filter(usuario=request.user.id), ensure_ascii=False)
+	json_usuario = json_serializer.serialize(User.objects.filter(id=request.user.id), ensure_ascii=False)
+	
 	if suscrito == True:
 		asignatura = Asignatura.objects.get(id=idasignatura)
 	else:
 		return HttpResponseRedirect(reverse('presentacionalumno'))
-	return render(request,'planetablogs/buscar.html',{'user': request.user, 'asignatura': asignatura})
+	return render(request,'planetablogs/buscar.html',{'json_usuario':json_usuario, 'json_disenos':json_disenos, 'user': request.user, 'asignatura': asignatura})
 
 
 
@@ -932,11 +949,11 @@ def ayuda_tutor(request,idasignatura):
 def puntuaciones_tutor(request,idasignatura):
 	ficheroNohup = open('nohup.out', 'a')
 	asignatura = Asignatura.objects.get(id=idasignatura)
-	lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos').exclude(alumno_id=1)
+	#QUITAR SI NO HAY ADMIN (exclude(alumno_id=1))
+	lista_valoracion = Valoracion.objects.filter(asignatura_id=idasignatura).order_by('puntos')
 	json_serializer = serializers.get_serializer("json")()
 	json_usuarios = json_serializer.serialize(User.objects.all().exclude(username="admin"), ensure_ascii=False)
 	ficheroNohup.write("[**VRT**] Tutor "+request.user.username.encode('utf-8')+" visita RÁNKING de "+ str(asignatura) +"\n")
-	#print "[****] Tutor "+request.user.username.encode('utf-8')+" visita RÁNKING de", asignatura
 	ficheroNohup.close()
 	return render(request, 'planetablogs/puntuaciones_tutor.html', {'json_usuarios':json_usuarios, 'lista_valoracion':lista_valoracion[::-1], 'user': request.user, 'asignatura': asignatura})
 
@@ -963,7 +980,6 @@ def infopuntuaciones_tutor(request,idasignatura):
 	json_serializer = serializers.get_serializer("json")()
 	lista_usuarios = json_serializer.serialize(User.objects.all(), ensure_ascii=False)
 	ficheroNohup.write("[**VIT**] Tutor "+request.user.username.encode('utf-8')+" visita INFOPUNTUACIONES de "+ str(asignatura) +"\n")
-	#print "[****] Tutor "+request.user.username.encode('utf-8')+" visita INFOPUNTUACIONES de", asignatura
 	ficheroNohup.close()
 	return render(request, 'planetablogs/infopuntuaciones_tutor.html', {'lista_usuarios':lista_usuarios, 'user': request.user, 'asignatura': asignatura})
 	
@@ -989,7 +1005,6 @@ def buscarNickUsuario(request):
 				list_comentarios = simplejson.loads(json_comentarios)
 				json_data = simplejson.dumps( {'usuario':list_usuario, 'entradas':list_entradas, 'comentarios':list_comentarios} )
 				ficheroNohup.write("[**BNU**] Búsqueda de "+request.user.username.encode('utf-8')+" por nick de usuario "+ request.GET['texto'].encode('utf-8') +"\n")
-				#print "[****] Búsqueda de "+request.user.username.encode('utf-8')+" por nick de usuario", request.GET['texto']
 			else:
 				json_data = simplejson.dumps( {'usuario':"", 'entradas':[], 'comentarios':[]} )
 		else:
@@ -1041,7 +1056,6 @@ def buscarIdEntrada(request):
 				list_comentarios = simplejson.loads(json_comentarios)
 				json_data = simplejson.dumps({'usuario':list_usuario, 'entrada':list_entrada, 'comentarios':list_comentarios} )
 				ficheroNohup.write("[**BIE**] Búsqueda de "+request.user.username.encode('utf-8')+" por id de entrada "+ request.GET['texto'].encode('utf-8') +"\n")
-				#print "[****] Búsqueda de "+request.user.username.encode('utf-8')+" por id de entrada", request.GET['texto']
 			else:
 				json_data = simplejson.dumps( {'usuario':"", 'entrada':"", 'comentarios':[]} )
 		else:
@@ -1096,6 +1110,180 @@ def resetear_password(request):
 	
 	
 	
+#Dar al botón LEIDO para el alumno
+def entradaleida(request):
+	#ficheroNohup = open('nohup.out', 'a')
+	if request.method=='GET':
+		idasignatura = request.GET['idasignatura']
+		idusuario = request.GET['idusuario']
+		identrada = request.GET['identrada']
+		visita = request.GET['visita']
+		asignatura = Asignatura.objects.get(id=idasignatura)
+		entradaEstadoAnterior = Entrada.objects.filter(id=identrada)
+		json_serializer = serializers.get_serializer("json")()
+		json_entrada_estado_anterior = json_serializer.serialize(entradaEstadoAnterior, ensure_ascii=False)
+		
+		entrada = Entrada.objects.get(id=identrada)
+		comprobarextra = Extra.objects.filter(asignatura_id=idasignatura,entrada_id=identrada)
+		lista_leidos = "['"+idusuario+"']"
+		if not comprobarextra:
+			extra = Extra(asignatura=asignatura,entrada=entrada,leido=lista_leidos,descatado="")
+			extra.save()
+		else:
+			extra = Extra.objects.get(asignatura_id=idasignatura,entrada_id=identrada)
+			if "'" + idusuario + "'" in extra.leido:
+				pass
+			else:
+				cadena = extra.leido[:-1]
+				lista_usuarios = cadena + ",'" + idusuario + "']"
+				extra.leido = lista_usuarios
+				extra.save()
+		if visita == "true":
+			visitante = "['"+idusuario+"']"
+			if entrada.visitantes == "":
+				entrada.visitantes = visitante
+				entrada.visitas = entrada.visitas + 1
+				entrada.save()
+			else:
+				if "'" + idusuario + "'" in entrada.visitantes:
+					pass
+				else:
+					cadena = entrada.visitantes[:-1]
+					lista_usuarios = cadena + ",'" + idusuario + "']"
+					entrada.visitantes = lista_usuarios
+					entrada.visitas = entrada.visitas + 1
+					entrada.save()
+	return StreamingHttpResponse(json_entrada_estado_anterior, content_type="application/json")
+
+
+
+#Dar al botón LEIDO para el tutor
+def entradaleidatutor(request):
+	#ficheroNohup = open('nohup.out', 'a')
+	if request.method=='GET':
+		idasignatura = request.GET['idasignatura']
+		idusuario = request.GET['idusuario']
+		identrada = request.GET['identrada']
+		asignatura = Asignatura.objects.get(id=idasignatura)
+		entrada = Entrada.objects.get(id=identrada)
+		
+		comprobarextra = Extra.objects.filter(asignatura_id=idasignatura,entrada_id=identrada)
+		lista_leidos = "['"+idusuario+"']"
+		if not comprobarextra:
+			extra = Extra(asignatura=asignatura,entrada=entrada,leido=lista_leidos,descatado="")
+			extra.save()
+		else:
+			extra = Extra.objects.get(asignatura_id=idasignatura,entrada_id=identrada)
+			if "'" + idusuario + "'" in extra.leido:
+				pass
+			else:
+				cadena = extra.leido[:-1]
+				lista_usuarios = cadena + ",'" + idusuario + "']"
+				extra.leido = lista_usuarios
+				extra.save()
+	return render(request, 'planetablogs/index.html')
+
+
+
+#Función que devuelve una lista con todos los nombres y apellidos de los visitantes de una entrada
+def SacarListaVisitantes(visitantes):
+	i = 0
+	lista_visitantes = []
+	visitantes_sin_corchetes = visitantes[1:-1] #quitamos corchetes de la lista
+	visitantes_parseados = visitantes_sin_corchetes.split(",") #separa los ids de usuarios
+	for i in range(len(visitantes_parseados)):
+		lista_visitantes.append(visitantes_parseados[i][1:-1])
+		i = i + 1
+	return lista_visitantes
+	
+	
+	
+#Responde con todos los usuarios que visitaron la entrada
+def mostrarvisitasusuarios(request):
+	lista_nombres_visitantes = []
+	if request.method=='GET':
+		identrada = request.GET["identrada"]
+		visitantes = Entrada.objects.get(id=identrada).visitantes
+		if visitantes != "":
+			lista_visitantes = SacarListaVisitantes(visitantes)
+		else:
+			lista_visitantes = []
+		for visitante in lista_visitantes:
+			usuario = User.objects.get(id=visitante)
+			lista_nombres_visitantes.append(usuario.first_name + " " + usuario.last_name + "|")
+	return StreamingHttpResponse(lista_nombres_visitantes, content_type="application/list")
+
+
+
+#Comprueba si el estilo ya está en la lista de diseños del usuario
+def ComprobarEstilo(estilo,idusuario):
+	existe_estilo = False
+	disenos = Diseno.objects.filter(usuario_id=idusuario)
+	for i in disenos:
+		if (i.estilo == estilo):
+			existe_estilo = True
+			break;
+	return existe_estilo
+		
+		
+		
+#Agregar un diseño
+@login_required()
+def agregardisenoalumno(request):
+	json_serializer = serializers.get_serializer("json")()
+	json_disenos = json_serializer.serialize(Diseno.objects.filter(usuario=request.user.id), ensure_ascii=False)
+	disenos = Diseno.objects.filter(usuario_id=request.user.id)
+	usuario = User.objects.get(id=request.user.id)
+	if request.method == 'POST':
+		form = FormularioDiseno(request.POST, request.FILES)
+		if form.is_valid():
+			estilo = form.cleaned_data["estilo"]
+			imagen = form.cleaned_data["imagen"]
+			
+			existe_estilo = ComprobarEstilo(estilo,request.user.id)
+			if not existe_estilo:
+				diseno = Diseno(usuario=usuario,estilo=estilo,imagen=imagen)
+				diseno.save()
+
+				usuario = ComprobarUsuario(request.user.id)
+				if (usuario == "Alumno"):
+					return HttpResponseRedirect(reverse('presentacionalumno'))
+				else:
+					return HttpResponseRedirect(reverse('presentacionprofesor'))
+			else:
+				return render(request, 'planetablogs/diseno.html', {'existe_estilo': existe_estilo, 'disenos': disenos, 'json_disenos': json_disenos})
+		else:
+			return render(request, 'planetablogs/diseno.html', {'disenos': disenos, 'json_disenos': json_disenos})
+	else:
+		form = FormularioDiseno()
+	return render(request, 'planetablogs/diseno.html', {'disenos': disenos, 'json_disenos': json_disenos})
+
+
+
+#Cambiar estilo a un usuario
+def cambiarestilo(request):
+	if request.method=='GET':
+		idusuario = request.GET['idusuario']
+		estilo = request.GET['estilo']
+		usuario = User.objects.get(id=idusuario)
+		usuario.estilo = estilo
+		usuario.save()
+			
+			
+
+#Elimina el diseño de un usuario
+def eliminardiseno(request):
+	if request.method=='GET':
+		iddiseno = request.GET['iddiseno']
+		diseno = Diseno.objects.get(id=iddiseno)
+		if (request.user.estilo==diseno.estilo):
+			request.user.estilo = ""
+			request.user.save()
+		diseno.delete()
+		return render(request, 'planetablogs/diseno.html')
+		
+		
+		
 if __name__ == '__main__':
 	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TFG.settings")
 	os.environ.setdefault("TIME_ZONE", "Europe/Madrid")

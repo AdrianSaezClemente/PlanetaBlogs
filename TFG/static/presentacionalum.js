@@ -1,7 +1,7 @@
 $(document).ready(function(){
-	$( "#tags" ).autocomplete({
+	/*( "#tags" ).autocomplete({
 		source: asignaturas
-	});
+	});*/
 	$(".oculto").hide();
 	
 	$("#subir").hide();
@@ -20,10 +20,56 @@ $(document).ready(function(){
 			return false;
 		});
 	});
+	
+	$(function(){
+		$(".dropdown-menu").on('click', 'li a', function(){
+			$(".btnmenu:first-child").text($(this).text());
+			$(".btnmenu:first-child").val($(this).text());
+			$(".btnmenu").append(" <span class='caret'></span>")
+		});
+	});
+	
+	MostrarEstiloUsuario(usuario);
 });
 
+
+function MostrarEstiloUsuario(usuario) {
+	for (i=0;i<disenos.length;i++){
+		if (usuario[0].fields.estilo == disenos[i].fields.estilo){
+			$("body").prepend("<img id='fondo' src='../../../../../static/imagenes/"+disenos[i].fields.imagen+"'/>");
+			//$("body").css("background-image",'url("/static/imagenes/'+disenos[i].fields.imagen+'")');
+			//$("body").css("background-attachment",'fixed');
+			break;
+		}
+	}
+}
+
+function CambiarEstilo(iddiseno) {
+	for (i=0;i<disenos.length;i++){
+		if (disenos[i].pk == parseInt(iddiseno)){
+			$("#fondo").remove()
+			$("body").prepend("<img id='fondo' src='../../../../../static/imagenes/"+disenos[i].fields.imagen+"'/>");
+			//$("body").css("background-image",'url("/static/imagenes/'+disenos[i].fields.imagen+'")');
+			//$("body").css("background-attachment",'fixed');
+			$("#botonlistadisenos").html(disenos[i].fields.estilo+"<span class='pequeña glyphicon glyphicon-list'></span><span class='caret'></span>");
+			CambiarEstiloAjax(disenos[i].fields.usuario,disenos[i].fields.estilo)
+			break;
+		}
+	}
+}
+
+function CambiarEstiloAjax(idusuario,estilo){
+	$.ajax({
+		data: {'idusuario':idusuario,'estilo':estilo},
+		url: '/planetablogs/cambiarestilo/',
+		type: 'GET',
+		success: function(datos){
+			
+		},
+	});
+}
+
 function EliminarHilo(idasignatura,titulo,descripcion){
-	console.log(titulo)
 	var title = "¡CUIDADO! Vas a eliminar "+titulo;
 	var mensaje = "<p>¿Estás seguro de que quieres eliminar "+titulo+" de tus hilos?</p><span>Se perderá toda tu información dentro de este hilo:</span><ul><li>Tus entradas imprimidas.</li><li>Los comentarios que hayas realizado en tus entradas.</li><li>Valoraciones positivas y negativas.</li><li>Tu puntuación obtenida hasta este momento.</li></ul>";
 	BootstrapDialog.show({
@@ -48,7 +94,6 @@ function EliminarHilo(idasignatura,titulo,descripcion){
 }
 
 function Eliminar(idasignatura,titulo,descripcion){
-	console.log(idasignatura)
 	$('#eliminar'+idasignatura).hide(2000);
 	$('#botoneliminar'+idasignatura).hide();
 	$.ajax({

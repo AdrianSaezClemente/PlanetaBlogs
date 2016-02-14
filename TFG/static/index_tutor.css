@@ -152,11 +152,6 @@ h6, .h6 {
   color: #999;
 }
 
-.blog-post-meta a {
-	font-size:1.3em;
-	font-weight:bold;
-}
-
 /*
  * Footer
  */
@@ -224,6 +219,24 @@ label {
 	background:white;
 	box-shadow:0 0 5em black;
 	border:8px solid #B9C5CD;
+}
+
+#popupvisitantes{
+	z-index:2;
+	position:absolute;
+	padding-left:20px;
+	padding-right:20px;
+	padding-top:5px;
+	color:white;
+	width:auto;
+	height:auto;
+	background:#595959;
+	border:2px solid white;
+	box-shadow:0 0 13px black, inset 0 0 5px #0066ff;
+}
+
+#popupvisitantes * th{
+	text-align:center;
 }
 
 .pequeña{width: 40px; height: 25px;}
@@ -388,7 +401,7 @@ label {
 	font-size:15px;
 }
 
-#tablasuscriptores * th,tr{
+#tablasuscriptores * th, #tablasuscriptores * tr {
 	text-align:center;
 }
 
@@ -443,6 +456,11 @@ label {
 	color: black;
 }
 
+.enlacenick {
+	font-size:1.2em;
+	font-weight:bold;	
+}
+
 .pagination {
 	margin-left:14em;
 }
@@ -458,6 +476,21 @@ label {
 	border-radius: 5px;
 }
 
+.numerovisitas {
+	font-size:10px;
+	color:#4e4e32 !important;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.visitas {
+	font-size:10px;
+	color:#4e4e32 !important;
+}
+
+.centrar {
+	text-align:center;
+}
 /********************FIN DE MI CSS**********************************/
 
 

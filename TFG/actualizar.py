@@ -8,7 +8,7 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
-from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Valoracion, Comentario, Up, Down
+from planetablogs.models import Entrada, Alumno, Profesor, Asignatura, Rss, Valoracion, Comentario, Up, Down, Extra, User
 from planetablogs.formularios import FormularioRegistro, FormularioIdentidad
 from django.template import RequestContext
 import feedparser
@@ -129,9 +129,12 @@ def ParsearEtiquetasRss(objetorss,i):
 	fecha_entrada = datetime.fromtimestamp(mktime(pubDate))	+ timedelta(hours=1)	#Convertir fecha parseada a DateTime (Una hora más por desfase horario)
 	utc = fecha_entrada.replace(tzinfo=from_zone) 									#Convierte fecha DateTime a zona UTC
 	fecha = utc.strftime("%Y-%m-%d %H:%M:%S")										#fecha se guarda en un objeto Entrada con dos horas menos de la hora local.
-	descripcion_tags = rss.entries[i].description
-	descripcion = ConvertirDescripcionSinTags(descripcion_tags)
-	entrada = Entrada(asignatura=asignatura,alumno=alumno,entrada=entrada,titulo=titulo,fecha=fecha,descripcion=descripcion,link=link,url_blog=url_blog,totalup=0,totaldown=0,total=0,totalcomentarios=0,puntuaciontutor=0)
+	try:
+		descripcion_tags = rss.entries[i].description
+		descripcion = ConvertirDescripcionSinTags(descripcion_tags)
+	except AttributeError:
+		descripcion = ""
+	entrada = Entrada(asignatura=asignatura,alumno=alumno,entrada=entrada,titulo=titulo,fecha=fecha,descripcion=descripcion,link=link,url_blog=url_blog,totalup=0,totaldown=0,total=0,totalcomentarios=0,puntuaciontutor=0,visitas=0,visitantes="")
 	entrada.save()
 	GuardarValoracionEntrada(idasignatura,idalumno)
 

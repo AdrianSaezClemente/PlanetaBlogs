@@ -47,4 +47,14 @@ $(document).ready(function() {
 		});
 	});
 	
+	MostrarEstiloUsuario(usuario);
 });
+
+function MostrarEstiloUsuario(usuario) {
+	for (i=0;i<disenos.length;i++){
+		if (usuario[0].fields.estilo == disenos[i].fields.estilo){
+			$("body").prepend("<img id='fondo' src='../../../../../static/imagenes/"+disenos[i].fields.imagen+"'/>");
+			break;
+		}
+	}
+}
