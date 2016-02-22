@@ -81,6 +81,7 @@ $(document).ready(function() {
 function MostrarVisitasUsuarios(idnumerovisitas){
 	var parseEntrada = idnumerovisitas.split("-"); 
 	var identrada = parseEntrada[1]
+	console.log(idnumerovisitas)
 	$.ajax({
 		data: {'identrada':identrada},
 		url: '/planetablogs/mostrarvisitasusuarios/',
@@ -88,6 +89,7 @@ function MostrarVisitasUsuarios(idnumerovisitas){
 		success: function(datos){
 			var lista_visitantes = datos.split("|")
 			var html = "<table class='table'><thead><tr><th style='font: small-caps 100%/200% serif;color:black;font-weight:bold;' class='centrar'>Visitantes</th></tr></thead><tbody>"
+			$("#"+idnumerovisitas).html(lista_visitantes.length-1)
 			if (lista_visitantes != "") {
 				for (i=0;i<(lista_visitantes.length-1);i++){
 					html += "<tr><td style='font-size:12px !important;font: bold 90% monospace;color:#B9C5CD;font-style:oblique;'>"+lista_visitantes[i]+"</td></tr>";
@@ -150,6 +152,26 @@ function SacarPosicionInfoTutor(elemento){
 	var y = offset.top + 25;
 	$("#popupinfotutor").css("left",x + "px");
 	$("#popupinfotutor").css("top",y + "px");
+}
+
+function SacarPosicionUp(elemento){
+	var offset = $(elemento).offset();
+	var x = offset.left - 45;
+	var y = offset.top - 50;
+	$("#popupUP").css("left",x + "px");
+	$("#popupUP").css("top",y + "px");
+	$("#popupUP").show()
+	$("#popupUP").animate({top:'-=30px'},1000,function(){$("#popupUP").hide();});
+}
+
+function SacarPosicionDown(elemento){
+	var offset = $(elemento).offset();
+	var x = offset.left - 45;
+	var y = offset.top - 50;
+	$("#popupDOWN").css("left",x + "px");
+	$("#popupDOWN").css("top",y + "px");
+	$("#popupDOWN").show()
+	$("#popupDOWN").animate({top:'-=30px'},1000,function(){$("#popupDOWN").hide();});
 }
 
 function SacarPosicionAnimacion(elemento){
@@ -230,6 +252,7 @@ function Up(identrada,idusuario,idasignatura,up,down,valortutor){
 		url: '/planetablogs/up/',
 		type: 'GET',
 		success: function(datos){
+			SacarPosicionUp("#up"+identrada);
 			if (valortutor == 0){
 				var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up1+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down+"</span></button></div><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-primary btn-xs'><span style='color:black;' class='badge'> SC </span></button></div></div>"
 				$("#updown"+identrada).html(html);
@@ -250,6 +273,7 @@ function Down(identrada,idusuario,idasignatura,up,down,valortutor){
 		url: '/planetablogs/down/',
 		type: 'GET',
 		success: function(datos){
+			SacarPosicionDown("#down"+identrada);
 			if (valortutor == 0){
 				var html = "<div class='btn-group'><button type='button' disabled='disabled' class='btn btn-success btn-xs'><span class='badge'>"+up+"</span></button></div> <div class='btn-group'><button type='button' disabled='disabled' class='btn btn-danger btn-xs'><span class='badge'>"+down1+"</span></button></div><div class='btn-group'><button type='button' disabled='disabled' class='btn btn-primary btn-xs'><span style='color:black;' class='badge'> SC </span></button></div></div>"
 				$("#updown"+identrada).html(html);

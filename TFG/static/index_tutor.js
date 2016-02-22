@@ -80,6 +80,7 @@ function MostrarVisitasUsuarios(idnumerovisitas){
 		success: function(datos){
 			var lista_visitantes = datos.split("|")
 			var html = "<table class='table'><thead><tr><th style='font: small-caps 100%/200% serif;color:black;font-weight:bold;' class='centrar'>Visitantes</th></tr></thead><tbody>"
+			$("#"+idnumerovisitas).html(lista_visitantes.length-1)
 			if (lista_visitantes != "") {
 				for (i=0;i<(lista_visitantes.length-1);i++){
 					html += "<tr><td style='font-size:12px !important;font: bold 90% monospace;color:#B9C5CD;font-style:oblique;'>"+lista_visitantes[i]+"</td></tr>";
