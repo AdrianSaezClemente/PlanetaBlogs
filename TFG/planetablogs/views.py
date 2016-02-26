@@ -125,10 +125,26 @@ def ActualizarNivel(puntos):
 		nivel = 9
 	elif puntos > 324 and puntos <= 384:
 		nivel = 10
-	elif puntos > 384 and puntos <= 450:
+	elif puntos > 384 and puntos <= 449:
 		nivel = 11	
-	else:
+	elif puntos > 449 and puntos <= 519:
 		nivel = 12
+	elif puntos > 519 and puntos <= 594:
+		nivel = 13
+	elif puntos > 594 and puntos <= 674:
+		nivel = 14
+	elif puntos > 674 and puntos <= 759:
+		nivel = 15
+	elif puntos > 759 and puntos <= 849:
+		nivel = 16
+	elif puntos > 849 and puntos <= 944:
+		nivel = 17
+	elif puntos > 944 and puntos <= 1044:
+		nivel = 18
+	elif puntos > 1044 and puntos <= 1149:
+		nivel = 19
+	else puntos > 1149:
+		nivel = 20
 	return nivel
 
 

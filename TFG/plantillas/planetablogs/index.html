@@ -199,7 +199,7 @@
 											<div id="escribircomentario">
 												<div class="input-group">
 													<span class="input-group-addon">#{{ entrada.0.entrada }}</span>
-													<textarea id="descripcion_comentario{{ entrada.0.id }}" class="form-control" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
+													<textarea id="descripcion_comentario{{ entrada.0.id }}" class="form-control" style="font-family:monospace;font-size:12px;" name="descripcion" rows="1" placeholder="Escribe tu comentario..."></textarea>
 													<input class="oculto" name="entrada" value="{{ entrada.0.id }}"></input>
 													<span class="input-group-btn">
 														<button class="btn btn-success" onclick="AgregarComentario('{{ entrada.0.id }}','{{ asignatura.id }}','{{ user.id }}')">Enviar <span class="glyphicon glyphicon-send"></span></button>
@@ -211,11 +211,11 @@
 													{% if entrada.0.id == comentario.entrada_id %}
 													<div id="comentarios">
 														<div id="comentario{{ comentario.id }}" class="panel panel-warning">
-															<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por {{ comentario.alumno.alumno.username }}<span class="pull-right">{{ comentario.fecha|date:"d" }} de {{ comentario.fecha|date:"F" }} de {{ comentario.fecha|date:"Y" }}, {{ comentario.fecha|date:"l" }} a las {{ comentario.fecha|date:"H:i" }}</span></div></div>
-															<div style="margin-bottom:10px;margin-left:10px;margin-right:10px;font-family:verdana;font-size:12px;word-wrap:break-word;" class="panel-body">
+															<div id="titulopanel" class="panel-heading"><div class="panel-title">Comentario publicado por <strong>{{ comentario.alumno.alumno.username }}</strong><span class="pull-right">{{ comentario.fecha|date:"d" }} de {{ comentario.fecha|date:"F" }} de {{ comentario.fecha|date:"Y" }}, {{ comentario.fecha|date:"l" }} a las {{ comentario.fecha|date:"H:i" }}</span></div></div>
+															<div style="margin-right:3px;margin-left:3px;font-family:monospace;font-size:11px;word-wrap:break-word;" class="panel-body">
 																{{ comentario.descripcion|linebreaksbr }}
 															{% if comentario.alumno.alumno.id == user.id %}
-																</br><button id="{{ comentario.id }}" onclick="EliminarComentario('{{ comentario.id }}','{{ asignatura.id }}','{{ entrada.0.id }}')" type="button" class="btn btn-danger btn-xs pull-right">Eliminar comentario</button>
+																</br><button id="{{ comentario.id }}" onclick="EliminarComentario('{{ comentario.id }}','{{ asignatura.id }}','{{ entrada.0.id }}')" type="button" style='font-family:verdana !important;' class="btn btn-danger btn-xs pull-right">Eliminar comentario</button>
 															{% endif %}
 															</div>
 														</div>

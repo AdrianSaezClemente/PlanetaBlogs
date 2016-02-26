@@ -187,44 +187,69 @@ body {
 .muypequeña{width: 20px; height: 10px;}
 
 .nivel0 {
-	background-color:#CC0000;
+	background-color:#e60000;
 }
 .nivel1 {
-	background-color:#FF0000;
+	background-color:#ff0000;
 }
 .nivel2 {
-	background-color:#FF3333;
+	background-color:#ff1a1a;
 }
 .nivel3 {
-	background-color:#FF6666;
+	background-color:#ff3333;
 }
 .nivel4 {
-	background-color:#FF9999;
+	background-color:#ff4d4d;
 }
 .nivel5 {
-	background-color:#FFCCCC;
+	background-color:#ff6666;
 }
 .nivel6 {
-	background-color:#CCEBCC;
+	background-color:#ff8080;
 }
 .nivel7 {
-	background-color:#99D699;
+	background-color:#ff9999;
 }
 .nivel8 {
-	background-color:#66C266;
+	background-color:#ffb3b3;
 }
 .nivel9 {
-	background-color:#33AD33;
+	background-color:#ffcccc;
 }
 .nivel10 {
-	background-color:#009900;
+	background-color:#ffe6e6;
 }
 .nivel11 {
-	background-color:#007A00;
+	background-color:#e6ffe6;
 }
 .nivel12 {
-	background-color:#006200;
+	background-color:#ccffcc;
 }
+.nivel13 {
+	background-color:#b3ffb3;
+}
+.nivel14 {
+	background-color:#99ff99;
+}
+.nivel15 {
+	background-color:#80ff80;
+}
+.nivel16 {
+	background-color:#66ff66;
+}
+.nivel17 {
+	background-color:#4dff4d;
+}
+.nivel18 {
+	background-color:#33ff33;
+}
+.nivel19 {
+	background-color:#00cc00;
+}
+.nivel20 {
+	background-color:#009900;
+}
+
 
 #subir {
 	position: fixed;

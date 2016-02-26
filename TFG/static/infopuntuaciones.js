@@ -55,5 +55,29 @@ $(document).ready(function() {
 	
 	$("#nivel12").mouseover(function() {$( this ).addClass("nivel12");})
 	$("#nivel12").mouseout(function() {$( this ).removeClass("nivel12");});
+	
+	$("#nivel13").mouseover(function() {$( this ).addClass("nivel13");})
+	$("#nivel13").mouseout(function() {$( this ).removeClass("nivel13");});
+	
+	$("#nivel14").mouseover(function() {$( this ).addClass("nivel14");})
+	$("#nivel14").mouseout(function() {$( this ).removeClass("nivel14");});
+	
+	$("#nivel15").mouseover(function() {$( this ).addClass("nivel15");})
+	$("#nivel15").mouseout(function() {$( this ).removeClass("nivel15");});
+	
+	$("#nivel16").mouseover(function() {$( this ).addClass("nivel16");})
+	$("#nivel16").mouseout(function() {$( this ).removeClass("nivel16");});
+	
+	$("#nivel17").mouseover(function() {$( this ).addClass("nivel17");})
+	$("#nivel17").mouseout(function() {$( this ).removeClass("nivel17");});
+	
+	$("#nivel18").mouseover(function() {$( this ).addClass("nivel18");})
+	$("#nivel18").mouseout(function() {$( this ).removeClass("nivel18");});
+	
+	$("#nivel19").mouseover(function() {$( this ).addClass("nivel19");})
+	$("#nivel19").mouseout(function() {$( this ).removeClass("nivel19");});
+	
+	$("#nivel20").mouseover(function() {$( this ).addClass("nivel20");})
+	$("#nivel20").mouseout(function() {$( this ).removeClass("nivel20");});
 
 });
