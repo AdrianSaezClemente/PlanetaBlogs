@@ -99,7 +99,7 @@ function MostrarVisitasUsuarios(idnumerovisitas){
 			}
 			else {
 				html += "<tr><td style='font-size:12px !important;font: bold 90% monospace;color:#ff4d4d;font-style:oblique;'>Esta entrada no tiene visitantes</td></tr>";
-				html += "</tbody></table>";
+				html += "</tbody></table></div>";
 				$("#popupvisitantes").html(html)
 			}
 		},

@@ -39,6 +39,14 @@ $(document).ready(function() {
 		if (nivel == 10) {$(this).addClass("nivel10");}
 		if (nivel == 11) {$(this).addClass("nivel11");}
 		if (nivel == 12) {$(this).addClass("nivel12");}
+		if (nivel == 13) {$(this).addClass("nivel13");}
+		if (nivel == 14) {$(this).addClass("nivel14");}
+		if (nivel == 15) {$(this).addClass("nivel15");}
+		if (nivel == 16) {$(this).addClass("nivel16");}
+		if (nivel == 17) {$(this).addClass("nivel17");}
+		if (nivel == 18) {$(this).addClass("nivel18");}
+		if (nivel == 19) {$(this).addClass("nivel19");}
+		if (nivel == 20) {$(this).addClass("nivel20");}
 	});
 	$(".nivel").mouseout(function() {
 		var nivel = $(this).html()
@@ -55,6 +63,14 @@ $(document).ready(function() {
 		if (nivel == 10) {$(this).removeClass("nivel10");}
 		if (nivel == 11) {$(this).removeClass("nivel11");}
 		if (nivel == 12) {$(this).removeClass("nivel12");}
+		if (nivel == 13) {$(this).removeClass("nivel13");}
+		if (nivel == 14) {$(this).removeClass("nivel14");}
+		if (nivel == 15) {$(this).removeClass("nivel15");}
+		if (nivel == 16) {$(this).removeClass("nivel16");}
+		if (nivel == 17) {$(this).removeClass("nivel17");}
+		if (nivel == 18) {$(this).removeClass("nivel18");}
+		if (nivel == 19) {$(this).removeClass("nivel19");}
+		if (nivel == 20) {$(this).removeClass("nivel20");}
 	});
 	
 	MostrarEstiloUsuario(usuario);

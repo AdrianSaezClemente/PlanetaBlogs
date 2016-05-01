@@ -143,7 +143,7 @@ def ActualizarNivel(puntos):
 		nivel = 18
 	elif puntos > 1044 and puntos <= 1149:
 		nivel = 19
-	else puntos > 1149:
+	else:
 		nivel = 20
 	return nivel
 

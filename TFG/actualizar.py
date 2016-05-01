@@ -70,7 +70,7 @@ def ActualizarNivel(puntos):
 		nivel = 18
 	elif puntos > 1044 and puntos <= 1149:
 		nivel = 19
-	else puntos > 1149:
+	else:
 		nivel = 20
 	return nivel
 
@@ -150,6 +150,11 @@ def ParsearEtiquetasRss(objetorss,i):
 		descripcion = ConvertirDescripcionSinTags(descripcion_tags)
 	except AttributeError:
 		descripcion = ""
+	if link.find("youtube") == -1:
+		pass
+	else:
+		iframe = "<iframe width='640' height='360' src="+link+" frameborder='0' allowfullscreen></iframe>"
+		descripcion = descripcion + iframe
 	entrada = Entrada(asignatura=asignatura,alumno=alumno,entrada=entrada,titulo=titulo,fecha=fecha,descripcion=descripcion,link=link,url_blog=url_blog,totalup=0,totaldown=0,total=0,totalcomentarios=0,puntuaciontutor=0,visitas=0,visitantes="")
 	entrada.save()
 	GuardarValoracionEntrada(idasignatura,idalumno)
